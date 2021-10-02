@@ -1,5 +1,16 @@
 # EasyJob
 
+<a href="https://img.shields.io/github/license/akshinmustafayev/EasyJob">
+  <img src="https://img.shields.io/github/license/akshinmustafayev/EasyJob" alt="License" />
+</a>
+<a href="https://img.shields.io/tokei/lines/github/akshinmustafayev/EasyJob">
+  <img src="https://img.shields.io/tokei/lines/github/akshinmustafayev/EasyJob" alt="Total lines" />
+</a>
+<a href="https://img.shields.io/github/downloads/akshinmustafayev/EasyJob/total">
+  <img src="https://img.shields.io/github/downloads/akshinmustafayev/EasyJob/total" alt="Downloads" />
+</a>
+
+
 ## Description
 
 EasyJob keep and execute your PowerShell scripts from one interface
@@ -8,6 +19,7 @@ EasyJob keep and execute your PowerShell scripts from one interface
 ## Overview
 
 <img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/1.png?raw=true" alt="EasyJob">
+<img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/2.png?raw=true" alt="EasyJob">
 
 
 ## Configuration
@@ -70,6 +82,17 @@ Here is an example:
   ]
 }
 ```
+
+_Note: Do not specify argument_answer value, since it will be ignored when executing script_
+
+
+
+## Easy access
+_CTRL+Left Mouse Click_ on the button will open location of the script attached to the button
+
+_SHIFT+Left Mouse Click_ on the button will open the script attached to the button with your default ps1 text editor
+
+
 
 ## Contributing
 
