@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\convert.png" />
+    <None Remove="Images\down.png" />
+    <None Remove="Images\folder.png" />
+    <None Remove="Images\icon.ico" />
+    <None Remove="Images\reload.png" />
+    <None Remove="Images\up.png" />
+    <None Remove="Images\x.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\convert.png" />
+    <Resource Include="Images\down.png" />
+    <Resource Include="Images\folder.png" />
+    <Resource Include="Images\icon.ico" />
+    <Resource Include="Images\reload.png" />
+    <Resource Include="Images\up.png" />
+    <Resource Include="Images\x.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
+
+</Project>

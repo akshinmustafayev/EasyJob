@@ -1,0 +1,85 @@
+{
+  "default_powershell_path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "console_background": "Black",
+  "console_foreground": "White",
+  "clear_events_when_reload": true,
+  "tabs": [
+    {
+      "header": "Common actions",
+      "buttons": [
+        {
+          "text": "test01",
+          "description": "Some test script",
+          "script": "scripts\\common\\test01.ps1",
+          "scriptpathtype": "relative",
+          "arguments": []
+        },
+        {
+          "text": "test02",
+          "description": "Some second test script",
+          "script": "scripts\\test02.ps1",
+          "scriptpathtype": "relative",
+          "arguments": []
+        },
+        {
+          "text": "Absolute script",
+          "description": "",
+          "script": "C:\\scripts\\absolute_script.ps1",
+          "scriptpathtype": "absolute",
+          "arguments": []
+        },
+        {
+          "text": "test03",
+          "description": "Some test 03 script with arguments",
+          "script": "scripts\\common\\test03.ps1",
+          "scriptpathtype": "relative",
+          "arguments": [
+            {
+              "argument_question": "Enter IP address or DNS name",
+              "argument_answer": ""
+            }
+          ]
+        },
+        {
+          "text": "test04",
+          "description": "Some test 04 script with arguments",
+          "script": "scripts\\common\\test04.ps1",
+          "scriptpathtype": "relative",
+          "arguments": [
+            {
+              "argument_question": "What is your name?",
+              "argument_answer": ""
+            },
+            {
+              "argument_question": "What is your surname",
+              "argument_answer": ""
+            },
+            {
+              "argument_question": "No, really what is your name?",
+              "argument_answer": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "header": "Second Tab",
+      "buttons": [
+        {
+          "text": "Some button",
+          "description": "no description",
+          "script": "scripts\\some_button_script.ps1",
+          "scriptpathtype": "relative",
+          "arguments": []
+        },
+        {
+          "text": "Button tst 12345",
+          "description": "",
+          "script": "D:\\net50\\test04.ps1",
+          "scriptpathtype": "absolute",
+          "arguments": []
+        }
+      ]
+    }
+  ]
+}
