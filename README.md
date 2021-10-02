@@ -73,5 +73,4 @@ Here is an example:
 
 ## Contributing
 
-Contribution is very much appreciated. 
-Hope that this tool might be useful to you!
+Contribution is very much appreciated. Hope that this tool might be useful for you!
