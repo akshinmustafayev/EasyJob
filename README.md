@@ -24,7 +24,7 @@ EasyJob keep and execute your PowerShell scripts from one interface
 
 ## Configuration
 
-Configuration could be done from config.json file located in the the same with app executable.
+Configuration could be done from config.json file located with the app executable.
 
 Here is an example:
 
