@@ -19,7 +19,7 @@ EasyJob keep and execute your PowerShell scripts from one interface
 ## Overview
 
 <img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/1.png?raw=true" alt="EasyJob">
-<img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/2.png?raw=true" alt="EasyJob">
+<img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/2_arg.png?raw=true" alt="EasyJob">
 
 
 ## Configuration
