@@ -21,6 +21,12 @@ EasyJob keep and execute your PowerShell scripts from one interface
 <img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/1.png?raw=true" alt="EasyJob">
 <img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/2_arg.png?raw=true" alt="EasyJob">
 
+## Features
+* You can remove button from the GUI by right mouse click on it and then select Remove in the context menu
+<img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/feature1.PNG?raw=true" alt="EasyJob">
+
+* You can remove tab from the GUI by right mouse click on it and then select Remove in the context menu
+<img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/feature2.PNG?raw=true" alt="EasyJob">
 
 ## Configuration
 
@@ -97,3 +103,10 @@ _SHIFT+Left Mouse Click_ on the button will open the script attached to the butt
 ## Contributing
 
 Contribution is very much appreciated. Hope that this tool might be useful for you!
+
+Thanks to the contributors:
+
+<a href="https://github.com/akshinmustafayev/EasyJob/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=akshinmustafayev/EasyJob" />
+</a>
+
