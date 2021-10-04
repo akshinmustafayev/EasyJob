@@ -11,6 +11,9 @@
         <ContextMenu x:Key="cmTabButton">
             <MenuItem Name="cmdRemoveTab" Header="Remove Tab" Click="cmdRemoveTab_Click"/>
         </ContextMenu>
+        <ContextMenu x:Key="cmButton">
+            <MenuItem Name="cmdRemove" Header="Remove" Click="cmdRemove_Click"/>
+        </ContextMenu>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -40,7 +43,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Margin="0,5,5,0" Padding="5" Content="{Binding ButtonText}" Style="{StaticResource EJButtonStyle}" Click="ActionButton_Click">
+                                    <Button Margin="0,5,5,0" Padding="5" Content="{Binding ButtonText}" Style="{StaticResource EJButtonStyle}" Click="ActionButton_Click" PreviewMouseDown="ActionButton_PreviewMouseDown">
                                         <Button.ToolTip>
                                             <ToolTip Style="{StaticResource EJToolTipStyle}" Content="{Binding ButtonDescription}" />
                                         </Button.ToolTip>

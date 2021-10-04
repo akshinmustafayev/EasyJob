@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +21,7 @@ namespace EasyJob
     public partial class MainWindow : Window
     {
         string selectedTabButton = "";
+        string selectedButton = "";
         public string configJson = "";
         public Config config;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
@@ -195,6 +197,17 @@ namespace EasyJob
             TabData td = (TabData)MainTab.SelectedItem;
             td.TabTextBoxText = "";
             AddTextToEventsList("Output has been cleared!", false);
+        }
+
+        public async void ActionButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                selectedButton = ((Button)e.Source).Content.ToString();
+                ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
+                cm.PlacementTarget = sender as Button;
+                cm.IsOpen = true;
+            }
         }
 
         public AnswerData ConvertArgumentsToAnswers(List<Answer> Answers)
@@ -539,6 +552,26 @@ namespace EasyJob
 
             MainTab.ItemsSource = null;
             MainTab.ItemsSource = newSourceTabs;
+
+            if (SaveConfig())
+            {
+                MainTab.Items.Refresh();
+                this.UpdateLayout();
+            }
+        }
+        private void cmdRemove_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < MainTab.Items.Count; i++)
+            {
+                if (MainTab.Items[i] is TabData button)
+                {
+                    var item = button.TabActionButtons.Where(x => x.ButtonText.Equals(selectedButton)).FirstOrDefault();
+                    if (item != null)
+                    {
+                        button.TabActionButtons.Remove(item);
+                    }
+                }
+            }
 
             if (SaveConfig())
             {
