@@ -7,7 +7,11 @@
         xmlns:local="clr-namespace:EasyJob"
         mc:Ignorable="d" Icon="pack://application:,,,/Images/icon.ico"
         Title="EasyJob Executor" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-
+    <Window.Resources>
+        <ContextMenu x:Key="cmButton">
+            <MenuItem Name="cmdRemove" Header="Remove" Click="cmdRemove_Click"/>
+        </ContextMenu>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -36,7 +40,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Margin="0,5,5,0" Padding="5" Content="{Binding ButtonText}" Style="{StaticResource EJButtonStyle}" Click="ActionButton_Click">
+                                    <Button Margin="0,5,5,0" Padding="5" Content="{Binding ButtonText}" Style="{StaticResource EJButtonStyle}" Click="ActionButton_Click" PreviewMouseDown="ActionButton_PreviewMouseDown">
                                         <Button.ToolTip>
                                             <ToolTip Style="{StaticResource EJToolTipStyle}" Content="{Binding ButtonDescription}" />
                                         </Button.ToolTip>
@@ -81,9 +85,9 @@
                 <MenuItem Header="Exit" Click="MenuItemExit_Click"/>
             </MenuItem>
         </Menu>
-        <TabControl x:Name="MainTab" Grid.Row="1" ItemTemplate="{StaticResource MainTabHeaderTemplate}"
-                    ContentTemplate="{StaticResource MainTabItemTemplate}" Style="{StaticResource EJTabControl}" ItemContainerStyle="{StaticResource EJTabItem}">
-        </TabControl>
+        
+        <TabControl x:Name="MainTab" Grid.Row="1" ItemTemplate="{StaticResource MainTabHeaderTemplate}" ContentTemplate="{StaticResource MainTabItemTemplate}" Style="{StaticResource EJTabControl}" ItemContainerStyle="{StaticResource EJTabItem}"/>
+
         <GridSplitter Grid.Row="2" Height="5" HorizontalAlignment="Stretch"/>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
