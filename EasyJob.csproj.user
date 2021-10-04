@@ -10,6 +10,9 @@
     <Compile Update="Windows\AnswerDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\TabsDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
@@ -28,6 +31,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\AnswerDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\TabsDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
