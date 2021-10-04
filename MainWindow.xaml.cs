@@ -330,8 +330,6 @@ namespace EasyJob
             string powershellArguments = GetPowerShellArguments(config.powershell_arguments);
             int ownerTab = MainTab.SelectedIndex;
 
-            MessageBox.Show(buttonScript);
-
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
             {
                 try
