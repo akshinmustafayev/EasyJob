@@ -94,7 +94,7 @@ _Note: Do not specify argument_answer value, since it will be ignored when execu
 
 
 ## Easy access
-_CTRL+Left Mouse Click_ on the button will open location of the script attached to the button
+_CTRL+Left Mouse Click_ on the button will open folder where script attached to the button is located
 
 _SHIFT+Left Mouse Click_ on the button will open the script attached to the button with your default ps1 text editor
 
