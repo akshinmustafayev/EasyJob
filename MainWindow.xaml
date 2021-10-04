@@ -7,7 +7,11 @@
         xmlns:local="clr-namespace:EasyJob"
         mc:Ignorable="d" Icon="pack://application:,,,/Images/icon.ico"
         Title="EasyJob Executor" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-
+    <Window.Resources>
+        <ContextMenu x:Key="cmTabButton">
+            <MenuItem Name="cmdRemoveTab" Header="Remove Tab" Click="cmdRemoveTab_Click"/>
+        </ContextMenu>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,7 +21,7 @@
         </Grid.RowDefinitions>
         <Grid.Resources>
             <DataTemplate x:Key="MainTabHeaderTemplate">
-                <Label Content="{Binding TabHeader}" />
+                <Label Content="{Binding TabHeader}" Name="TabHeaderSelector" PreviewMouseDown="TabHeaderSelector_PreviewMouseDown"/>
             </DataTemplate>
             <DataTemplate x:Key="MainTabItemTemplate">
                 <Grid>

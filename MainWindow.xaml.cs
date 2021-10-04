@@ -19,6 +19,7 @@ namespace EasyJob
 {
     public partial class MainWindow : Window
     {
+        string selectedTabButton = "";
         public string configJson = "";
         public Config config;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
@@ -42,18 +43,18 @@ namespace EasyJob
                     {
                         List<ActionButton> actionButtons = new List<ActionButton>();
                         
-                        foreach (ConfigButton configButton in configTab.buttons)
+                        foreach (ConfigButton configButton in configTab.Buttons)
                         {
                             List<Answer> configArguments = new List<Answer>();
-                            foreach(ConfigArgument configArgument in configButton.arguments)
+                            foreach(ConfigArgument configArgument in configButton.Arguments)
                             {
-                                configArguments.Add(new Answer { AnswerQuestion = configArgument.argument_question, AnswerResult = configArgument.argument_answer });
+                                configArguments.Add(new Answer { AnswerQuestion = configArgument.ArgumentQuestion, AnswerResult = configArgument.ArgumentAnswer });
                             }
                             
-                            actionButtons.Add(new ActionButton { ButtonText = configButton.text, ButtonDescription = configButton.description, ButtonScript = configButton.script, ButtonScriptPathType = configButton.scriptpathtype, ButtonArguments = configArguments });
+                            actionButtons.Add(new ActionButton { ButtonText = configButton.Text, ButtonDescription = configButton.Description, ButtonScript = configButton.Script, ButtonScriptPathType = configButton.ScriptPathType, ButtonArguments = configArguments });
                         }
 
-                        tabs.Add(new TabData { TabHeader = configTab.header, ConsoleBackground = config.console_background, ConsoleForeground = config.console_foreground, TabActionButtons = actionButtons, TabTextBoxText = "" });
+                        tabs.Add(new TabData { TabHeader = configTab.Header, ConsoleBackground = config.console_background, ConsoleForeground = config.console_foreground, TabActionButtons = actionButtons, TabTextBoxText = "" });
                     }
 
                     MainTab.ItemsSource = tabs;
@@ -473,5 +474,88 @@ namespace EasyJob
 
         #endregion
 
+        public bool SaveConfig()
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "config.json";
+            if (File.Exists(path))
+            {
+                try
+                {
+                    IEnumerable<TabData> tabs = (IEnumerable<TabData>)MainTab.ItemsSource;
+
+                    config.tabs.Clear();
+
+                    List<ConfigTab> configTabs = new List<ConfigTab>();
+                    List<ConfigButton> buttons = null;
+                    List<ConfigArgument> configArguments = null;
+
+                    foreach (TabData tab in tabs)
+                    {
+                        buttons = new List<ConfigButton>();
+                        foreach (ActionButton button in tab.TabActionButtons)
+                        {
+                            configArguments = new List<ConfigArgument>();
+                            foreach (Answer answer in button.ButtonArguments)
+                            {
+                                configArguments.Add(new ConfigArgument(answer.AnswerQuestion, answer.AnswerResult));
+                            }
+
+                            buttons.Add(new ConfigButton(button.ButtonText, button.ButtonDescription, button.ButtonScript, button.ButtonScriptPathType, configArguments));
+                        }
+
+                        configTabs.Add(new ConfigTab(tab.TabHeader, buttons));
+                    }
+
+                    config.tabs = configTabs;
+
+                    string conf = System.Text.Json.JsonSerializer.Serialize(config);
+                    File.WriteAllText(path, conf, System.Text.Encoding.UTF8);
+
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                SaveConfig();
+            }
+
+            return false;
+        }
+
+        private void cmdRemoveTab_Click(object sender, RoutedEventArgs e)
+        {
+            List<TabData> newSourceTabs = new List<TabData>();
+            foreach (TabData tab in MainTab.Items)
+            {
+                if (!tab.TabHeader.Equals(selectedTabButton))
+                {
+                    newSourceTabs.Add(tab);
+                }
+            }
+
+            MainTab.ItemsSource = null;
+            MainTab.ItemsSource = newSourceTabs;
+
+            if (SaveConfig())
+            {
+                MainTab.Items.Refresh();
+                this.UpdateLayout();
+            }
+        }
+
+        private void TabHeaderSelector_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                selectedTabButton = ((Label)e.Source).Content.ToString();
+                ContextMenu cm = this.FindResource("cmTabButton") as ContextMenu;
+                cm.PlacementTarget = sender as Label;
+                cm.IsOpen = true;
+            }
+        }
     }
 }
