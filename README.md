@@ -22,10 +22,10 @@ EasyJob keep and execute your PowerShell scripts from one interface
 <img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/2_arg.png?raw=true" alt="EasyJob">
 
 ## Features
-* You can remove button from the GUI by right mouse click on it and then select Remove in the context menu
+* You can remove button from the GUI by right mouse click on it and then select Remove in the context menu. Settings are automatically will be saved to your config.json file.
 <img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/feature1.PNG?raw=true" alt="EasyJob">
 
-* You can remove tab from the GUI by right mouse click on it and then select Remove in the context menu
+* You can remove tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
 <img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/feature2.PNG?raw=true" alt="EasyJob">
 
 ## Configuration
