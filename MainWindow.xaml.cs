@@ -1,246 +1,33 @@
-﻿using EasyJob.Serialization;
-using EasyJob.Serialization.AnswerDialog;
-using EasyJob.Serialization.TasksList;
-using EasyJob.TabItems;
-using EasyJob.Utils;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using EasyJob.Serialization;
+using EasyJob.Serialization.AnswerDialog;
+using EasyJob.Serialization.TasksList;
+using EasyJob.TabItems;
+using EasyJob.Utils;
+using Newtonsoft.Json;
 
 namespace EasyJob
 {
     public partial class MainWindow : Window
     {
-        #region Variables
-
         public string configJson = "";
-        string selectedButton = "";
         public Config config;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
-
-        #endregion
-
-        #region Contructors
 
         public MainWindow()
         {
             InitializeComponent();
             LoadConfig();
         }
-
-        #endregion
-
-        #region Events
-
-        public void ClearOutputButton_Click(object sender, RoutedEventArgs e)
-        {
-            TabData td = (TabData)MainTab.SelectedItem;
-            td.TabTextBoxText = "";
-            AddTextToEventsList("Output has been cleared!", false);
-        }
-
-        public async void ActionButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.RightButton == MouseButtonState.Pressed)
-            {
-                selectedButton = ((Button)e.Source).Content.ToString();
-                ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
-                cm.PlacementTarget = sender as Button;
-                cm.IsOpen = true;
-            }
-        }
-
-        public async void ActionButton_Click(object sender, RoutedEventArgs e)
-        {
-            Button actionButton = sender as Button;
-            string buttonScript = ((ActionButton)actionButton.DataContext).ButtonScript;
-            string buttonScriptPathType = ((ActionButton)actionButton.DataContext).ButtonScriptPathType;
-            string scriptPath = GetScriptPath(buttonScript, buttonScriptPathType);
-            int ownerTab = MainTab.SelectedIndex;
-
-            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-            {
-                try
-                {
-                    Process.Start("explorer.exe", GetScriptPath(RemoveScriptFileFromPath(buttonScript), buttonScriptPathType));
-                    AddTextToEventsList("Opened script location folder: " + GetScriptPath(RemoveScriptFileFromPath(buttonScript), buttonScriptPathType), false);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    AddTextToEventsList("Could not open script location folder: " + ex.Message, false);
-                }
-                return;
-            }
-
-            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-            {
-                try
-                {
-                    Process.Start("explorer.exe", scriptPath);
-                    AddTextToEventsList("Opened script : " + scriptPath, false);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    AddTextToEventsList("Could not open script: " + ex.Message, false);
-                }
-                return;
-            }
-
-            List<Answer> buttonArguments = ((ActionButton)actionButton.DataContext).ButtonArguments;
-            AddTextToConsole("Start script: " + scriptPath + Environment.NewLine + "===============================================================" + Environment.NewLine, ownerTab);
-            AddTextToEventsList("Execution of " + scriptPath + " has been started.", false);
-
-            if (buttonArguments.Count == 0)
-            {
-                AddTextToEventsList("Starting script " + scriptPath, false);
-                await RunProcessAsync(config.default_powershell_path, "-File \"" + scriptPath + "\"", ownerTab, buttonScript);
-            }
-            else
-            {
-                AnswerDialog dialog = new AnswerDialog(ConvertArgumentsToAnswers(buttonArguments));
-                if (dialog.ShowDialog() == true)
-                {
-                    AddTextToEventsList("Starting script" + scriptPath, false);
-                    await RunProcessAsync(config.default_powershell_path, "-File \"" + scriptPath + "\" " + ConvertArgumentsToPowerShell(dialog.answerData.Answers), ownerTab, buttonScript);
-                }
-                else
-                {
-                    AddTextToEventsList("Task cancelled by user", false);
-                    AddTextToConsole("Task cancelled by user!", ownerTab);
-                }
-            }
-        }
-
-        private void TasksListStop_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Button buttonStop = sender as Button;
-                int processID = ((TaskListTask)buttonStop.DataContext).TaskID;
-                Process.GetProcessById(processID).Kill();
-                AddTextToEventsList("Process has been cancelled by user!", false);
-                RemoveTaskFromTasksList(processID, false);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                AddTextToEventsList("Process cancelled failed: " + ex.Message, false);
-            }
-        }
-
-        private void ScrollToTopButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                TextBox console = FindVisualChild<TextBox>(MainTab);
-                console.ScrollToHome();
-            }
-            catch { }
-        }
-
-        private void ScrollToBottomButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                TextBox console = FindVisualChild<TextBox>(MainTab);
-                console.ScrollToEnd();
-            }
-            catch { }
-        }
-
-        private void cmdRemove_Click(object sender, RoutedEventArgs e)
-        {
-            for (int i = 0; i < MainTab.Items.Count; i++)
-            {
-                if (MainTab.Items[i] is TabData button)
-                {
-                    var item = button.TabActionButtons.Where(x => x.ButtonText.Equals(selectedButton)).FirstOrDefault();
-                    if (item != null)
-                    {
-                        button.TabActionButtons.Remove(item);
-                    }
-                }
-            }
-
-            if (SaveConfig())
-            {
-                MainTab.Items.Refresh();
-                this.UpdateLayout();
-            }            
-        }
-
-        #region MenuItems
-
-        private void ReloadConfigMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (config.clear_events_when_reload == true)
-                {
-                    EventsList.Items.Clear();
-                }
-                else
-                {
-                    AddTextToEventsList("Relading config!", false);
-                }
-
-                MainTab.ItemsSource = null;
-                LoadConfig();
-
-                if (MainTab.Items.Count > 0)
-                {
-                    MainTab.SelectedIndex = 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                AddTextToEventsList("Relading config failed: " + ex.Message, false);
-            }
-        }
-        private void OpenAppFolderMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Process.Start("explorer.exe", AppDomain.CurrentDomain.BaseDirectory);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                AddTextToEventsList("Opened application running folder", false);
-            }
-        }
-        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
-        {
-            if (tasksList.Count > 0)
-            {
-                if (MessageBox.Show("Task is still going. Do you want to exit? You will have to kill process manually if you exit", "Please confirm", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
-                {
-                    Application.Current.Shutdown();
-                }
-            }
-            else
-            {
-                Application.Current.Shutdown();
-            }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Methods
 
         public void LoadConfig()
         {
@@ -255,18 +42,18 @@ namespace EasyJob
                     {
                         List<ActionButton> actionButtons = new List<ActionButton>();
                         
-                        foreach (ConfigButton configButton in configTab.Buttons)
+                        foreach (ConfigButton configButton in configTab.buttons)
                         {
                             List<Answer> configArguments = new List<Answer>();
-                            foreach(ConfigArgument configArgument in configButton.Arguments)
+                            foreach(ConfigArgument configArgument in configButton.arguments)
                             {
-                                configArguments.Add(new Answer { AnswerQuestion = configArgument.ArgumentQuestion, AnswerResult = configArgument.ArgumentAnswer });
+                                configArguments.Add(new Answer { AnswerQuestion = configArgument.argument_question, AnswerResult = configArgument.argument_answer });
                             }
-
-                            actionButtons.Add(new ActionButton { ButtonText = configButton.Text, ButtonDescription = configButton.Description, ButtonScript = configButton.Script, ButtonScriptPathType = configButton.ScriptPathType, ButtonArguments = configArguments });
+                            
+                            actionButtons.Add(new ActionButton { ButtonText = configButton.text, ButtonDescription = configButton.description, ButtonScript = configButton.script, ButtonScriptPathType = configButton.scriptpathtype, ButtonArguments = configArguments });
                         }
 
-                        tabs.Add(new TabData { TabHeader = configTab.Header, ConsoleBackground = config.console_background, ConsoleForeground = config.console_foreground, TabActionButtons = actionButtons, TabTextBoxText = "" });
+                        tabs.Add(new TabData { TabHeader = configTab.header, ConsoleBackground = config.console_background, ConsoleForeground = config.console_foreground, TabActionButtons = actionButtons, TabTextBoxText = "" });
                     }
 
                     MainTab.ItemsSource = tabs;
@@ -282,58 +69,6 @@ namespace EasyJob
             {
                 MessageBox.Show("File " + AppDomain.CurrentDomain.BaseDirectory + "config.json does not exist.");
             }
-        }
-
-        public bool SaveConfig()
-        {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "config.json";
-            if (File.Exists(path))
-            {
-                try
-                {
-                    IEnumerable<TabData> tabs = (IEnumerable<TabData>)MainTab.ItemsSource;
-                    
-                    config.tabs.Clear();
-                    
-                    List<ConfigTab> configTabs = new List<ConfigTab>();
-                    List<ConfigButton> buttons = null;
-                    List<ConfigArgument> configArguments = null;
-
-                    foreach (TabData tab in tabs)
-                    {                        
-                        buttons = new List<ConfigButton>();
-                        foreach (ActionButton button in tab.TabActionButtons)
-                        {
-                            configArguments = new List<ConfigArgument>();
-                            foreach (Answer answer in button.ButtonArguments)
-                            {
-                                configArguments.Add(new ConfigArgument(answer.AnswerQuestion, answer.AnswerResult));
-                            }
-
-                            buttons.Add(new ConfigButton(button.ButtonText, button.ButtonDescription, button.ButtonScript, button.ButtonScriptPathType, configArguments));
-                        }
-
-                        configTabs.Add(new ConfigTab(tab.TabHeader, buttons));
-                    }
-
-                    config.tabs = configTabs;
-
-                    string conf = System.Text.Json.JsonSerializer.Serialize(config);
-                    File.WriteAllText(path, conf, System.Text.Encoding.UTF8);
-
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                SaveConfig();
-            }
-
-            return false;
         }
 
         private void AddTextToConsole (string Text, int OwnerTab)
@@ -454,6 +189,13 @@ namespace EasyJob
             return scriptPath;
         }
 
+        public void ClearOutputButton_Click(object sender, RoutedEventArgs e)
+        {
+            TabData td = (TabData)MainTab.SelectedItem;
+            td.TabTextBoxText = "";
+            AddTextToEventsList("Output has been cleared!", false);
+        }
+
         public AnswerData ConvertArgumentsToAnswers(List<Answer> Answers)
         {
             AnswerData answerData = new AnswerData();
@@ -491,6 +233,69 @@ namespace EasyJob
             }
 
             return newScriptPath;
+        }
+
+        public async void ActionButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button actionButton = sender as Button;
+            string buttonScript = ((ActionButton)actionButton.DataContext).ButtonScript;
+            string buttonScriptPathType = ((ActionButton)actionButton.DataContext).ButtonScriptPathType;
+            string scriptPath = GetScriptPath(buttonScript, buttonScriptPathType);
+            int ownerTab = MainTab.SelectedIndex;
+
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                try
+                {
+                    Process.Start("explorer.exe", GetScriptPath(RemoveScriptFileFromPath(buttonScript), buttonScriptPathType));
+                    AddTextToEventsList("Opened script location folder: " + GetScriptPath(RemoveScriptFileFromPath(buttonScript), buttonScriptPathType), false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    AddTextToEventsList("Could not open script location folder: " + ex.Message, false);
+                }
+                return;
+            }
+
+            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+            {
+                try
+                {
+                    Process.Start("explorer.exe", scriptPath);
+                    AddTextToEventsList("Opened script : " + scriptPath, false);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    AddTextToEventsList("Could not open script: " + ex.Message, false);
+                }
+                return;
+            }
+
+            List<Answer> buttonArguments = ((ActionButton)actionButton.DataContext).ButtonArguments;
+            AddTextToConsole("Start script: " + scriptPath + Environment.NewLine + "===============================================================" + Environment.NewLine, ownerTab);
+            AddTextToEventsList("Execution of " + scriptPath + " has been started.", false);
+
+            if (buttonArguments.Count == 0)
+            {
+                AddTextToEventsList("Starting script " + scriptPath, false);
+                await RunProcessAsync(config.default_powershell_path, "-File \"" + scriptPath + "\"", ownerTab, buttonScript);
+            }
+            else
+            {
+                AnswerDialog dialog = new AnswerDialog(ConvertArgumentsToAnswers(buttonArguments));
+                if (dialog.ShowDialog() == true)
+                {
+                    AddTextToEventsList("Starting script" + scriptPath, false);
+                    await RunProcessAsync(config.default_powershell_path, "-File \"" + scriptPath + "\" " + ConvertArgumentsToPowerShell(dialog.answerData.Answers), ownerTab, buttonScript);
+                }
+                else
+                {
+                    AddTextToEventsList("Task cancelled by user", false);
+                    AddTextToConsole("Task cancelled by user!", ownerTab);
+                }
+            }
         }
 
         public async Task<int> RunProcessAsync(string FileName, string Args, int OwnerTab, string ScriptName)
@@ -554,6 +359,43 @@ namespace EasyJob
             return tcs.Task;
         }
 
+        private void TasksListStop_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button buttonStop = sender as Button;
+                int processID = ((TaskListTask)buttonStop.DataContext).TaskID;
+                Process.GetProcessById(processID).Kill();
+                AddTextToEventsList("Process has been cancelled by user!", false);
+                RemoveTaskFromTasksList(processID, false);
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+                AddTextToEventsList("Process cancelled failed: " + ex.Message, false);
+            }
+        }
+
+        private void ScrollToTopButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TextBox console = FindVisualChild<TextBox>(MainTab);
+                console.ScrollToHome();
+            }
+            catch { }
+        }
+
+        private void ScrollToBottomButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TextBox console = FindVisualChild<TextBox>(MainTab);
+                console.ScrollToEnd();
+            }
+            catch { }
+        }
+
         private static T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {
             for (int childCount = 0; childCount < VisualTreeHelper.GetChildrenCount(parent); childCount++)
@@ -571,6 +413,65 @@ namespace EasyJob
             return null;
         }
 
+
+
+        #region MenuItems
+        private void ReloadConfigMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            try {
+                if (config.clear_events_when_reload == true)
+                {
+                    EventsList.Items.Clear();
+                }
+                else 
+                {
+                    AddTextToEventsList("Relading config!", false);
+                }
+
+                MainTab.ItemsSource = null;
+                LoadConfig();
+
+                if(MainTab.Items.Count > 0)
+                {
+                    MainTab.SelectedIndex = 0;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                AddTextToEventsList("Relading config failed: " + ex.Message, false);
+            }
+        }
+        private void OpenAppFolderMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start("explorer.exe", AppDomain.CurrentDomain.BaseDirectory);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message); 
+                AddTextToEventsList("Opened application running folder", false);
+            }
+        }
+
+        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        {
+            if(tasksList.Count > 0)
+            {
+                if(MessageBox.Show("Task is still going. Do you want to exit? You will have to kill process manually if you exit", "Please confirm", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
+                {
+                    Application.Current.Shutdown();
+                }
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+
         #endregion
+
     }
 }
