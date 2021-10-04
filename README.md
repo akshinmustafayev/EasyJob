@@ -13,7 +13,7 @@
 
 ## Description
 
-EasyJob keep and execute your PowerShell scripts from one interface
+EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 
 ## Overview
@@ -37,6 +37,8 @@ Here is an example:
 ```
 {
   "default_powershell_path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "default_cmd_path": "C:\\Windows\\System32\\cmd.exe",
+  "powershell_arguments": "",
   "console_background": "Black",
   "console_foreground": "White",
   "clear_events_when_reload": true,
@@ -49,6 +51,23 @@ Here is an example:
           "description": "Some test script",
           "script": "scripts\\common\\test01.ps1",
           "scriptpathtype": "relative",
+          "scripttype": "powershell",
+          "arguments": []
+        },
+        {
+          "text": "Bat script",
+          "description": "Some BAT script",
+          "script": "scripts\\test02.bat",
+          "scriptpathtype": "relative",
+          "scripttype": "bat",
+          "arguments": []
+        },
+        {
+          "text": "Absolute path script",
+          "description": "",
+          "script": "C:\\scripts\\absolute_script.ps1",
+          "scriptpathtype": "absolute",
+          "scripttype": "powershell",
           "arguments": []
         },
         {
@@ -56,6 +75,7 @@ Here is an example:
           "description": "Some test 04 script with arguments",
           "script": "scripts\\common\\test04.ps1",
           "scriptpathtype": "relative",
+          "scripttype": "powershell",
           "arguments": [
             {
               "argument_question": "What is your name?",
@@ -77,10 +97,11 @@ Here is an example:
       "header": "Second Tab",
       "buttons": [
         {
-          "text": "Some button",
+          "text": "And this is button too",
           "description": "no description",
           "script": "scripts\\some_button_script.ps1",
           "scriptpathtype": "relative",
+          "scripttype": "powershell",
           "arguments": []
         }
       ]

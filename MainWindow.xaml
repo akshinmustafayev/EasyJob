@@ -8,11 +8,11 @@
         mc:Ignorable="d" Icon="pack://application:,,,/Images/icon.ico"
         Title="EasyJob Executor" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <ContextMenu x:Key="cmTabButton">
-            <MenuItem Name="cmdRemoveTab" Header="Remove Tab" Click="cmdRemoveTab_Click"/>
+        <ContextMenu x:Key="RemoveTabContextMenu">
+            <MenuItem Name="cmdRemoveTab" Header="Remove tab" Click="ContextMenuRemoveTab_Click"/>
         </ContextMenu>
-        <ContextMenu x:Key="cmButton">
-            <MenuItem Name="cmdRemove" Header="Remove" Click="cmdRemove_Click"/>
+        <ContextMenu x:Key="RemoveActionButtonContextMenu">
+            <MenuItem Name="cmdRemove" Header="Remove button" Click="ContextMenuRemoveActionButton_Click"/>
         </ContextMenu>
     </Window.Resources>
     <Grid>
