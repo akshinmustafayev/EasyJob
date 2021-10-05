@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
@@ -13,13 +13,6 @@
     <RepositoryUrl>https://github.com/akshinmustafayev/EasyJob</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Utils\**" />
-    <EmbeddedResource Remove="Utils\**" />
-    <None Remove="Utils\**" />
-    <Page Remove="Utils\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Remove="Images\convert.png" />
@@ -30,6 +23,11 @@
     <None Remove="Images\reload.png" />
     <None Remove="Images\up.png" />
     <None Remove="Images\x.png" />
+    <None Remove="LICENSE.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="LICENSE.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,12 +49,6 @@
   <ItemGroup>
     <None Update="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="LICENSE.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="README.md">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

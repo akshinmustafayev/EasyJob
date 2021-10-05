@@ -9,26 +9,6 @@ namespace EasyJob.TabItems
         private string _TabTextBoxText;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TabData"/> class.
-        /// </summary>
-        public TabData()
-        {
-
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TabData"/> class.
-        /// </summary>
-        /// <param name="tabTextBoxText">The tab text box text.</param>
-        public TabData(string tabTextBoxText)
-        {
-            this._TabTextBoxText = tabTextBoxText;
-            
-            TabHeader = tabTextBoxText;
-            TabActionButtons = new List<ActionButton>();
-        }
-
-        /// <summary>
         /// Gets or sets the tab header.
         /// </summary>
         /// <value>
