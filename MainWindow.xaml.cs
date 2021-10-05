@@ -21,8 +21,8 @@ namespace EasyJob
 {
     public partial class MainWindow : Window
     {
-        string selectedTabButton = "";
-        string selectedButton = "";
+        TabData selectedTabItem = null;
+        ActionButton selectedActionButton = null;
         public string configJson = "";
         public Config config;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
@@ -56,7 +56,7 @@ namespace EasyJob
                                 configArguments.Add(new Answer { AnswerQuestion = configArgument.ArgumentQuestion, AnswerResult = configArgument.ArgumentAnswer });
                             }
                             
-                            actionButtons.Add(new ActionButton { ButtonText = configButton.Text, ButtonDescription = configButton.Description, ButtonScript = configButton.Script, ButtonScriptPathType = configButton.ScriptPathType, ButtonArguments = configArguments });
+                            actionButtons.Add(new ActionButton { ButtonText = configButton.Text, ButtonDescription = configButton.Description, ButtonScript = configButton.Script, ButtonScriptPathType = configButton.ScriptPathType, ButtonScriptType = configButton.ScriptType, ButtonArguments = configArguments });
                         }
 
                         tabs.Add(new TabData { TabHeader = configTab.Header, ConsoleBackground = config.console_background, ConsoleForeground = config.console_foreground, TabActionButtons = actionButtons, TabTextBoxText = "" });
@@ -75,6 +75,59 @@ namespace EasyJob
             {
                 MessageBox.Show("File " + AppDomain.CurrentDomain.BaseDirectory + "config.json does not exist.");
             }
+        }
+
+        public bool SaveConfig()
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "config.json";
+            if (File.Exists(path))
+            {
+                try
+                {
+                    IEnumerable<TabData> tabs = (IEnumerable<TabData>)MainTab.ItemsSource;
+
+                    config.tabs.Clear();
+
+                    List<ConfigTab> configTabs = new List<ConfigTab>();
+                    List<ConfigButton> buttons = null;
+                    List<ConfigArgument> configArguments = null;
+
+                    foreach (TabData tab in tabs)
+                    {
+                        buttons = new List<ConfigButton>();
+                        foreach (ActionButton button in tab.TabActionButtons)
+                        {
+                            configArguments = new List<ConfigArgument>();
+                            foreach (Answer answer in button.ButtonArguments)
+                            {
+                                configArguments.Add(new ConfigArgument(answer.AnswerQuestion, answer.AnswerResult));
+                            }
+
+                            buttons.Add(new ConfigButton(button.ButtonText, button.ButtonDescription, button.ButtonScript, button.ButtonScriptPathType, button.ButtonScriptType, configArguments));
+                        }
+
+                        configTabs.Add(new ConfigTab(tab.TabHeader, buttons));
+                    }
+
+                    config.tabs = configTabs;
+
+                    string conf = System.Text.Json.JsonSerializer.Serialize(config);
+                    File.WriteAllText(path, conf, System.Text.Encoding.UTF8);
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+            else
+            {
+                SaveConfig();
+            }
+
+            return false;
         }
 
         private void AddTextToConsole (string Text, int OwnerTab)
@@ -195,6 +248,18 @@ namespace EasyJob
             return scriptPath;
         }
 
+        private string GetPowerShellArguments(string Arguments)
+        {
+            string arguments = "";
+            
+            if(Arguments.Length > 0)
+            {
+                arguments = " " + Arguments + " ";
+            }
+
+            return arguments;
+        }
+
         public void ClearOutputButton_Click(object sender, RoutedEventArgs e)
         {
             TabData td = (TabData)MainTab.SelectedItem;
@@ -202,16 +267,6 @@ namespace EasyJob
             AddTextToEventsList("Output has been cleared!", false);
         }
 
-        public async void ActionButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.RightButton == MouseButtonState.Pressed)
-            {
-                selectedButton = ((Button)e.Source).Content.ToString();
-                ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
-                cm.PlacementTarget = sender as Button;
-                cm.IsOpen = true;
-            }
-        }
 
         public AnswerData ConvertArgumentsToAnswers(List<Answer> Answers)
         {
@@ -221,6 +276,22 @@ namespace EasyJob
         }
 
         public string ConvertArgumentsToPowerShell(List<Answer> Answers)
+        {
+            string powerShellArguments = "";
+            foreach (Answer answer in Answers)
+            {
+                powerShellArguments = powerShellArguments + answer.AnswerResult + " ";
+            }
+
+            if (powerShellArguments.EndsWith(" "))
+            {
+                powerShellArguments = powerShellArguments.Remove(powerShellArguments.Length - 1);
+            }
+
+            return powerShellArguments;
+        }
+
+        public string ConvertArgumentsToCMD(List<Answer> Answers)
         {
             string powerShellArguments = "";
             foreach (Answer answer in Answers)
@@ -257,7 +328,9 @@ namespace EasyJob
             Button actionButton = sender as Button;
             string buttonScript = ((ActionButton)actionButton.DataContext).ButtonScript;
             string buttonScriptPathType = ((ActionButton)actionButton.DataContext).ButtonScriptPathType;
+            string buttonScriptType = ((ActionButton)actionButton.DataContext).ButtonScriptType;
             string scriptPath = GetScriptPath(buttonScript, buttonScriptPathType);
+            string powershellArguments = GetPowerShellArguments(config.powershell_arguments);
             int ownerTab = MainTab.SelectedIndex;
 
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
@@ -297,7 +370,14 @@ namespace EasyJob
             if (buttonArguments.Count == 0)
             {
                 AddTextToEventsList("Starting script " + scriptPath, false);
-                await RunProcessAsync(config.default_powershell_path, "-File \"" + scriptPath + "\"", ownerTab, buttonScript);
+                if (buttonScriptType.ToLower() == "powershell")
+                {
+                    await RunProcessAsync(config.default_powershell_path, powershellArguments + "-File \"" + scriptPath + "\"", ownerTab, buttonScript);
+                }
+                else
+                {
+                    await RunProcessAsync(config.default_cmd_path, "/c \"" + scriptPath + "\"", ownerTab, buttonScript);
+                }
             }
             else
             {
@@ -305,7 +385,14 @@ namespace EasyJob
                 if (dialog.ShowDialog() == true)
                 {
                     AddTextToEventsList("Starting script" + scriptPath, false);
-                    await RunProcessAsync(config.default_powershell_path, "-File \"" + scriptPath + "\" " + ConvertArgumentsToPowerShell(dialog.answerData.Answers), ownerTab, buttonScript);
+                    if (buttonScriptType.ToLower() == "powershell")
+                    {
+                        await RunProcessAsync(config.default_powershell_path, powershellArguments + "-File \"" + scriptPath + "\" " + ConvertArgumentsToPowerShell(dialog.answerData.Answers), ownerTab, buttonScript);
+                    }
+                    else
+                    {
+                        await RunProcessAsync(config.default_cmd_path, powershellArguments + "/c \"" + scriptPath + "\" " + ConvertArgumentsToCMD(dialog.answerData.Answers), ownerTab, buttonScript);
+                    }
                 }
                 else
                 {
@@ -490,64 +577,45 @@ namespace EasyJob
 
         #endregion
 
-        public bool SaveConfig()
+        #region ContextMenuItems
+
+        public void ActionButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "config.json";
-            if (File.Exists(path))
+            if (e.RightButton == MouseButtonState.Pressed)
             {
-                try
-                {
-                    IEnumerable<TabData> tabs = (IEnumerable<TabData>)MainTab.ItemsSource;
-
-                    config.tabs.Clear();
-
-                    List<ConfigTab> configTabs = new List<ConfigTab>();
-                    List<ConfigButton> buttons = null;
-                    List<ConfigArgument> configArguments = null;
-
-                    foreach (TabData tab in tabs)
-                    {
-                        buttons = new List<ConfigButton>();
-                        foreach (ActionButton button in tab.TabActionButtons)
-                        {
-                            configArguments = new List<ConfigArgument>();
-                            foreach (Answer answer in button.ButtonArguments)
-                            {
-                                configArguments.Add(new ConfigArgument(answer.AnswerQuestion, answer.AnswerResult));
-                            }
-
-                            buttons.Add(new ConfigButton(button.ButtonText, button.ButtonDescription, button.ButtonScript, button.ButtonScriptPathType, configArguments));
-                        }
-
-                        configTabs.Add(new ConfigTab(tab.TabHeader, buttons));
-                    }
-
-                    config.tabs = configTabs;
-
-                    string conf = System.Text.Json.JsonSerializer.Serialize(config);
-                    File.WriteAllText(path, conf, System.Text.Encoding.UTF8);
-
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
+                ContextMenu cm = this.FindResource("RemoveActionButtonContextMenu") as ContextMenu;
+                cm.PlacementTarget = sender as Button;
+                cm.IsOpen = true;
             }
-            else
-            {
-                SaveConfig();
-            }
-
-            return false;
         }
 
-        private void cmdRemoveTab_Click(object sender, RoutedEventArgs e)
+        private void TabHeaderSelector_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                selectedTabItem = ((Label)e.Source).DataContext as TabData;
+                ContextMenu cm = this.FindResource("RemoveTabContextMenu") as ContextMenu;
+                cm.PlacementTarget = sender as Label;
+                cm.IsOpen = true;
+            }
+        }
+
+        #endregion
+
+        
+        private void ContextMenuRemoveTab_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedTabItem == null)
+            {
+                MessageBox.Show("Selected Tab is still null. Please try again.");
+                return;
+            }
+
             List<TabData> newSourceTabs = new List<TabData>();
             foreach (TabData tab in MainTab.Items)
             {
-                if (!tab.TabHeader.Equals(selectedTabButton))
+                if (tab != selectedTabItem)
                 {
                     newSourceTabs.Add(tab);
                 }
@@ -562,13 +630,20 @@ namespace EasyJob
                 this.UpdateLayout();
             }
         }
-        private void cmdRemove_Click(object sender, RoutedEventArgs e)
+
+        private void ContextMenuRemoveActionButton_Click(object sender, RoutedEventArgs e)
         {
+            if(selectedActionButton == null)
+            {
+                MessageBox.Show("Selected Action button is still null. Please try again.");
+                return;
+            }
+
             for (int i = 0; i < MainTab.Items.Count; i++)
             {
                 if (MainTab.Items[i] is TabData button)
                 {
-                    var item = button.TabActionButtons.Where(x => x.ButtonText.Equals(selectedButton)).FirstOrDefault();
+                    var item = button.TabActionButtons.Where(x => x.Equals(selectedActionButton)).FirstOrDefault();
                     if (item != null)
                     {
                         button.TabActionButtons.Remove(item);

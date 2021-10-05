@@ -1,5 +1,7 @@
 {
   "default_powershell_path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "default_cmd_path": "C:\\Windows\\System32\\cmd.exe",
+  "powershell_arguments": "",
   "console_background": "Black",
   "console_foreground": "White",
   "clear_events_when_reload": true,
@@ -12,6 +14,7 @@
           "description": "Some test script",
           "script": "scripts\\common\\test01.ps1",
           "scriptpathtype": "relative",
+          "scripttype": "powershell",
           "arguments": []
         },
         {
@@ -19,6 +22,15 @@
           "description": "Some second test script",
           "script": "scripts\\test02.ps1",
           "scriptpathtype": "relative",
+          "scripttype": "powershell",
+          "arguments": []
+        },
+        {
+          "text": "bat",
+          "description": "Some second test script",
+          "script": "scripts\\1.bat",
+          "scriptpathtype": "relative",
+          "scripttype": "cmd",
           "arguments": []
         },
         {
@@ -26,6 +38,7 @@
           "description": "",
           "script": "C:\\scripts\\absolute_script.ps1",
           "scriptpathtype": "absolute",
+          "scripttype": "powershell",
           "arguments": []
         },
         {
@@ -33,6 +46,7 @@
           "description": "Some test 03 script with arguments",
           "script": "scripts\\common\\test03.ps1",
           "scriptpathtype": "relative",
+          "scripttype": "powershell",
           "arguments": [
             {
               "argument_question": "Enter IP address or DNS name",
@@ -45,6 +59,7 @@
           "description": "Some test 04 script with arguments",
           "script": "scripts\\common\\test04.ps1",
           "scriptpathtype": "relative",
+          "scripttype": "powershell",
           "arguments": [
             {
               "argument_question": "What is your name?",
@@ -70,13 +85,36 @@
           "description": "no description",
           "script": "scripts\\some_button_script.ps1",
           "scriptpathtype": "relative",
+          "scripttype": "powershell",
           "arguments": []
         },
         {
-          "text": "Button tst 12345",
+          "text": "Some button",
+          "description": "no description",
+          "script": "scripts\\some_button_script2.ps1",
+          "scriptpathtype": "relative",
+          "scripttype": "powershell",
+          "arguments": []
+        }
+      ]
+    },
+    {
+      "header": "Second Tab",
+      "buttons": [
+        {
+          "text": "Some button 1",
+          "description": "no description",
+          "script": "scripts\\some_button_script.ps1",
+          "scriptpathtype": "relative",
+          "scripttype": "powershell",
+          "arguments": []
+        },
+        {
+          "text": "Button",
           "description": "",
           "script": "D:\\net50\\test04.ps1",
           "scriptpathtype": "absolute",
+          "scripttype": "powershell",
           "arguments": []
         }
       ]
