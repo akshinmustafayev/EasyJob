@@ -87,6 +87,9 @@
                 <Separator />
                 <MenuItem Header="Exit" Click="MenuItemExit_Click"/>
             </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Name="menuAbout" Click="menuAbout_Click">
+            </MenuItem>
             <MenuItem Header="Workflow">
                 <MenuItem Header="Add Tab" Name="menuAddTab" Click="menuAddTab_Click"/>
             </MenuItem>

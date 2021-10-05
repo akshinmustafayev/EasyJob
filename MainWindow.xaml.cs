@@ -1,10 +1,4 @@
-using EasyJob.Serialization;
-using EasyJob.Serialization.AnswerDialog;
-using EasyJob.Serialization.TasksList;
-using EasyJob.TabItems;
-using EasyJob.Utils;
-using EasyJob.Windows;
-using Newtonsoft.Json;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +10,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using EasyJob.Serialization;
+using EasyJob.Serialization.AnswerDialog;
+using EasyJob.Serialization.TasksList;
+using EasyJob.TabItems;
+using EasyJob.Utils;
+using EasyJob.Windows;
+using Newtonsoft.Json;
 
 namespace EasyJob
 {
@@ -26,12 +27,15 @@ namespace EasyJob
         public string configJson = "";
         public Config config;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
+
+        AboutDialog aboutDialog;
         TabsDialog tabsDialog;
         
         public MainWindow()
         {
             tabsDialog = new TabsDialog();
-
+            aboutDialog = new AboutDialog();
+            
             InitializeComponent();
             LoadConfig();
         }
@@ -45,6 +49,7 @@ namespace EasyJob
                     config = JsonConvert.DeserializeObject<Config>(configJson);
 
                     MainTab.ItemsSource = Helpers.Utils.LoadConfigs(config);
+                    
                     AddTextToEventsList("Config loaded from file: " + AppDomain.CurrentDomain.BaseDirectory + "config.json", false);
                 }
                 catch (Exception ex)
@@ -565,8 +570,8 @@ namespace EasyJob
         {
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                selectedButton = ((Button)e.Source).Content.ToString();
-                ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
+                selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
+                ContextMenu cm = this.FindResource("RemoveActionButtonContextMenu") as ContextMenu;
                 cm.PlacementTarget = sender as Button;
                 cm.IsOpen = true;
             }
@@ -639,7 +644,7 @@ namespace EasyJob
                 this.UpdateLayout();
             }
         }
-        
+
         private void TabHeaderSelector_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed)
@@ -651,6 +656,12 @@ namespace EasyJob
             }
         }
 
+
+        private void menuAbout_Click(object sender, RoutedEventArgs e)
+        {
+            aboutDialog.ShowDialog();
+        }
+        
         private void menuAddTab_Click(object sender, RoutedEventArgs e)
         {
             tabsDialog.ShowDialog();
@@ -659,6 +670,7 @@ namespace EasyJob
 
             MainTab.Items.Refresh();
             this.UpdateLayout();
+
         }
     }
 }
