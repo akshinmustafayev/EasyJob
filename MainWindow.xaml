@@ -89,7 +89,9 @@
             </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" Name="menuAbout" Click="menuAbout_Click">
-                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Workflow">
+                <MenuItem Header="Add Tab" Name="menuAddTab" Click="menuAddTab_Click"/>
             </MenuItem>
         </Menu>
         <TabControl x:Name="MainTab" Grid.Row="1" ItemTemplate="{StaticResource MainTabHeaderTemplate}"
