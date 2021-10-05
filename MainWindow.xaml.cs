@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,14 +27,9 @@ namespace EasyJob
         public Config config;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
 
-        AboutDialog aboutDialog;
-        TabsDialog tabsDialog;
-        
+         
         public MainWindow()
         {
-            tabsDialog = new TabsDialog();
-            aboutDialog = new AboutDialog();
-            
             InitializeComponent();
             LoadConfig();
         }
@@ -645,32 +639,21 @@ namespace EasyJob
             }
         }
 
-        private void TabHeaderSelector_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.RightButton == MouseButtonState.Pressed)
-            {
-                selectedTabButton = ((Label)e.Source).Content.ToString();
-                ContextMenu cm = this.FindResource("cmTabButton") as ContextMenu;
-                cm.PlacementTarget = sender as Label;
-                cm.IsOpen = true;
-            }
-        }
-
-
         private void menuAbout_Click(object sender, RoutedEventArgs e)
         {
+            AboutDialog aboutDialog = new AboutDialog();
             aboutDialog.ShowDialog();
         }
         
         private void menuAddTab_Click(object sender, RoutedEventArgs e)
         {
+            TabsDialog tabsDialog = new TabsDialog();
             tabsDialog.ShowDialog();
 
             LoadConfig();
 
             MainTab.Items.Refresh();
             this.UpdateLayout();
-
         }
     }
 }

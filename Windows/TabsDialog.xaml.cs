@@ -144,7 +144,7 @@ namespace EasyJob.Windows
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         #endregion
