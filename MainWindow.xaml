@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ej="clr-namespace:EasyJob.Utils"
+        xmlns:ej="clr-namespace:EasyJob.Windows"
         xmlns:local="clr-namespace:EasyJob"
         mc:Ignorable="d" Icon="pack://application:,,,/Images/icon.ico"
         Title="EasyJob Executor" Height="450" Width="800" WindowStartupLocation="CenterScreen">
@@ -86,6 +86,9 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Exit" Click="MenuItemExit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Click="MenuAbout_Click" />
             </MenuItem>
         </Menu>
         <TabControl x:Name="MainTab" Grid.Row="1" ItemTemplate="{StaticResource MainTabHeaderTemplate}"

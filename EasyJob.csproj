@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
@@ -15,26 +15,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Utils\**" />
-    <EmbeddedResource Remove="Utils\**" />
-    <None Remove="Utils\**" />
-    <Page Remove="Utils\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Images\convert.png" />
     <None Remove="Images\down.png" />
     <None Remove="Images\folder.png" />
+    <None Remove="Images\github.png" />
     <None Remove="Images\icon.ico" />
     <None Remove="Images\reload.png" />
     <None Remove="Images\up.png" />
     <None Remove="Images\x.png" />
+    <None Remove="LICENSE.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="LICENSE.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\convert.png" />
     <Resource Include="Images\down.png" />
     <Resource Include="Images\folder.png" />
+    <Resource Include="Images\github.png" />
     <Resource Include="Images\icon.ico" />
     <Resource Include="Images\reload.png" />
     <Resource Include="Images\up.png" />
@@ -42,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.37" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
