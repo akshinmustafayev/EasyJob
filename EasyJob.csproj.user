@@ -27,6 +27,9 @@
     <Page Update="Styles\ToolTip\ToolTipStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Windows\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Windows\AnswerDialog.xaml">
       <SubType>Designer</SubType>
     </Page>

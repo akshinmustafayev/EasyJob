@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace EasyJob.Utils
+namespace EasyJob.Windows
 {
     /// <summary>
     /// Interaction logic for AnswerDialog.xaml

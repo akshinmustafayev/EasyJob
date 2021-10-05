@@ -13,7 +13,7 @@ using EasyJob.Serialization;
 using EasyJob.Serialization.AnswerDialog;
 using EasyJob.Serialization.TasksList;
 using EasyJob.TabItems;
-using EasyJob.Utils;
+using EasyJob.Windows;
 using Newtonsoft.Json;
 
 namespace EasyJob
@@ -569,6 +569,12 @@ namespace EasyJob
             {
                 Application.Current.Shutdown();
             }
+        }
+
+        private void MenuAbout_Click(object sender, RoutedEventArgs e)
+        {
+            AboutDialog aboutDialog = new AboutDialog();
+            aboutDialog.ShowDialog();
         }
 
 
