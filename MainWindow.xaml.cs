@@ -42,7 +42,7 @@ namespace EasyJob
                     configJson = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "config.json");
                     config = JsonConvert.DeserializeObject<Config>(configJson);
 
-                    MainTab.ItemsSource = Helpers.Utils.LoadConfigs(config);
+                    MainTab.ItemsSource = Helper.LoadConfigs(config);
                     
                     AddTextToEventsList("Config loaded from file: " + AppDomain.CurrentDomain.BaseDirectory + "config.json", false);
                 }
@@ -84,10 +84,10 @@ namespace EasyJob
                                 configArguments.Add(new ConfigArgument(answer.AnswerQuestion, answer.AnswerResult));
                             }
 
-                            buttons.Add(new ConfigButton(button.ButtonText, button.ButtonDescription, button.ButtonScript, button.ButtonScriptPathType, button.ButtonScriptType, configArguments));
+                            buttons.Add(new ConfigButton(button.ID ,button.ButtonText, button.ButtonDescription, button.ButtonScript, button.ButtonScriptPathType, button.ButtonScriptType, configArguments));
                         }
 
-                        configTabs.Add(new ConfigTab(tab.TabHeader, buttons));
+                        configTabs.Add(new ConfigTab(tab.ID, tab.TabHeader, buttons));
                     }
 
                     config.tabs = configTabs;
@@ -654,6 +654,11 @@ namespace EasyJob
 
             MainTab.Items.Refresh();
             this.UpdateLayout();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SaveConfig();
         }
     }
 }

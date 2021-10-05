@@ -1,11 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using EasyJob.Serialization.AnswerDialog;
+using System;
+using System.Collections.Generic;
 using System.Windows.Controls;
-using EasyJob.Serialization.AnswerDialog;
 
 namespace EasyJob.TabItems
 {
     public class ActionButton
     {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public Guid ID { get; set; }
+
         /// <summary>
         /// Gets or sets the button text.
         /// </summary>

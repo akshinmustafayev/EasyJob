@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
@@ -23,10 +24,18 @@ namespace EasyJob.TabItems
         public TabData(string tabTextBoxText)
         {
             this._TabTextBoxText = tabTextBoxText;
-            
+            ID = Guid.NewGuid();            
             TabHeader = tabTextBoxText;
             TabActionButtons = new List<ActionButton>();
         }
+
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public Guid ID { get; set; }
 
         /// <summary>
         /// Gets or sets the tab header.

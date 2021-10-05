@@ -46,7 +46,7 @@ namespace EasyJob.Windows
                     config = JsonConvert.DeserializeObject<Config>(configJson);
 
                     lstTabs.ItemsSource = null;
-                    TabItems = Helpers.Utils.LoadConfigs(config);                    
+                    TabItems = Helper.LoadConfigs(config);                    
                     lstTabs.ItemsSource = TabItems;
                 }
                 catch (Exception ex)
@@ -68,7 +68,7 @@ namespace EasyJob.Windows
                 try
                 {
                     config.tabs.Clear();
-                    config.tabs = Helpers.Utils.SaveConfigs(TabItems);
+                    config.tabs = Helper.SaveConfigs(TabItems);
 
                     string conf = System.Text.Json.JsonSerializer.Serialize(config);
                     File.WriteAllText(path, conf, System.Text.Encoding.UTF8);
@@ -127,6 +127,8 @@ namespace EasyJob.Windows
                 this.TabItems.Insert(selectedIndex + 1, itemToMoveDown);
                 this.lstTabs.SelectedIndex = selectedIndex + 1;
             }
+
+            SaveConfig();
         }
 
         private void btnTabUp_Click(object sender, RoutedEventArgs e)
@@ -140,6 +142,8 @@ namespace EasyJob.Windows
                 this.TabItems.Insert(selectedIndex - 1, itemToMoveUp);
                 this.lstTabs.SelectedIndex = selectedIndex - 1;
             }
+
+            SaveConfig();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

@@ -6,7 +6,7 @@
         xmlns:ej="clr-namespace:EasyJob.Utils"
         xmlns:local="clr-namespace:EasyJob"
         mc:Ignorable="d" Icon="pack://application:,,,/Images/icon.ico"
-        Title="EasyJob Executor" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="EasyJob Executor" Height="450" Width="800" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Window.Resources>
         <ContextMenu x:Key="RemoveTabContextMenu">
             <MenuItem Name="cmdRemoveTab" Header="Remove tab" Click="ContextMenuRemoveTab_Click"/>

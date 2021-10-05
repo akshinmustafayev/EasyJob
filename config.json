@@ -7,115 +7,128 @@
   "clear_events_when_reload": true,
   "tabs": [
     {
-      "header": "Common actions",
-      "buttons": [
+      "ID": "1625f365-6e10-4ca9-b9f2-292eaab3b5ba",
+      "Header": "Common actions",
+      "Buttons": [
         {
-          "text": "test01",
-          "description": "Some test script",
-          "script": "scripts\\common\\test01.ps1",
-          "scriptpathtype": "relative",
-          "scripttype": "powershell",
-          "arguments": []
+          "Id": "dafdc2b9-21f4-4490-8d16-5815276c83c2",
+          "Text": "test01",
+          "Description": "Some test script",
+          "Script": "scripts\\common\\test01.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
         },
         {
-          "text": "test02",
-          "description": "Some second test script",
-          "script": "scripts\\test02.ps1",
-          "scriptpathtype": "relative",
-          "scripttype": "powershell",
-          "arguments": []
+          "Id": "60f37530-061e-4bf5-93d8-d9f2f2697019",
+          "Text": "test02",
+          "Description": "Some second test script",
+          "Script": "scripts\\test02.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
         },
         {
-          "text": "bat",
-          "description": "Some second test script",
-          "script": "scripts\\1.bat",
-          "scriptpathtype": "relative",
-          "scripttype": "cmd",
-          "arguments": []
+          "Id": "31ff40f5-06d3-41eb-919b-6d58a3fdc12b",
+          "Text": "bat",
+          "Description": "Some second test script",
+          "Script": "scripts\\1.bat",
+          "ScriptPathType": "relative",
+          "ScriptType": "cmd",
+          "Arguments": []
         },
         {
-          "text": "Absolute script",
-          "description": "",
-          "script": "C:\\scripts\\absolute_script.ps1",
-          "scriptpathtype": "absolute",
-          "scripttype": "powershell",
-          "arguments": []
+          "Id": "ca1fdb3d-1870-45a1-a235-41ad9f8937b9",
+          "Text": "Absolute script",
+          "Description": "",
+          "Script": "C:\\scripts\\absolute_script.ps1",
+          "ScriptPathType": "absolute",
+          "ScriptType": "powershell",
+          "Arguments": []
         },
         {
-          "text": "test03",
-          "description": "Some test 03 script with arguments",
-          "script": "scripts\\common\\test03.ps1",
-          "scriptpathtype": "relative",
-          "scripttype": "powershell",
-          "arguments": [
+          "Id": "cfaab0e9-018f-4e06-a510-c74af2ae3934",
+          "Text": "test03",
+          "Description": "Some test 03 script with arguments",
+          "Script": "scripts\\common\\test03.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": [
             {
-              "argument_question": "Enter IP address or DNS name",
-              "argument_answer": ""
+              "ArgumentQuestion": "Enter IP address or DNS name",
+              "ArgumentAnswer": ""
             }
           ]
         },
         {
-          "text": "test04",
-          "description": "Some test 04 script with arguments",
-          "script": "scripts\\common\\test04.ps1",
-          "scriptpathtype": "relative",
-          "scripttype": "powershell",
-          "arguments": [
+          "Id": "82496c05-9b95-4475-a1fe-bc998d4d4fef",
+          "Text": "test04",
+          "Description": "Some test 04 script with arguments",
+          "Script": "scripts\\common\\test04.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": [
             {
-              "argument_question": "What is your name?",
-              "argument_answer": ""
+              "ArgumentQuestion": "What is your name?",
+              "ArgumentAnswer": ""
             },
             {
-              "argument_question": "What is your surname",
-              "argument_answer": ""
+              "ArgumentQuestion": "What is your surname",
+              "ArgumentAnswer": ""
             },
             {
-              "argument_question": "No, really what is your name?",
-              "argument_answer": ""
+              "ArgumentQuestion": "No, really what is your name?",
+              "ArgumentAnswer": ""
             }
           ]
         }
       ]
     },
     {
-      "header": "Second Tab",
-      "buttons": [
+      "ID": "baf569f0-9bde-423b-847e-33911b38afc0",
+      "Header": "Second Tab",
+      "Buttons": [
         {
-          "text": "Some button",
-          "description": "no description",
-          "script": "scripts\\some_button_script.ps1",
-          "scriptpathtype": "relative",
-          "scripttype": "powershell",
-          "arguments": []
+          "Id": "ac8cd289-6412-4009-998e-87ccf8d3b0c7",
+          "Text": "Some button",
+          "Description": "no description",
+          "Script": "scripts\\some_button_script.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
         },
         {
-          "text": "Some button",
-          "description": "no description",
-          "script": "scripts\\some_button_script2.ps1",
-          "scriptpathtype": "relative",
-          "scripttype": "powershell",
-          "arguments": []
+          "Id": "cda8d39f-efd3-4b4f-8052-6266137c76c4",
+          "Text": "Some button",
+          "Description": "no description",
+          "Script": "scripts\\some_button_script2.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
         }
       ]
     },
     {
-      "header": "Second Tab",
-      "buttons": [
+      "ID": "8e00872a-3efc-4b5f-8aec-0892c0dd8e87",
+      "Header": "Second Tab",
+      "Buttons": [
         {
-          "text": "Some button 1",
-          "description": "no description",
-          "script": "scripts\\some_button_script.ps1",
-          "scriptpathtype": "relative",
-          "scripttype": "powershell",
-          "arguments": []
+          "Id": "b6f6c958-6dc7-4801-8058-b7b87925c25d",
+          "Text": "Some button 1",
+          "Description": "no description",
+          "Script": "scripts\\some_button_script.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
         },
         {
-          "text": "Button",
-          "description": "",
-          "script": "D:\\net50\\test04.ps1",
-          "scriptpathtype": "absolute",
-          "scripttype": "powershell",
-          "arguments": []
+          "Id": "467b76fa-9a76-4231-8a2b-053023bab066",
+          "Text": "Button",
+          "Description": "",
+          "Script": "D:\\net50\\test04.ps1",
+          "ScriptPathType": "absolute",
+          "ScriptType": "powershell",
+          "Arguments": []
         }
       ]
     }

@@ -4,9 +4,9 @@ using EasyJob.TabItems;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace EasyJob.Helpers
+namespace EasyJob
 {
-    public static class Utils
+    public static class Helper
     {
         /// <summary>
         /// Loads the configs.
@@ -29,10 +29,10 @@ namespace EasyJob.Helpers
                         configArguments.Add(new Answer { AnswerQuestion = configArgument.ArgumentQuestion, AnswerResult = configArgument.ArgumentAnswer });
                     }
 
-                    actionButtons.Add(new ActionButton { ButtonText = configButton.Text, ButtonDescription = configButton.Description, ButtonScript = configButton.Script, ButtonScriptPathType = configButton.ScriptPathType, ButtonScriptType = configButton.ScriptType, ButtonArguments = configArguments });
+                    actionButtons.Add(new ActionButton { ID = configButton.Id, ButtonText = configButton.Text, ButtonDescription = configButton.Description, ButtonScript = configButton.Script, ButtonScriptPathType = configButton.ScriptPathType, ButtonScriptType = configButton.ScriptType, ButtonArguments = configArguments });
                 }
 
-                tabs.Add(new TabData { TabHeader = configTab.Header, ConsoleBackground = config.console_background, ConsoleForeground = config.console_foreground, TabActionButtons = actionButtons, TabTextBoxText = "" });
+                tabs.Add(new TabData { ID = configTab.ID, TabHeader = configTab.Header, ConsoleBackground = config.console_background, ConsoleForeground = config.console_foreground, TabActionButtons = actionButtons, TabTextBoxText = "" });
             }
 
             return tabs;
@@ -46,22 +46,24 @@ namespace EasyJob.Helpers
         public static List<ConfigTab> SaveConfigs(IEnumerable<TabData> tabs)
         {
             List<ConfigTab> configTabs = new List<ConfigTab>();
-            List<ConfigButton> buttons = new List<ConfigButton>();
-            List<ConfigArgument> configArguments = new List<ConfigArgument>();
+            List<ConfigButton> buttons = null;
+            List<ConfigArgument> configArguments = null;
 
             foreach (TabData tab in tabs)
             {
+                buttons = new List<ConfigButton>();
                 foreach (ActionButton button in tab.TabActionButtons)
                 {
+                    configArguments = new List<ConfigArgument>();
                     foreach (Answer answer in button.ButtonArguments)
                     {
                         configArguments.Add(new ConfigArgument(answer.AnswerQuestion, answer.AnswerResult));
                     }
 
-                    buttons.Add(new ConfigButton(button.ButtonText, button.ButtonDescription, button.ButtonScript, button.ButtonScriptPathType, button.ButtonScriptType, configArguments));
+                    buttons.Add(new ConfigButton(button.ID, button.ButtonText, button.ButtonDescription, button.ButtonScript, button.ButtonScriptPathType, button.ButtonScriptType, configArguments));
                 }
 
-                configTabs.Add(new ConfigTab(tab.TabHeader, buttons));
+                configTabs.Add(new ConfigTab(tab.ID, tab.TabHeader, buttons));
             }
 
             return configTabs;

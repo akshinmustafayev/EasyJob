@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EasyJob.Serialization
 {
     public class ConfigButton
     {
+        private Guid _id;
         private string _text;
         private string _description;
         private string _script;
@@ -14,21 +16,31 @@ namespace EasyJob.Serialization
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigButton"/> class.
         /// </summary>
+        /// <param name="id">The identifier.</param>
         /// <param name="text">The text.</param>
         /// <param name="description">The description.</param>
         /// <param name="script">The script.</param>
         /// <param name="scriptpathtype">The scriptpathtype.</param>
         /// <param name="scripttype">The scripttype.</param>
         /// <param name="arguments">The arguments.</param>
-        public ConfigButton(string text, string description, string script, string scriptpathtype, string scripttype, List<ConfigArgument> arguments)
+        public ConfigButton(Guid id, string text, string description, string script, string scriptpathtype, string scripttype, List<ConfigArgument> arguments)
         {
-            this.Text = text;
+            this._id = id.Equals(Guid.Empty) ? Guid.NewGuid() : id;
+            this._text = text;
             this._description = description;
             this._script = script;
             this._scriptpathtype = scriptpathtype;
             this._scripttype = scripttype;
             this._arguments = arguments;
         }
+
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public Guid Id { get => _id; set => _id = value; }
 
         /// <summary>
         /// Gets or sets the text.
