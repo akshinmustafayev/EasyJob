@@ -14,6 +14,7 @@ using EasyJob.Serialization.AnswerDialog;
 using EasyJob.Serialization.TasksList;
 using EasyJob.TabItems;
 using EasyJob.Utils;
+using EasyJob.Windows;
 using Newtonsoft.Json;
 
 namespace EasyJob
@@ -25,9 +26,11 @@ namespace EasyJob
         public string configJson = "";
         public Config config;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
+        AboutDialog aboutDialog;
 
         public MainWindow()
         {
+            aboutDialog = new AboutDialog();
             InitializeComponent();
             LoadConfig();
         }
@@ -589,6 +592,11 @@ namespace EasyJob
                 cm.PlacementTarget = sender as Label;
                 cm.IsOpen = true;
             }
+        }
+
+        private void menuAbout_Click(object sender, RoutedEventArgs e)
+        {
+            aboutDialog.ShowDialog();
         }
     }
 }
