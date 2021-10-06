@@ -9,6 +9,12 @@
 <a href="https://img.shields.io/github/downloads/akshinmustafayev/EasyJob/total">
   <img src="https://img.shields.io/github/downloads/akshinmustafayev/EasyJob/total" alt="Downloads" />
 </a>
+<a href="https://img.shields.io/github/stars/akshinmustafayev/EasyJob?style=social">
+  <img alt="GitHub repo file count" src="https://img.shields.io/github/stars/akshinmustafayev/EasyJob?style=social">
+</a>
+<a href="https://img.shields.io/github/contributors/akshinmustafayev/EasyJob">
+  <img alt="GitHub repo file count" src="https://img.shields.io/github/contributors/akshinmustafayev/EasyJob">
+</a>
 
 
 ## Description
