@@ -48,6 +48,10 @@ Here is an example:
   "console_background": "Black",
   "console_foreground": "White",
   "clear_events_when_reload": true,
+  "restrictions": {
+    "block_tabs_remove": false,
+    "block_buttons_remove": true
+  },
   "tabs": [
     {
       "header": "Common actions",
