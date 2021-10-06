@@ -25,6 +25,7 @@ namespace EasyJob.Windows
         public void LoadDataInfoIntoTheForm()
         {
             lblVersion.Content = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            lblInfo.Content = "Author: Akshin Mustafayev and Github community";
             string readme = ReadLicenseFile();
             RichTextBox1.Document.Blocks.Clear();
             var plainText = ConvertToPlainText(readme);

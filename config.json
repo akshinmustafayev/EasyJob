@@ -7,7 +7,7 @@
   "clear_events_when_reload": true,
   "restrictions": {
     "block_tabs_remove": false,
-    "block_buttons_remove": true
+    "block_buttons_remove": false
   },
   "tabs": [
     {
