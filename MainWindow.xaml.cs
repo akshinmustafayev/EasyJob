@@ -584,6 +584,11 @@ namespace EasyJob
 
         public void ActionButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if(config.restrictions.block_buttons_remove == true)
+            {
+                return;
+            }
+
             if (e.RightButton == MouseButtonState.Pressed)
             {
                 selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
@@ -595,6 +600,11 @@ namespace EasyJob
 
         private void TabHeaderSelector_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (config.restrictions.block_tabs_remove == true)
+            {
+                return;
+            }
+
             if (e.RightButton == MouseButtonState.Pressed)
             {
                 selectedTabItem = ((Label)e.Source).DataContext as TabData;
