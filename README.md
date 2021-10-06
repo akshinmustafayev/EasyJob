@@ -9,6 +9,12 @@
 <a href="https://img.shields.io/github/downloads/akshinmustafayev/EasyJob/total">
   <img src="https://img.shields.io/github/downloads/akshinmustafayev/EasyJob/total" alt="Downloads" />
 </a>
+<a href="https://img.shields.io/github/stars/akshinmustafayev/EasyJob?style=social">
+  <img alt="GitHub repo file count" src="https://img.shields.io/github/stars/akshinmustafayev/EasyJob?style=social">
+</a>
+<a href="https://img.shields.io/github/contributors/akshinmustafayev/EasyJob">
+  <img alt="GitHub repo file count" src="https://img.shields.io/github/contributors/akshinmustafayev/EasyJob">
+</a>
 
 
 ## Description
@@ -42,6 +48,10 @@ Here is an example:
   "console_background": "Black",
   "console_foreground": "White",
   "clear_events_when_reload": true,
+  "restrictions": {
+    "block_tabs_remove": false,
+    "block_buttons_remove": true
+  },
   "tabs": [
     {
       "header": "Common actions",
