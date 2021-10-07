@@ -264,7 +264,6 @@ namespace EasyJob
             AddTextToEventsList("Output has been cleared!", false);
         }
 
-
         public AnswerData ConvertArgumentsToAnswers(List<Answer> Answers)
         {
             AnswerData answerData = new AnswerData();
