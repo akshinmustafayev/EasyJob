@@ -4,7 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ej="clr-namespace:EasyJob.Windows"
-        xmlns:local="clr-namespace:EasyJob"
+        xmlns:local="clr-namespace:EasyJob" 
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        xmlns:myAttachedProperties="clr-namespace:EasyJob.Utils" 
         mc:Ignorable="d" Icon="pack://application:,,,/Images/icon.ico"
         Title="EasyJob Executor" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -43,9 +46,9 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Margin="0,5,5,0" Padding="5" Content="{Binding ButtonText}" Style="{StaticResource EJButtonStyle}" Click="ActionButton_Click" PreviewMouseDown="ActionButton_PreviewMouseDown">
+                                    <Button Margin="0,5,5,0" Padding="5" Content="{Binding ButtonText}" Click="ActionButton_Click" PreviewMouseDown="ActionButton_PreviewMouseDown">
                                         <Button.ToolTip>
-                                            <ToolTip Style="{StaticResource EJToolTipStyle}" Content="{Binding ButtonDescription}" />
+                                            <ToolTip Content="{Binding ButtonDescription}" />
                                         </Button.ToolTip>
                                     </Button>
                                 </DataTemplate>
@@ -53,7 +56,7 @@
                         </ItemsControl>
                     </ScrollViewer>
                     <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"/>
-                    <TextBox Grid.Row="2" Text="{Binding Path=TabTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" FontFamily="Consolas" Background="{Binding Path=ConsoleBackground}" Foreground="{Binding Path=ConsoleForeground}"/>
+                    <TextBox Grid.Row="2" myAttachedProperties:TextBoxAttachedProperties.AutoScrollToEnd="True" Text="{Binding Path=TabTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" FontFamily="Consolas" Background="{Binding Path=ConsoleBackground}" Foreground="{Binding Path=ConsoleForeground}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled"/>
                     <Grid Grid.Row="3" Margin="0,5,0,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -61,18 +64,18 @@
                             <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Margin="2,0,5,0" Padding="5" Content="Clear Output" Style="{StaticResource EJButtonStyle}" Click="ClearOutputButton_Click" />
-                        <Button Grid.Column="2" Margin="0,0,5,0" Padding="5" Style="{StaticResource EJButtonStyle}" Click="ScrollToTopButton_Click">
+                        <Button Grid.Column="0" Margin="2,0,5,0" Padding="5" Content="Clear Output" Click="ClearOutputButton_Click" />
+                        <Button Grid.Column="2" Margin="0,0,5,0" Padding="5" Click="ScrollToTopButton_Click">
                             <Image Source="pack://application:,,,/Images/up.png" Margin="-1"/>
                         </Button>
-                        <Button Grid.Column="3"  Margin="0,0,5,0" Padding="5" Style="{StaticResource EJButtonStyle}" Click="ScrollToBottomButton_Click">
+                        <Button Grid.Column="3"  Margin="0,0,5,0" Padding="5" Click="ScrollToBottomButton_Click">
                             <Image Source="pack://application:,,,/Images/down.png" Margin="-1"/>
                         </Button>
                     </Grid>
                 </Grid>
             </DataTemplate>
         </Grid.Resources>
-        <Menu Grid.Row="0" Padding="5" FlowDirection="LeftToRight" IsMainMenu="True">
+        <Menu Grid.Row="0" FlowDirection="LeftToRight" IsMainMenu="True">
             <MenuItem Header="File">
                 <MenuItem Header="Reload config" Click="ReloadConfigMenuItem_Click">
                     <MenuItem.Icon>
@@ -88,11 +91,15 @@
                 <MenuItem Header="Exit" Click="MenuItemExit_Click"/>
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="About" Click="MenuAbout_Click" />
+                <MenuItem Header="About" Click="MenuAbout_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Images/about.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <TabControl x:Name="MainTab" Grid.Row="1" ItemTemplate="{StaticResource MainTabHeaderTemplate}"
-                    ContentTemplate="{StaticResource MainTabItemTemplate}" Style="{StaticResource EJTabControl}" ItemContainerStyle="{StaticResource EJTabItem}">
+                    ContentTemplate="{StaticResource MainTabItemTemplate}">
         </TabControl>
         <GridSplitter Grid.Row="2" Height="5" HorizontalAlignment="Stretch"/>
         <Grid Grid.Row="3">
@@ -115,9 +122,9 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="2" Orientation="Horizontal">
-                            <Button Name="TasksListStop" Margin="0" Height="22" Width="22" Click="TasksListStop_Click">
+                            <Button Name="TasksListStop" Margin="0" Height="25" Width="25" Click="TasksListStop_Click">
                                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent">
-                                    <Image Source="pack://application:,,,/Images/x.png" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Image Source="pack://application:,,,/Images/close.png" Margin="-6,-2,-6,-2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
                             <TextBlock Margin="10 0 2 0" Text="{Binding Path=TaskID, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="Blue"/>
