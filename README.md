@@ -23,9 +23,12 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 
 ## Overview
-![image](https://user-images.githubusercontent.com/29357955/136437666-040d0491-52e8-4c48-a7e9-350e9beb22cb.png)
+![image](https://user-images.githubusercontent.com/29357955/136666562-90ae503d-f60c-4528-a2ae-db3b666d14ae.png)
 
-![image](https://user-images.githubusercontent.com/29357955/136437696-793ccaa8-092b-46b8-bf19-0b054ad784dc.png)
+![image](https://user-images.githubusercontent.com/29357955/136666569-27cd5987-8a63-4ded-973a-942f655ce5a0.png)
+
+![image](https://user-images.githubusercontent.com/29357955/136666571-5de78dec-7e8c-4864-bdce-16013b4a55ea.png)
+
 
 ## Features
 * You can remove button from the GUI by right mouse click on it and then select Remove in the context menu. Settings are automatically will be saved to your config.json file.
