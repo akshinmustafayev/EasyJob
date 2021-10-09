@@ -34,7 +34,7 @@ namespace EasyJob.Windows
             foreach (Answer answer in ButtonScriptArguments.Items) { configArguments.Add(new ConfigArgument(answer.AnswerQuestion, answer.AnswerResult)); };
             string buttonScriptPathTypeValue = ConvertScriptPathTypeComboBoxToString(ButtonScriptPathType);
             string buttonScriptTypeValue = ConvertScriptTypeComboBoxToString(ButtonScriptType);
-            ConfigButton newConfigButton = new ConfigButton(ButtonText.Text, ButtonDescription.Text, ButtonScript.Text, buttonScriptPathTypeValue, buttonScriptTypeValue, configArguments);
+            ConfigButton newConfigButton = new ConfigButton(Guid.NewGuid() ,ButtonText.Text, ButtonDescription.Text, ButtonScript.Text, buttonScriptPathTypeValue, buttonScriptTypeValue, configArguments);
             configButton = newConfigButton;
 
             DialogResult = true;

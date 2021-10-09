@@ -24,8 +24,10 @@
     <None Remove="Images\github.png" />
     <None Remove="Images\icon.ico" />
     <None Remove="Images\reload.png" />
+    <None Remove="Images\reorder.png" />
     <None Remove="Images\troubleshoot.png" />
     <None Remove="Images\up.png" />
+    <None Remove="Images\workflow.png" />
     <None Remove="LICENSE.txt" />
   </ItemGroup>
 
@@ -43,8 +45,10 @@
     <Resource Include="Images\github.png" />
     <Resource Include="Images\icon.ico" />
     <Resource Include="Images\reload.png" />
+    <Resource Include="Images\reorder.png" />
     <Resource Include="Images\troubleshoot.png" />
     <Resource Include="Images\up.png" />
+    <Resource Include="Images\workflow.png" />
   </ItemGroup>
 
   <ItemGroup>

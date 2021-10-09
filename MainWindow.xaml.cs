@@ -13,6 +13,7 @@ using EasyJob.Serialization;
 using EasyJob.Serialization.AnswerDialog;
 using EasyJob.Serialization.TasksList;
 using EasyJob.TabItems;
+using EasyJob.Utils;
 using EasyJob.Windows;
 using Newtonsoft.Json;
 
@@ -36,30 +37,13 @@ namespace EasyJob
         {
             if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "config.json"))
             {
-                try { 
+                try
+                {
                     configJson = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "config.json");
                     config = JsonConvert.DeserializeObject<Config>(configJson);
-                    List<TabData> tabs = new List<TabData>();
-                    
-                    foreach (ConfigTab configTab in config.tabs)
-                    {
-                        List<ActionButton> actionButtons = new List<ActionButton>();
-                        
-                        foreach (ConfigButton configButton in configTab.Buttons)
-                        {
-                            List<Answer> configArguments = new List<Answer>();
-                            foreach(ConfigArgument configArgument in configButton.Arguments)
-                            {
-                                configArguments.Add(new Answer { AnswerQuestion = configArgument.ArgumentQuestion, AnswerResult = configArgument.ArgumentAnswer });
-                            }
-                            
-                            actionButtons.Add(new ActionButton { ButtonText = configButton.Text, ButtonDescription = configButton.Description, ButtonScript = configButton.Script, ButtonScriptPathType = configButton.ScriptPathType, ButtonScriptType = configButton.ScriptType, ButtonArguments = configArguments });
-                        }
 
-                        tabs.Add(new TabData { TabHeader = configTab.Header, ConsoleBackground = config.console_background, ConsoleForeground = config.console_foreground, TabActionButtons = actionButtons, TabTextBoxText = "" });
-                    }
+                    MainTab.ItemsSource = Helper.LoadConfigs(config);
 
-                    MainTab.ItemsSource = tabs;
                     AddTextToEventsList("Config loaded from file: " + AppDomain.CurrentDomain.BaseDirectory + "config.json", false);
                 }
                 catch (Exception ex)
@@ -100,10 +84,10 @@ namespace EasyJob
                                 configArguments.Add(new ConfigArgument(answer.AnswerQuestion, answer.AnswerResult));
                             }
 
-                            buttons.Add(new ConfigButton(button.ButtonText, button.ButtonDescription, button.ButtonScript, button.ButtonScriptPathType, button.ButtonScriptType, configArguments));
+                            buttons.Add(new ConfigButton(button.ID, button.ButtonText, button.ButtonDescription, button.ButtonScript, button.ButtonScriptPathType, button.ButtonScriptType, configArguments));
                         }
 
-                        configTabs.Add(new ConfigTab(tab.TabHeader, buttons));
+                        configTabs.Add(new ConfigTab(tab.ID, tab.TabHeader, buttons));
                     }
 
                     config.tabs = configTabs;
@@ -558,6 +542,17 @@ namespace EasyJob
                 MessageBox.Show(ex.Message); 
                 AddTextToEventsList("Opened application running folder", false);
             }
+        }
+
+        private void ReorderTabsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ReorderTabsDialog rtd = new ReorderTabsDialog();
+            rtd.ShowDialog();
+
+            LoadConfig();
+
+            MainTab.Items.Refresh();
+            this.UpdateLayout();
         }
 
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
