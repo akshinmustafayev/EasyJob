@@ -54,6 +54,9 @@
     <Compile Update="Windows\ExportDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\DefinitionsDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\ImportDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -73,6 +76,10 @@
 
   <ItemGroup>
     <Page Update="Windows\ExportDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\DefinitionsDialog.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

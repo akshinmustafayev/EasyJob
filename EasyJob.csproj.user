@@ -30,6 +30,9 @@
     <Page Update="Windows\ExportDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Windows\DefinitionsDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Windows\ImportDialog.xaml">
       <SubType>Designer</SubType>
     </Page>

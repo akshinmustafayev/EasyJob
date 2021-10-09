@@ -28,11 +28,12 @@ namespace EasyJob
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
         ImportDialog importDialog = null;
         ExportDialog exportDialog = null;
-
+        DefinitionsDialog definitionsDialog = null;
         public MainWindow()
         {
             importDialog = new ImportDialog();
             exportDialog = new ExportDialog();
+            definitionsDialog = new DefinitionsDialog();
             InitializeComponent();
             LoadConfig();
         }
@@ -693,6 +694,14 @@ namespace EasyJob
                 exportDialog = new ExportDialog();
 
             exportDialog.ShowDialog();
+        }
+
+        private void menuDefinitions_Click(object sender, RoutedEventArgs e)
+        {
+            if (!definitionsDialog.IsVisible)
+                definitionsDialog = new DefinitionsDialog();
+
+            definitionsDialog.ShowDialog();
         }
     }
 }

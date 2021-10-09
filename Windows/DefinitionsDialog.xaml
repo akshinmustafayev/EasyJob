@@ -1,0 +1,13 @@
+﻿<Window x:Class="EasyJob.Windows.DefinitionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasyJob.Windows"
+        mc:Ignorable="d"
+        Title="Definitions Dialog" Height="380" Width="630" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Normal">
+    <Grid>
+        <Button x:Name="btnClose" Content="Close" Width="100" VerticalAlignment="Top" Margin="399,300,0,0" Click="btnClose_Click"/>
+        <Button x:Name="btnApply" Content="Apply" Width="100" VerticalAlignment="Top" Margin="504,300,0,0" Click="btnApply_Click"/>
+    </Grid>
+</Window>

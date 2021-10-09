@@ -101,6 +101,7 @@
                 <MenuItem Header="Add Tab" Name="menuAddTab" Click="menuAddTab_Click"/>
             </MenuItem>
             <MenuItem Header="Settings">
+                <MenuItem Header="Definitions" Name="menuDefinitions" Click="menuDefinitions_Click"/>                
                 <MenuItem Header="Import" Name="menuImport" Click="menuImport_Click"/>
                 <MenuItem Header="Export" Name="menuExport" Click="menuExport_Click"/>
             </MenuItem>
