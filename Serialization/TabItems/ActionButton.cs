@@ -22,7 +22,7 @@ namespace EasyJob.TabItems
         /// The button text.
         /// </value>
         public string ButtonText { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the button description.
         /// </summary>
@@ -30,7 +30,7 @@ namespace EasyJob.TabItems
         /// The button description.
         /// </value>
         public string ButtonDescription { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the button script.
         /// </summary>
@@ -38,7 +38,7 @@ namespace EasyJob.TabItems
         /// The button script.
         /// </value>
         public string ButtonScript { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the type of the button script path.
         /// </summary>
@@ -62,7 +62,7 @@ namespace EasyJob.TabItems
         /// The button arguments.
         /// </value>
         public List<Answer> ButtonArguments { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the context menu.
         /// </summary>

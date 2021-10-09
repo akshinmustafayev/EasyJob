@@ -5,32 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyJob.Windows"
         mc:Ignorable="d"
-        WindowStyle="None"
-        Title="About EasyJob" Height="380" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        WindowStyle="SingleBorderWindow"
+        Title="About EasyJob" Height="380" Width="610" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="110"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <Image Source="/Images/github.png" Height="100" Width="100"/>
+            <Image Source="/Images/github.png" Height="100" Width="100" MouseLeftButtonDown="GithubImage_MouseLeftButtonDown" Cursor="Hand"/>
         </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="1">
-            <Label Name="lblTitle" Content="EasyJob" Margin="10,10,50,5"/>
-            <Label Name="lblLicence" Content="Licence: Apache-2.0" Margin="10,5,50,5"/>
-            <Label Name="lblVersion" Margin="10,5,50,5"/>
-        </StackPanel>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Label Name="lblTitle" Content="EasyJob Executor" Width="122" Margin="0,0,392,83" HorizontalAlignment="Right"/>
+            <Label Name="lblInfo" Content="Author" Width="514" Margin="0,27,0,56" HorizontalAlignment="Center" />
+            <Label Name="lblLicence" Content="Licence: Apache-2.0" Width="122" Margin="0,54,392,30" HorizontalAlignment="Right" />
+            <Label Name="lblVersion" Content="Version" Margin="0,80,0,0"/>
+        </Grid>
         <StackPanel Grid.Row="1" Grid.Column="0"/>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <RichTextBox Margin="10,10,10,10" Name="RichTextBox1" HorizontalAlignment="Left" Width="472" Height="210" Background="Black" Foreground="White"
-                         BorderThickness="0" IsDocumentEnabled="True" IsReadOnly="True">
+                         BorderThickness="0" IsDocumentEnabled="True" IsReadOnly="True" VerticalScrollBarVisibility="Visible">
             </RichTextBox>
         </StackPanel>
-        <Button Name="btnClose" Content="Close" Grid.Column="1" HorizontalAlignment="Left" Margin="390,242,0,0" Width="100" Grid.Row="1" VerticalAlignment="Top" Click="btnClose_Click"/>
     </Grid>
 </Window>

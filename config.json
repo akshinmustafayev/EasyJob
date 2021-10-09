@@ -5,6 +5,10 @@
   "console_background": "Black",
   "console_foreground": "White",
   "clear_events_when_reload": true,
+  "restrictions": {
+    "block_tabs_remove": false,
+    "block_buttons_remove": false
+  },
   "tabs": [
     {
       "ID": "1625f365-6e10-4ca9-b9f2-292eaab3b5ba",

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EasyJob.Windows"
         mc:Ignorable="d"
         WindowStyle="None"
-        Title="Tabs Dialog" Height="354" Width="320" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Normal">
+        Title="Tabs Dialog" Height="354" Width="340" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Normal">
     <Grid>
         <ListView Name="lstTabs" Margin="10,7,75,77" ItemsSource="{Binding TabItems}">
             <ListView.Resources>
@@ -23,12 +23,12 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="btnTabUp" Content="Up" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="264,106,0,0" Click="btnTabUp_Click"/>
-        <Button Name="btnTabDown" Content="Down" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="264,131,0,0" Click="btnTabDown_Click"/>
+        <Button Name="btnTabUp" Content="Up" VerticalAlignment="Top" Width="55" Margin="264,106,0,0" Click="btnTabUp_Click"/>
+        <Button Name="btnTabDown" Content="Down" VerticalAlignment="Top" Width="55" Margin="264,131,0,0" Click="btnTabDown_Click"/>
 
-        <Label x:Name="lblNewTab" Content="New Tab Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,282,0,0"/>
-        <TextBox x:Name="txtNewTab" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Margin="108,286,0,0"/>
-        <Button x:Name="btnAddNewTab" Content="Add Tab" HorizontalAlignment="Left" Width="61" VerticalAlignment="Top" Margin="254,284,0,0" Click="btnAddNewTab_Click"/>
+        <Label x:Name="lblNewTab" Content="New Tab Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,290,0,0"/>
+        <TextBox x:Name="txtNewTab" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Margin="112,284,0,0"/>
+        <Button x:Name="btnAddNewTab" Content="Add Tab" Width="76" VerticalAlignment="Top" Margin="254,284,0,0" Click="btnAddNewTab_Click"/>
         <Button x:Name="btnClose" Content="Close" HorizontalAlignment="Left" Width="195" VerticalAlignment="Top" Margin="79,321,0,0" Click="btnClose_Click"/>
     </Grid>
 </Window>

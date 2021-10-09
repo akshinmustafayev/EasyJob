@@ -49,7 +49,7 @@ namespace EasyJob.Serialization
         /// The text.
         /// </value>
         public string Text { get => _text; set => _text = value; }
-        
+
         /// <summary>
         /// Gets or sets the description.
         /// </summary>
@@ -57,7 +57,7 @@ namespace EasyJob.Serialization
         /// The description.
         /// </value>
         public string Description { get => _description; set => _description = value; }
-        
+
         /// <summary>
         /// Gets or sets the script.
         /// </summary>
@@ -65,7 +65,7 @@ namespace EasyJob.Serialization
         /// The script.
         /// </value>
         public string Script { get => _script; set => _script = value; }
-        
+
         /// <summary>
         /// Gets or sets the type of the script path.
         /// </summary>
@@ -73,7 +73,7 @@ namespace EasyJob.Serialization
         /// The type of the script path.
         /// </value>
         public string ScriptPathType { get => _scriptpathtype; set => _scriptpathtype = value; }
-        
+
         /// <summary>
         /// Gets or sets the type of the script.
         /// </summary>
@@ -81,7 +81,7 @@ namespace EasyJob.Serialization
         /// The type of the script.
         /// </value>
         public string ScriptType { get => _scripttype; set => _scripttype = value; }
-        
+
         /// <summary>
         /// Gets or sets the arguments.
         /// </summary>

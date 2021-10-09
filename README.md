@@ -9,6 +9,12 @@
 <a href="https://img.shields.io/github/downloads/akshinmustafayev/EasyJob/total">
   <img src="https://img.shields.io/github/downloads/akshinmustafayev/EasyJob/total" alt="Downloads" />
 </a>
+<a href="https://img.shields.io/github/stars/akshinmustafayev/EasyJob?style=social">
+  <img alt="GitHub repo file count" src="https://img.shields.io/github/stars/akshinmustafayev/EasyJob?style=social">
+</a>
+<a href="https://img.shields.io/github/contributors/akshinmustafayev/EasyJob">
+  <img alt="GitHub repo file count" src="https://img.shields.io/github/contributors/akshinmustafayev/EasyJob">
+</a>
 
 
 ## Description
@@ -17,16 +23,18 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 
 ## Overview
+![image](https://user-images.githubusercontent.com/29357955/136437666-040d0491-52e8-4c48-a7e9-350e9beb22cb.png)
 
-<img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/1.png?raw=true" alt="EasyJob">
-<img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/2_arg.png?raw=true" alt="EasyJob">
+![image](https://user-images.githubusercontent.com/29357955/136437696-793ccaa8-092b-46b8-bf19-0b054ad784dc.png)
 
 ## Features
 * You can remove button from the GUI by right mouse click on it and then select Remove in the context menu. Settings are automatically will be saved to your config.json file.
-<img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/feature1.PNG?raw=true" alt="EasyJob">
+
+![image](https://user-images.githubusercontent.com/29357955/136437593-22c3c27c-f369-401b-8a90-735daa1a609f.png)
 
 * You can remove tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
-<img src="https://github.com/akshinmustafayev/EasyJob/blob/main/ej/feature2.PNG?raw=true" alt="EasyJob">
+
+![image](https://user-images.githubusercontent.com/29357955/136437621-9029cc73-0ba8-436b-af73-14656c0f41fc.png)
 
 ## Configuration
 
@@ -42,6 +50,10 @@ Here is an example:
   "console_background": "Black",
   "console_foreground": "White",
   "clear_events_when_reload": true,
+  "restrictions": {
+    "block_tabs_remove": false,
+    "block_buttons_remove": true
+  },
   "tabs": [
     {
       "header": "Common actions",

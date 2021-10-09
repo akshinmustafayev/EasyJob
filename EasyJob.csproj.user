@@ -21,22 +21,16 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Styles\Button\ButtonStyle.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Styles\ListBox\ListBoxStyle.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Styles\TabControl\TabControlStyle.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Styles\ToolTip\ToolTipStyle.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Windows\AboutDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\AnswerDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\ExportDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\ImportDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\TabsDialog.xaml">

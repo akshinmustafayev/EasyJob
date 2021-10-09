@@ -1,6 +1,8 @@
 ﻿using HtmlAgilityPack;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 
@@ -17,15 +19,36 @@ namespace EasyJob.Windows
         public AboutDialog()
         {
             InitializeComponent();
-            lblVersion.Content = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            LoadDataInfoIntoTheForm();
+        }
 
-            string readme = AppDomain.CurrentDomain.BaseDirectory + "LICENSE.txt";
-            if (File.Exists(readme))
+        public void LoadDataInfoIntoTheForm()
+        {
+            lblVersion.Content = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            lblInfo.Content = "Author: Akshin Mustafayev and Github community";
+            string readme = ReadLicenseFile();
+            RichTextBox1.Document.Blocks.Clear();
+            var plainText = ConvertToPlainText(readme);
+            RichTextBox1.AppendText(plainText);
+        }
+
+        public string ReadLicenseFile()
+        {
+            string name = "LICENSE.txt";
+            // Determine path
+            var assembly = Assembly.GetExecutingAssembly();
+            string resourcePath = name;
+            // Format: "{Namespace}.{Folder}.{filename}.{Extension}"
+            if (!name.StartsWith(nameof(EasyJob)))
             {
-                RichTextBox1.Document.Blocks.Clear();
-                string html = File.ReadAllText(readme);
-                var plainText = ConvertToPlainText(html);
-                RichTextBox1.AppendText(plainText);
+                resourcePath = assembly.GetManifestResourceNames()
+                    .Single(str => str.EndsWith(name));
+            }
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourcePath))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
             }
         }
 
@@ -107,9 +130,16 @@ namespace EasyJob.Windows
 
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void GithubImage_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            this.Close();
+            try
+            {
+                Process proc = new Process();
+                proc.StartInfo.UseShellExecute = true;
+                proc.StartInfo.FileName = "https://github.com/akshinmustafayev/EasyJob";
+                proc.Start();
+            }
+            catch (Exception ex){ MessageBox.Show(ex.Message); }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace EasyJob.TabItems
         public TabData(string tabTextBoxText)
         {
             this._TabTextBoxText = tabTextBoxText;
-            ID = Guid.NewGuid();            
+            ID = Guid.NewGuid();
             TabHeader = tabTextBoxText;
             TabActionButtons = new List<ActionButton>();
         }

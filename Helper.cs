@@ -1,4 +1,4 @@
-﻿using EasyJob.Serialization;
+using EasyJob.Serialization;
 using EasyJob.Serialization.AnswerDialog;
 using EasyJob.TabItems;
 using System.Collections.Generic;

@@ -26,10 +26,13 @@ namespace EasyJob
         public string configJson = "";
         public Config config;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
+        ImportDialog importDialog = null;
+        ExportDialog exportDialog = null;
 
-         
         public MainWindow()
         {
+            importDialog = new ImportDialog();
+            exportDialog = new ExportDialog();
             InitializeComponent();
             LoadConfig();
         }
@@ -247,7 +250,6 @@ namespace EasyJob
             td.TabTextBoxText = "";
             AddTextToEventsList("Output has been cleared!", false);
         }
-
 
         public AnswerData ConvertArgumentsToAnswers(List<Answer> Answers)
         {
@@ -555,7 +557,6 @@ namespace EasyJob
             }
         }
 
-
         #endregion
 
         #region ContextMenuItems
@@ -639,6 +640,12 @@ namespace EasyJob
             }
         }
 
+        private void MenuAbout_Click(object sender, RoutedEventArgs e)
+        {
+            AboutDialog aboutDialog = new AboutDialog();
+            aboutDialog.ShowDialog();
+        }
+
         private void menuAbout_Click(object sender, RoutedEventArgs e)
         {
             AboutDialog aboutDialog = new AboutDialog();
@@ -659,6 +666,27 @@ namespace EasyJob
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             SaveConfig();
+		}
+		
+        private void menuImport_Click(object sender, RoutedEventArgs e)
+        {
+            if (!importDialog.IsVisible)
+                importDialog = new ImportDialog();
+
+            importDialog.ShowDialog();
+
+            LoadConfig();
+
+            MainTab.Items.Refresh();
+            this.UpdateLayout();
+        }
+
+        private void menuExport_Click(object sender, RoutedEventArgs e)
+        {
+            if (!exportDialog.IsVisible)
+                exportDialog = new ExportDialog();
+
+            exportDialog.ShowDialog();
         }
     }
 }
