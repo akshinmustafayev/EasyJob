@@ -7,7 +7,13 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Windows\AboutDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\AnswerDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\TabsDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -19,6 +25,15 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\AnswerDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\ExportDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\ImportDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\TabsDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
