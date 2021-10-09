@@ -24,8 +24,8 @@ namespace EasyJob.Windows
 
         public void LoadDataInfoIntoTheForm()
         {
-            lblVersion.Content = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            lblInfo.Content = "Author: Akshin Mustafayev and Github community";
+            lblTitle.Content = "EasyJob Executor " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            lblInfo.Content = "Author: Akshin Mustafayev. Contrubutions made to the project by the Github community";
             string readme = ReadLicenseFile();
             RichTextBox1.Document.Blocks.Clear();
             var plainText = ConvertToPlainText(readme);
@@ -128,6 +128,30 @@ namespace EasyJob.Windows
                     break;
             }
 
+        }
+
+        private void GetInspirationButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process proc = new Process();
+                proc.StartInfo.UseShellExecute = true;
+                proc.StartInfo.FileName = "https://www.youtube.com/watch?v=l0U7SxXHkPY";
+                proc.Start();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void CheckNewReleasesButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process proc = new Process();
+                proc.StartInfo.UseShellExecute = true;
+                proc.StartInfo.FileName = "https://github.com/akshinmustafayev/EasyJob/releases";
+                proc.Start();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void GithubImage_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

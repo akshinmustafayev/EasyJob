@@ -19,7 +19,6 @@ namespace EasyJob
             base.OnStartup(e);
 
             SetDropDownMenuToBeRightAligned();
-
         }
 
         private static void SetDropDownMenuToBeRightAligned()

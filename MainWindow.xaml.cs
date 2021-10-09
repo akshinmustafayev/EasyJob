@@ -420,11 +420,12 @@ namespace EasyJob
             var tcs = new TaskCompletionSource<int>();
 
             // Process Exited
-            process.Exited += (s, ea) => {
+            process.Exited += (s, ea) =>
+            {
                 RemoveTaskFromTasksList(process.Id, true);
                 tcs.SetResult(process.ExitCode);
                 AddTextToConsole(Environment.NewLine + "Task finished!" + Environment.NewLine, OwnerTab);
-                AddTextToEventsList("Task " + process.StartInfo.Arguments.Replace("-File ","") + " finished", true);
+                AddTextToEventsList("Task " + process.StartInfo.Arguments.Replace("-File ", "") + " finished", true);
                 ScrollToBottomListBox(EventsList, true);
             };
 
@@ -435,11 +436,15 @@ namespace EasyJob
 
             // Process Error output received
             process.ErrorDataReceived += (s, ea) => {
-                AddTextToConsole("Error: " + ea.Data, OwnerTab); 
-                if (ea.Data != "" || ea.Data != null) 
-                { 
-                    AddTextToEventsList("Task " + process.StartInfo.Arguments.Replace("-File ", "") + " failed", true); 
-                } 
+
+                if (ea.Data != null)
+                {
+                    if (ea.Data != "")
+                    {
+                        AddTextToConsole("Error: " + ea.Data, OwnerTab);
+                        AddTextToEventsList("Task " + process.StartInfo.Arguments.Replace("-File ", "") + " failed", true);
+                    }
+                }
             };
 
             // Start the process
@@ -576,6 +581,12 @@ namespace EasyJob
             aboutDialog.ShowDialog();
         }
 
+        private void MenuTroubleshooting_Click(object sender, RoutedEventArgs e)
+        {
+            TroubleshootingWindow troubleshootingDialog = new TroubleshootingWindow(config);
+            troubleshootingDialog.Show();
+        }
+
 
         #endregion
 
@@ -590,10 +601,31 @@ namespace EasyJob
 
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
-                ContextMenu cm = this.FindResource("RemoveActionButtonContextMenu") as ContextMenu;
-                cm.PlacementTarget = sender as Button;
-                cm.IsOpen = true;
+                if (e.OriginalSource is TextBlock)
+                {
+                    selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
+                    ContextMenu cm = this.FindResource("RemoveActionButtonContextMenu") as ContextMenu;
+                    cm.PlacementTarget = sender as Button;
+                    cm.IsOpen = true;
+                }
+            }
+        }
+
+        public void ActionButtonAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (config.restrictions.block_buttons_add == true)
+            {
+                return;
+            }
+
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                if (e.Source is ScrollViewer)
+                {
+                    ContextMenu cm = this.FindResource("AddActionButtonContextMenu") as ContextMenu;
+                    cm.PlacementTarget = sender as ScrollViewer;
+                    cm.IsOpen = true;
+                }
             }
         }
 
@@ -613,9 +645,6 @@ namespace EasyJob
             }
         }
 
-        #endregion
-
-        
         private void ContextMenuRemoveTab_Click(object sender, RoutedEventArgs e)
         {
             if (selectedTabItem == null)
@@ -645,7 +674,7 @@ namespace EasyJob
 
         private void ContextMenuRemoveActionButton_Click(object sender, RoutedEventArgs e)
         {
-            if(selectedActionButton == null)
+            if (selectedActionButton == null)
             {
                 MessageBox.Show("Selected Action button is still null. Please try again.");
                 return;
@@ -669,5 +698,37 @@ namespace EasyJob
                 this.UpdateLayout();
             }
         }
+
+        private void ContextMenuAddActionButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddActionButtonDialog aabd = new AddActionButtonDialog();
+            if (aabd.ShowDialog() == true)
+            {
+                if (MainTab.Items[MainTab.SelectedIndex] is TabData button)
+                {
+                    List<Answer> answers = new List<Answer>();
+                    foreach(ConfigArgument ca in aabd.configButton.Arguments)
+                    {
+                        answers.Add(new Answer { AnswerQuestion = ca.ArgumentQuestion, AnswerResult = ca.ArgumentAnswer });
+                    }
+                    button.TabActionButtons.Add( new ActionButton { ButtonText = aabd.configButton.Text, ButtonDescription = aabd.configButton.Description, ButtonScript = aabd.configButton.Script, ButtonScriptPathType = aabd.configButton.ScriptPathType, ButtonScriptType = aabd.configButton.ScriptType, ButtonArguments = answers });
+                }
+
+                if (SaveConfig())
+                {
+                    MainTab.Items.Refresh();
+                    this.UpdateLayout();
+                    AddTextToEventsList("Button " + aabd.configButton.Text + " successfully has been added", false);
+                }
+            }
+            else
+            {
+                AddTextToEventsList("Adding button cancelled by user", false);
+            }
+
+        }
+
+        #endregion
+
     }
 }
