@@ -46,7 +46,7 @@ namespace EasyJob.Windows
                     config = JsonConvert.DeserializeObject<Config>(configJson);
 
                     lstTabs.ItemsSource = null;
-                    TabItems = Helper.LoadConfigs(config);                    
+                    TabItems = Helpers.Utils.LoadConfigs(config);                    
                     lstTabs.ItemsSource = TabItems;
                 }
                 catch (Exception ex)
@@ -68,7 +68,7 @@ namespace EasyJob.Windows
                 try
                 {
                     config.tabs.Clear();
-                    config.tabs = Helper.SaveConfigs(TabItems);
+                    config.tabs = Helpers.Utils.SaveConfigs(TabItems);
 
                     string conf = System.Text.Json.JsonSerializer.Serialize(config);
                     File.WriteAllText(path, conf, System.Text.Encoding.UTF8);

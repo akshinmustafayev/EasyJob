@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
@@ -8,34 +7,6 @@ namespace EasyJob.TabItems
     public class TabData : INotifyPropertyChanged
     {
         private string _TabTextBoxText;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TabData"/> class.
-        /// </summary>
-        public TabData()
-        {
-
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TabData"/> class.
-        /// </summary>
-        /// <param name="tabTextBoxText">The tab text box text.</param>
-        public TabData(string tabTextBoxText)
-        {
-            this._TabTextBoxText = tabTextBoxText;
-            ID = Guid.NewGuid();
-            TabHeader = tabTextBoxText;
-            TabActionButtons = new List<ActionButton>();
-        }
-
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public Guid ID { get; set; }
 
         /// <summary>
         /// Gets or sets the tab header.
@@ -71,8 +42,7 @@ namespace EasyJob.TabItems
         /// <value>
         /// The tab text box text.
         /// </value>
-        public string TabTextBoxText
-        {
+        public string TabTextBoxText {
             get
             {
                 return this._TabTextBoxText;
