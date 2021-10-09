@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
@@ -19,10 +19,12 @@
     <None Remove="Images\close.png" />
     <None Remove="Images\convert.png" />
     <None Remove="Images\down.png" />
+    <None Remove="Images\exit.png" />
     <None Remove="Images\folder.png" />
     <None Remove="Images\github.png" />
     <None Remove="Images\icon.ico" />
     <None Remove="Images\reload.png" />
+    <None Remove="Images\troubleshoot.png" />
     <None Remove="Images\up.png" />
     <None Remove="LICENSE.txt" />
   </ItemGroup>
@@ -36,10 +38,12 @@
     <Resource Include="Images\close.png" />
     <Resource Include="Images\convert.png" />
     <Resource Include="Images\down.png" />
+    <Resource Include="Images\exit.png" />
     <Resource Include="Images\folder.png" />
     <Resource Include="Images\github.png" />
     <Resource Include="Images\icon.ico" />
     <Resource Include="Images\reload.png" />
+    <Resource Include="Images\troubleshoot.png" />
     <Resource Include="Images\up.png" />
   </ItemGroup>
 
@@ -47,39 +51,22 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.37" />
     <PackageReference Include="ModernWpfUis" Version="1.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Ookii.Dialogs" Version="4.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Windows\ExportDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Windows\ImportDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="LICENSE.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="README.md">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
-
+  
   <ItemGroup>
-    <Page Update="Windows\ExportDialog.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Windows\ImportDialog.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
+    <Content Include="EasyJobPS\**">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+</ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Serialization\AddActionButtonDialog\" />
   </ItemGroup>
 
 </Project>

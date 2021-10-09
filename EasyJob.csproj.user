@@ -7,13 +7,13 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Windows\AboutDialog.xaml.cs">
+    <Compile Update="Windows\AddActionButtonDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\AnswerDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Windows\TabsDialog.xaml.cs">
+    <Compile Update="Windows\TroubleshootingWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -24,16 +24,13 @@
     <Page Update="Windows\AboutDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Windows\AddActionButtonDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Windows\AnswerDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\ExportDialog.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Windows\ImportDialog.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Windows\TabsDialog.xaml">
+    <Page Update="Windows\TroubleshootingWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
