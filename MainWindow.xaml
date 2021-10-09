@@ -47,6 +47,18 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="Settings">
+                <MenuItem Header="Workflow">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Images/workflow.png"/>
+                    </MenuItem.Icon>
+                    <MenuItem Header="Reorder tabs" Click="ReorderTabsMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Images/reorder.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="Troubleshooting" Click="MenuTroubleshooting_Click">
                     <MenuItem.Icon>
