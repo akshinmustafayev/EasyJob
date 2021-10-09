@@ -39,6 +39,12 @@
     <Page Update="Windows\AnswerDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Windows\ExportDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\ImportDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Windows\TabsDialog.xaml">
       <SubType>Designer</SubType>
     </Page>

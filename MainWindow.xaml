@@ -93,6 +93,10 @@
             <MenuItem Header="Workflow">
                 <MenuItem Header="Add Tab" Name="menuAddTab" Click="menuAddTab_Click"/>
             </MenuItem>
+            <MenuItem Header="Settings">
+                <MenuItem Header="Import" Name="menuImport" Click="menuImport_Click"/>
+                <MenuItem Header="Export" Name="menuExport" Click="menuExport_Click"/>
+            </MenuItem>
         </Menu>
         <TabControl x:Name="MainTab" Grid.Row="1" ItemTemplate="{StaticResource MainTabHeaderTemplate}"
                     ContentTemplate="{StaticResource MainTabItemTemplate}" Style="{StaticResource EJTabControl}" ItemContainerStyle="{StaticResource EJTabItem}">
