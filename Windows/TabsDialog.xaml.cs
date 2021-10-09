@@ -127,6 +127,8 @@ namespace EasyJob.Windows
                 this.TabItems.Insert(selectedIndex + 1, itemToMoveDown);
                 this.lstTabs.SelectedIndex = selectedIndex + 1;
             }
+
+            SaveConfig();
         }
 
         private void btnTabUp_Click(object sender, RoutedEventArgs e)
@@ -140,6 +142,8 @@ namespace EasyJob.Windows
                 this.TabItems.Insert(selectedIndex - 1, itemToMoveUp);
                 this.lstTabs.SelectedIndex = selectedIndex - 1;
             }
+
+            SaveConfig();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

@@ -9,13 +9,19 @@
         Title="Tabs Dialog" Height="354" Width="320" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Normal">
     <Grid>
         <ListView Name="lstTabs" Margin="10,7,75,77" ItemsSource="{Binding TabItems}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=TabHeader}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn DisplayMemberBinding="{Binding ID}" Width="0"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding TabHeader}" />
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
         </ListView>
         <Button Name="btnTabUp" Content="Up" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="264,106,0,0" Click="btnTabUp_Click"/>
         <Button Name="btnTabDown" Content="Down" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Margin="264,131,0,0" Click="btnTabDown_Click"/>
