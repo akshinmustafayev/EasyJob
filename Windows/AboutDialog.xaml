@@ -3,34 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
         xmlns:local="clr-namespace:EasyJob.Windows"
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
-        Title="About EasyJob" Height="380" Width="610" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="About EasyJob" Height="420" Width="640" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="110"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Padding="12" Grid.Column="0" Text="About" Style="{StaticResource HeaderTextBlockStyle}" Background="#E2E2E2"/>
+                <Image Grid.Column="1" Source="pack://application:,,,/Images/github.png" Height="Auto" Width="Auto" MouseLeftButtonDown="GithubImage_MouseLeftButtonDown" Cursor="Hand" Stretch="Fill"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="44"/>
+                </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <Image Source="/Images/github.png" Height="100" Width="100" MouseLeftButtonDown="GithubImage_MouseLeftButtonDown" Cursor="Hand"/>
-        </StackPanel>
-        <Grid Grid.Row="0" Grid.Column="1">
-            <Label Name="lblTitle" Content="EasyJob Executor" Width="122" Margin="0,0,392,83" HorizontalAlignment="Right"/>
-            <Label Name="lblInfo" Content="Author" Width="514" Margin="0,27,0,56" HorizontalAlignment="Center" />
-            <Label Name="lblLicence" Content="Licence: Apache-2.0" Width="122" Margin="0,54,392,30" HorizontalAlignment="Right" />
-            <Label Name="lblVersion" Content="Version" Margin="0,80,0,0"/>
+                <Label Grid.Row="0" Name="lblTitle" VerticalAlignment="Center" Margin="10,0,10,0" Content="EasyJob Executor"/>
+                <Label Grid.Row="1" Name="lblInfo" VerticalAlignment="Center" Margin="10,0,10,0" Content="Author" />
+                <Label Grid.Row="2" Name="lblLicence" VerticalAlignment="Center" Margin="10,0,10,0" Content="Licence: Apache-2.0" />
+                
+                <RichTextBox Grid.Row="3" Margin="10,10,10,0" Name="RichTextBox1" HorizontalAlignment="Left" Background="Black" Foreground="White"
+                         BorderThickness="0" IsDocumentEnabled="True" IsReadOnly="True" VerticalScrollBarVisibility="Visible" FontFamily="Consolas">
+                </RichTextBox>
+
+                <Button Grid.Row="4" Content="Get some inspiration" Click="GetInspirationButton_Click" Margin="5,0,10,0" Padding="5" HorizontalAlignment="Right"/>
+                <Button Grid.Row="4" Content="Check new releases" Click="CheckNewReleasesButton_Click" Margin="5,0,155,0" Padding="5" HorizontalAlignment="Right"/>
+            </Grid>
         </Grid>
-        <StackPanel Grid.Row="1" Grid.Column="0"/>
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <RichTextBox Margin="10,10,10,10" Name="RichTextBox1" HorizontalAlignment="Left" Width="472" Height="210" Background="Black" Foreground="White"
-                         BorderThickness="0" IsDocumentEnabled="True" IsReadOnly="True" VerticalScrollBarVisibility="Visible">
-            </RichTextBox>
-        </StackPanel>
     </Grid>
 </Window>
