@@ -23,9 +23,12 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 
 ## Overview
-![image](https://user-images.githubusercontent.com/29357955/136437666-040d0491-52e8-4c48-a7e9-350e9beb22cb.png)
+![image](https://user-images.githubusercontent.com/29357955/136666562-90ae503d-f60c-4528-a2ae-db3b666d14ae.png)
 
-![image](https://user-images.githubusercontent.com/29357955/136437696-793ccaa8-092b-46b8-bf19-0b054ad784dc.png)
+![image](https://user-images.githubusercontent.com/29357955/136666569-27cd5987-8a63-4ded-973a-942f655ce5a0.png)
+
+![image](https://user-images.githubusercontent.com/29357955/136666571-5de78dec-7e8c-4864-bdce-16013b4a55ea.png)
+
 
 ## Features
 * You can remove button from the GUI by right mouse click on it and then select Remove in the context menu. Settings are automatically will be saved to your config.json file.
@@ -35,6 +38,12 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 * You can remove tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
 
 ![image](https://user-images.githubusercontent.com/29357955/136437621-9029cc73-0ba8-436b-af73-14656c0f41fc.png)
+
+* You can reorder Tabs from the Workflow item from the Main menu
+* You can Add button from the GUI by right mouse click on button bar and then select Add button.
+
+![image](https://user-images.githubusercontent.com/29357955/136666836-a38e3d12-3b6f-482d-b1b4-6ce7a93912a8.png)
+
 
 ## Configuration
 
@@ -52,13 +61,17 @@ Here is an example:
   "clear_events_when_reload": true,
   "restrictions": {
     "block_tabs_remove": false,
-    "block_buttons_remove": true
+    "block_buttons_remove": false,
+    "block_tabs_add": false,
+    "block_buttons_add": false
   },
   "tabs": [
     {
+      "ID": "2e5feab0-527c-451c-b83c-d838d22dacac",
       "header": "Common actions",
       "buttons": [
         {
+          "Id": "01bf5871-442e-4f73-91a3-fa13855b609c",
           "text": "test01",
           "description": "Some test script",
           "script": "scripts\\common\\test01.ps1",
@@ -67,6 +80,7 @@ Here is an example:
           "arguments": []
         },
         {
+          "Id": "9cdc38fa-fc32-4a9d-be78-cd2bfe264422",
           "text": "Bat script",
           "description": "Some BAT script",
           "script": "scripts\\test02.bat",
@@ -75,6 +89,7 @@ Here is an example:
           "arguments": []
         },
         {
+          "Id": "5ec086d9-7987-43ef-84fb-1d8481b05aea",
           "text": "Absolute path script",
           "description": "",
           "script": "C:\\scripts\\absolute_script.ps1",
@@ -83,6 +98,7 @@ Here is an example:
           "arguments": []
         },
         {
+          "Id": "c28abef3-494c-48f5-96d8-a5788ced1a23",
           "text": "test04",
           "description": "Some test 04 script with arguments",
           "script": "scripts\\common\\test04.ps1",
@@ -106,9 +122,11 @@ Here is an example:
       ]
     },
     {
+      "ID": "42f71e1a-32b9-4c16-8c7d-256cd589c52e",
       "header": "Second Tab",
       "buttons": [
         {
+          "Id": "3476554c-77b1-4abd-914e-ab1db866fc5f",
           "text": "And this is button too",
           "description": "no description",
           "script": "scripts\\some_button_script.ps1",
@@ -122,8 +140,8 @@ Here is an example:
 }
 ```
 
-_Note: Do not specify argument_answer value, since it will be ignored when executing script_
-
+_Note 1: Do not specify argument_answer value, since it will be ignored when executing script_
+_Note 2: ID my be any other random GUID number
 
 
 ## Easy access
