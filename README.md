@@ -89,6 +89,7 @@ Here is an example:
           "arguments": []
         },
         {
+          "Id": "5ec086d9-7987-43ef-84fb-1d8481b05aea",
           "text": "Absolute path script",
           "description": "",
           "script": "C:\\scripts\\absolute_script.ps1",
