@@ -125,7 +125,7 @@ namespace EasyJob
             });
         }
 
-        private void AddTextToEventsList(string Text, bool IsAsync)
+        public void AddTextToEventsList(string Text, bool IsAsync)
         {
             if (Text == "" || Text == null || Text == "Error: ")
             {
@@ -239,6 +239,34 @@ namespace EasyJob
             }
 
             return arguments;
+        }
+
+        private void ShowAddButtonDialog()
+        {
+            AddActionButtonDialog aabd = new AddActionButtonDialog();
+            if (aabd.ShowDialog() == true)
+            {
+                if (MainTab.Items[MainTab.SelectedIndex] is TabData button)
+                {
+                    List<Answer> answers = new List<Answer>();
+                    foreach (ConfigArgument ca in aabd.configButton.Arguments)
+                    {
+                        answers.Add(new Answer { AnswerQuestion = ca.ArgumentQuestion, AnswerResult = ca.ArgumentAnswer });
+                    }
+                    button.TabActionButtons.Add(new ActionButton { ButtonText = aabd.configButton.Text, ButtonDescription = aabd.configButton.Description, ButtonScript = aabd.configButton.Script, ButtonScriptPathType = aabd.configButton.ScriptPathType, ButtonScriptType = aabd.configButton.ScriptType, ButtonArguments = answers });
+                }
+
+                if (SaveConfig())
+                {
+                    MainTab.Items.Refresh();
+                    this.UpdateLayout();
+                    AddTextToEventsList("Button '" + aabd.configButton.Text + "' has been successfully added", false);
+                }
+            }
+            else
+            {
+                AddTextToEventsList("Adding button cancelled by user", false);
+            }
         }
 
         public void ClearOutputButton_Click(object sender, RoutedEventArgs e)
@@ -507,7 +535,8 @@ namespace EasyJob
         #region MenuItems
         private void ReloadConfigMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            try {
+            try 
+            {
                 if (config.clear_events_when_reload == true)
                 {
                     EventsList.Items.Clear();
@@ -553,6 +582,22 @@ namespace EasyJob
 
             MainTab.Items.Refresh();
             this.UpdateLayout();
+        }
+
+        private void AddTabMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            NewTabDialog ntd = new NewTabDialog();
+            ntd.ShowDialog();
+
+            LoadConfig();
+
+            MainTab.Items.Refresh();
+            this.UpdateLayout();
+        }
+
+        private void AddButtonToCurrentTabMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ShowAddButtonDialog();
         }
 
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
@@ -696,31 +741,7 @@ namespace EasyJob
 
         private void ContextMenuAddActionButton_Click(object sender, RoutedEventArgs e)
         {
-            AddActionButtonDialog aabd = new AddActionButtonDialog();
-            if (aabd.ShowDialog() == true)
-            {
-                if (MainTab.Items[MainTab.SelectedIndex] is TabData button)
-                {
-                    List<Answer> answers = new List<Answer>();
-                    foreach(ConfigArgument ca in aabd.configButton.Arguments)
-                    {
-                        answers.Add(new Answer { AnswerQuestion = ca.ArgumentQuestion, AnswerResult = ca.ArgumentAnswer });
-                    }
-                    button.TabActionButtons.Add( new ActionButton { ButtonText = aabd.configButton.Text, ButtonDescription = aabd.configButton.Description, ButtonScript = aabd.configButton.Script, ButtonScriptPathType = aabd.configButton.ScriptPathType, ButtonScriptType = aabd.configButton.ScriptType, ButtonArguments = answers });
-                }
-
-                if (SaveConfig())
-                {
-                    MainTab.Items.Refresh();
-                    this.UpdateLayout();
-                    AddTextToEventsList("Button " + aabd.configButton.Text + " successfully has been added", false);
-                }
-            }
-            else
-            {
-                AddTextToEventsList("Adding button cancelled by user", false);
-            }
-
+            ShowAddButtonDialog();
         }
 
         #endregion

@@ -13,6 +13,9 @@
     <Compile Update="Windows\AnswerDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\NewTabDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\ReorderTabsDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +34,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\AnswerDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\NewTabDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\ReorderTabsDialog.xaml">

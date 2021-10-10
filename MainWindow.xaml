@@ -57,6 +57,16 @@
                             <Image Source="pack://application:,,,/Images/reorder.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem Header="Add tab" Click="AddTabMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Images/addtab.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Add button to current tab" Click="AddButtonToCurrentTabMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Images/addbutton.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Help">
