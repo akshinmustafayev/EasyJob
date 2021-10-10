@@ -11,14 +11,21 @@
         mc:Ignorable="d" Icon="pack://application:,,,/Images/icon.ico"
         Title="EasyJob Executor" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <ContextMenu x:Key="AddTabContextMenu">
+            <MenuItem Header="Add tab" Click="ContextMenuAddTab_Click"/>
+        </ContextMenu>
         <ContextMenu x:Key="RemoveTabContextMenu">
             <MenuItem Header="Remove tab" Click="ContextMenuRemoveTab_Click"/>
         </ContextMenu>
-        <ContextMenu x:Key="RemoveActionButtonContextMenu">
-            <MenuItem Header="Remove button" Click="ContextMenuRemoveActionButton_Click"/>
+        <ContextMenu x:Key="RemoveAddTabContextMenu">
+            <MenuItem Header="Add tab" Click="ContextMenuAddTab_Click"/>
+            <MenuItem Header="Remove tab" Click="ContextMenuRemoveTab_Click"/>
         </ContextMenu>
         <ContextMenu x:Key="AddActionButtonContextMenu">
             <MenuItem Header="Add button" Click="ContextMenuAddActionButton_Click"/>
+        </ContextMenu>
+        <ContextMenu x:Key="RemoveActionButtonContextMenu">
+            <MenuItem Header="Remove button" Click="ContextMenuRemoveActionButton_Click"/>
         </ContextMenu>
     </Window.Resources>
     <Grid>
@@ -38,6 +45,11 @@
                 <MenuItem Header="Open app folder" Click="OpenAppFolderMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/folder.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Clear events list" Click="ClearEventsLogListMenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Images/clear.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
@@ -60,6 +72,16 @@
                     <MenuItem Header="Add tab" Click="AddTabMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/addtab.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Remove current tab" Click="RemoveCurrentTabMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Images/removetab.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Rename current tab" Click="RenameCurrentTabMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Images/renametab.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Add button to current tab" Click="AddButtonToCurrentTabMenuItem_Click">

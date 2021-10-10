@@ -269,6 +269,17 @@ namespace EasyJob
             }
         }
 
+        private void ShowAddNewTabDialog()
+        {
+            NewTabDialog ntd = new NewTabDialog();
+            ntd.ShowDialog();
+
+            LoadConfig();
+
+            MainTab.Items.Refresh();
+            this.UpdateLayout();
+        }
+
         public void ClearOutputButton_Click(object sender, RoutedEventArgs e)
         {
             TabData td = (TabData)MainTab.SelectedItem;
@@ -573,6 +584,11 @@ namespace EasyJob
             }
         }
 
+        private void ClearEventsLogListMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            EventsList.Items.Clear();
+        }
+
         private void ReorderTabsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             ReorderTabsDialog rtd = new ReorderTabsDialog();
@@ -586,13 +602,59 @@ namespace EasyJob
 
         private void AddTabMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            NewTabDialog ntd = new NewTabDialog();
-            ntd.ShowDialog();
+            ShowAddNewTabDialog();
+        }
 
-            LoadConfig();
+        private void RemoveCurrentTabMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Do you want to delete current tab?", "Please confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                List<TabData> newSourceTabs = new List<TabData>();
+                foreach (TabData tab in MainTab.Items)
+                {
+                    TabData currentTab = MainTab.Items[MainTab.SelectedIndex] as TabData;
+                    if (tab != currentTab)
+                    {
+                        newSourceTabs.Add(tab);
+                    }
+                }
 
-            MainTab.Items.Refresh();
-            this.UpdateLayout();
+                MainTab.ItemsSource = null;
+                MainTab.ItemsSource = newSourceTabs;
+
+                if (SaveConfig())
+                {
+                    MainTab.Items.Refresh();
+                    this.UpdateLayout();
+                }
+            }
+        }
+
+        private void RenameCurrentTabMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            RenameTabDialog rtd = new RenameTabDialog();
+            if(rtd.ShowDialog() == true)
+            {
+                List<TabData> newSourceTabs = new List<TabData>();
+                foreach (TabData tab in MainTab.Items)
+                {
+                    TabData currentTab = MainTab.Items[MainTab.SelectedIndex] as TabData;
+                    if (tab == currentTab)
+                    {
+                        tab.TabHeader = rtd.NewTabName;
+                    }
+                    newSourceTabs.Add(tab);
+                }
+
+                MainTab.ItemsSource = null;
+                MainTab.ItemsSource = newSourceTabs;
+
+                if (SaveConfig())
+                {
+                    MainTab.Items.Refresh();
+                    this.UpdateLayout();
+                }
+            }
         }
 
         private void AddButtonToCurrentTabMenuItem_Click(object sender, RoutedEventArgs e)
@@ -671,17 +733,35 @@ namespace EasyJob
 
         private void TabHeaderSelector_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (config.restrictions.block_tabs_remove == true)
-            {
-                return;
-            }
-
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                selectedTabItem = ((Label)e.Source).DataContext as TabData;
-                ContextMenu cm = this.FindResource("RemoveTabContextMenu") as ContextMenu;
-                cm.PlacementTarget = sender as Label;
-                cm.IsOpen = true;
+                if (config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_add == true)
+                {
+                    return;
+                }
+                else if (config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_add == true)
+                {
+                    selectedTabItem = ((Label)e.Source).DataContext as TabData;
+                    ContextMenu cm = this.FindResource("RemoveTabContextMenu") as ContextMenu;
+                    cm.PlacementTarget = sender as Label;
+                    cm.IsOpen = true;
+                    return;
+                }
+                else if (config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_add == false)
+                {
+                    selectedTabItem = ((Label)e.Source).DataContext as TabData;
+                    ContextMenu cm = this.FindResource("AddTabContextMenu") as ContextMenu;
+                    cm.PlacementTarget = sender as Label;
+                    cm.IsOpen = true;
+                    return;
+                }
+                else if (config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_add == false)
+                {
+                    selectedTabItem = ((Label)e.Source).DataContext as TabData;
+                    ContextMenu cm = this.FindResource("RemoveAddTabContextMenu") as ContextMenu;
+                    cm.PlacementTarget = sender as Label;
+                    cm.IsOpen = true;
+                }
             }
         }
 
@@ -710,6 +790,11 @@ namespace EasyJob
                 MainTab.Items.Refresh();
                 this.UpdateLayout();
             }
+        }
+
+        private void ContextMenuAddTab_Click(object sender, RoutedEventArgs e)
+        {
+            ShowAddNewTabDialog();
         }
 
         private void ContextMenuRemoveActionButton_Click(object sender, RoutedEventArgs e)
