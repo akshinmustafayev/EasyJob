@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.0.6</Version>
+    <Version>1.0.8</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
@@ -16,6 +16,9 @@
 
   <ItemGroup>
     <None Remove="Images\about.png" />
+    <None Remove="Images\add.png" />
+    <None Remove="Images\addbutton.png" />
+    <None Remove="Images\addtab.png" />
     <None Remove="Images\close.png" />
     <None Remove="Images\convert.png" />
     <None Remove="Images\down.png" />
@@ -37,6 +40,9 @@
 
   <ItemGroup>
     <Resource Include="Images\about.png" />
+    <Resource Include="Images\add.png" />
+    <Resource Include="Images\addbutton.png" />
+    <Resource Include="Images\addtab.png" />
     <Resource Include="Images\close.png" />
     <Resource Include="Images\convert.png" />
     <Resource Include="Images\down.png" />
@@ -68,9 +74,5 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Serialization\AddActionButtonDialog\" />
-  </ItemGroup>
 
 </Project>
