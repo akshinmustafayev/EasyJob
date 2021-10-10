@@ -25,7 +25,7 @@ namespace EasyJob.Windows
         public AnswerDialog(AnswerData _answerData)
         {
             InitializeComponent();
-            this.answerData = _answerData;
+            answerData = _answerData;
             if (_answerData != null)
             {
                 foreach (Answer answer in _answerData.Answers)

@@ -27,7 +27,9 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 ![image](https://user-images.githubusercontent.com/29357955/136666569-27cd5987-8a63-4ded-973a-942f655ce5a0.png)
 
-![image](https://user-images.githubusercontent.com/29357955/136666571-5de78dec-7e8c-4864-bdce-16013b4a55ea.png)
+![image](https://user-images.githubusercontent.com/29357955/136707109-41022bd8-7966-4a8d-ae30-4ce3acb230c9.png)
+
+![image](https://user-images.githubusercontent.com/29357955/136707408-518324f0-1de3-4b66-9d77-ed186d25c1fe.png)
 
 
 ## Features
@@ -35,14 +37,19 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 ![image](https://user-images.githubusercontent.com/29357955/136437593-22c3c27c-f369-401b-8a90-735daa1a609f.png)
 
-* You can remove tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
+* You can remove and add tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
 
-![image](https://user-images.githubusercontent.com/29357955/136437621-9029cc73-0ba8-436b-af73-14656c0f41fc.png)
+![image](https://user-images.githubusercontent.com/29357955/136707259-b6af7d8e-48fd-4e19-b785-66279c79a08b.png)
 
-* You can reorder Tabs from the Workflow item from the Main menu
 * You can Add button from the GUI by right mouse click on button bar and then select Add button.
 
 ![image](https://user-images.githubusercontent.com/29357955/136666836-a38e3d12-3b6f-482d-b1b4-6ce7a93912a8.png)
+
+* You can reorder Tabs from the _Settings->Workflow->Reorder_ tabs context menu
+* You can add Tabs from the _Settings->Workflow->Add tab_ context menu
+* You can rename Tabs from the _Settings->Workflow->Remove current tab_ context menu
+* You can remove Tabs from the _Settings->Workflow->Rename current tab_ context menu
+* You can remove Add buttons from the _Settings->Workflow->Add button to current_ tab context menu
 
 
 ## Configuration
@@ -141,7 +148,8 @@ Here is an example:
 ```
 
 _Note 1: Do not specify argument_answer value, since it will be ignored when executing script_
-_Note 2: ID my be any other random GUID number
+
+_Note 2: ID my be any other random GUID number. You may not specify it, application will regenerate it after changes if it is absent or not present._
 
 
 ## Easy access

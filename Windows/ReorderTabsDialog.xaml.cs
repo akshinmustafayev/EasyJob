@@ -3,20 +3,10 @@ using EasyJob.TabItems;
 using EasyJob.Utils;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace EasyJob.Windows
 {
@@ -70,7 +60,7 @@ namespace EasyJob.Windows
                     config.tabs = Helper.SaveConfigs(TabItems);
 
                     string conf = System.Text.Json.JsonSerializer.Serialize(config);
-                    File.WriteAllText(path, conf, System.Text.Encoding.UTF8);
+                    File.WriteAllText(path, conf, Encoding.UTF8);
 
                     return true;
                 }
@@ -89,14 +79,20 @@ namespace EasyJob.Windows
 
         private void TabsRedorderDown_Click(object sender, RoutedEventArgs e)
         {
-            var selectedIndex = this.MainWindowTabsList.SelectedIndex;
-
-            if (selectedIndex + 1 < this.TabItems.Count)
+            if(MainWindowTabsList.SelectedIndex == -1)
             {
-                var itemToMoveDown = this.TabItems[selectedIndex];
-                this.TabItems.RemoveAt(selectedIndex);
-                this.TabItems.Insert(selectedIndex + 1, itemToMoveDown);
-                this.MainWindowTabsList.SelectedIndex = selectedIndex + 1;
+                MessageBox.Show("Please select item to reorder");
+                return;
+            }
+
+            var selectedIndex = MainWindowTabsList.SelectedIndex;
+
+            if (selectedIndex + 1 < TabItems.Count)
+            {
+                var itemToMoveDown = TabItems[selectedIndex];
+                TabItems.RemoveAt(selectedIndex);
+                TabItems.Insert(selectedIndex + 1, itemToMoveDown);
+                MainWindowTabsList.SelectedIndex = selectedIndex + 1;
             }
 
             SaveConfig();
@@ -104,14 +100,20 @@ namespace EasyJob.Windows
 
         private void TabsReorderUp_Click(object sender, RoutedEventArgs e)
         {
-            var selectedIndex = this.MainWindowTabsList.SelectedIndex;
+            if (MainWindowTabsList.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select item to reorder");
+                return;
+            }
+
+            var selectedIndex = MainWindowTabsList.SelectedIndex;
 
             if (selectedIndex > 0)
             {
-                var itemToMoveUp = this.TabItems[selectedIndex];
-                this.TabItems.RemoveAt(selectedIndex);
-                this.TabItems.Insert(selectedIndex - 1, itemToMoveUp);
-                this.MainWindowTabsList.SelectedIndex = selectedIndex - 1;
+                var itemToMoveUp = TabItems[selectedIndex];
+                TabItems.RemoveAt(selectedIndex);
+                TabItems.Insert(selectedIndex - 1, itemToMoveUp);
+                MainWindowTabsList.SelectedIndex = selectedIndex - 1;
             }
 
             SaveConfig();

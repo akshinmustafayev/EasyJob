@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
@@ -19,6 +19,7 @@
     <None Remove="Images\add.png" />
     <None Remove="Images\addbutton.png" />
     <None Remove="Images\addtab.png" />
+    <None Remove="Images\clear.png" />
     <None Remove="Images\close.png" />
     <None Remove="Images\convert.png" />
     <None Remove="Images\down.png" />
@@ -27,6 +28,8 @@
     <None Remove="Images\github.png" />
     <None Remove="Images\icon.ico" />
     <None Remove="Images\reload.png" />
+    <None Remove="Images\removetab.png" />
+    <None Remove="Images\renametab.png" />
     <None Remove="Images\reorder.png" />
     <None Remove="Images\troubleshoot.png" />
     <None Remove="Images\up.png" />
@@ -43,6 +46,7 @@
     <Resource Include="Images\add.png" />
     <Resource Include="Images\addbutton.png" />
     <Resource Include="Images\addtab.png" />
+    <Resource Include="Images\clear.png" />
     <Resource Include="Images\close.png" />
     <Resource Include="Images\convert.png" />
     <Resource Include="Images\down.png" />
@@ -51,6 +55,8 @@
     <Resource Include="Images\github.png" />
     <Resource Include="Images\icon.ico" />
     <Resource Include="Images\reload.png" />
+    <Resource Include="Images\removetab.png" />
+    <Resource Include="Images\renametab.png" />
     <Resource Include="Images\reorder.png" />
     <Resource Include="Images\troubleshoot.png" />
     <Resource Include="Images\up.png" />
