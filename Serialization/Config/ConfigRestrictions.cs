@@ -12,5 +12,6 @@ namespace EasyJob.Serialization
         public bool block_buttons_remove { get; set; }
         public bool block_tabs_add { get; set; }
         public bool block_buttons_add { get; set; }
+        public bool block_buttons_edit { get; set; }
     }
 }
