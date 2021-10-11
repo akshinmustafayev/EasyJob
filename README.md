@@ -33,17 +33,20 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 
 ## Features
-* You can remove button from the GUI by right mouse click on it and then select Remove in the context menu. Settings are automatically will be saved to your config.json file.
+* You can _Remove_ or _Edit_ button from the GUI by right mouse click on it and then select item in the context menu. Settings are automatically will be saved to your config.json file.
 
-![image](https://user-images.githubusercontent.com/29357955/136437593-22c3c27c-f369-401b-8a90-735daa1a609f.png)
+![image](https://user-images.githubusercontent.com/29357955/136830752-7c1ab401-3f90-4421-b0d5-21468ac80d08.png)
 
-* You can remove and add tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
 
-![image](https://user-images.githubusercontent.com/29357955/136707259-b6af7d8e-48fd-4e19-b785-66279c79a08b.png)
+* You can _Remove_ or _Add_ tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
 
-* You can Add button from the GUI by right mouse click on button bar and then select Add button.
+![image](https://user-images.githubusercontent.com/29357955/136830773-9adaf839-fb6f-4019-b537-3d332df94481.png)
 
-![image](https://user-images.githubusercontent.com/29357955/136666836-a38e3d12-3b6f-482d-b1b4-6ce7a93912a8.png)
+
+* You can _Add_ button from the GUI by right mouse click on button bar and then select Add button.
+
+![image](https://user-images.githubusercontent.com/29357955/136830784-270440e0-7cd5-4529-b71a-fda6b874ec45.png)
+
 
 * You can reorder Tabs from the _Settings->Workflow->Reorder_ tabs context menu
 * You can add Tabs from the _Settings->Workflow->Add tab_ context menu
@@ -70,7 +73,8 @@ Here is an example:
     "block_tabs_remove": false,
     "block_buttons_remove": false,
     "block_tabs_add": false,
-    "block_buttons_add": false
+    "block_buttons_add": false,
+    "block_buttons_edit": false
   },
   "tabs": [
     {
