@@ -12,20 +12,63 @@
         Title="EasyJob Executor" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ContextMenu x:Key="AddTabContextMenu">
-            <MenuItem Header="Add tab" Click="ContextMenuAddTab_Click"/>
+            <MenuItem Header="Add tab" Click="ContextMenuAddTab_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/addtab.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
         </ContextMenu>
         <ContextMenu x:Key="RemoveTabContextMenu">
-            <MenuItem Header="Remove tab" Click="ContextMenuRemoveTab_Click"/>
+            <MenuItem Header="Remove tab" Click="ContextMenuRemoveTab_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/removetab.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
         </ContextMenu>
         <ContextMenu x:Key="RemoveAddTabContextMenu">
-            <MenuItem Header="Add tab" Click="ContextMenuAddTab_Click"/>
-            <MenuItem Header="Remove tab" Click="ContextMenuRemoveTab_Click"/>
+            <MenuItem Header="Add tab" Click="ContextMenuAddTab_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/addtab.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Remove tab" Click="ContextMenuRemoveTab_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/removetab.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
         </ContextMenu>
         <ContextMenu x:Key="AddActionButtonContextMenu">
-            <MenuItem Header="Add button" Click="ContextMenuAddActionButton_Click"/>
+            <MenuItem Header="Add button" Click="ContextMenuAddActionButton_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/addbutton.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
         </ContextMenu>
         <ContextMenu x:Key="RemoveActionButtonContextMenu">
-            <MenuItem Header="Remove button" Click="ContextMenuRemoveActionButton_Click"/>
+            <MenuItem Header="Remove button" Click="ContextMenuRemoveActionButton_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/removebutton.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+        <ContextMenu x:Key="EditActionButtonContextMenu">
+            <MenuItem Header="Edit button" Click="ContextMenuEditActionButton_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/editbutton.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+        <ContextMenu x:Key="RemoveEditActionButtonContextMenu">
+            <MenuItem Header="Remove button" Click="ContextMenuRemoveActionButton_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/removebutton.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Edit button" Click="ContextMenuEditActionButton_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/editbutton.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
         </ContextMenu>
     </Window.Resources>
     <Grid>

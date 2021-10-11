@@ -655,6 +655,10 @@ namespace EasyJob
                     this.UpdateLayout();
                 }
             }
+            else
+            {
+                AddTextToEventsList("Current tab rename cancelled by user", false);
+            }
         }
 
         private void AddButtonToCurrentTabMenuItem_Click(object sender, RoutedEventArgs e)
@@ -696,19 +700,41 @@ namespace EasyJob
 
         public void ActionButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(config.restrictions.block_buttons_remove == true)
-            {
-                return;
-            }
-
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (e.OriginalSource is TextBlock)
+                if (config.restrictions.block_buttons_edit == true && config.restrictions.block_buttons_remove == true)
                 {
-                    selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
-                    ContextMenu cm = this.FindResource("RemoveActionButtonContextMenu") as ContextMenu;
-                    cm.PlacementTarget = sender as Button;
-                    cm.IsOpen = true;
+                    return;
+                }
+                else if (config.restrictions.block_buttons_edit == false && config.restrictions.block_buttons_remove == true)
+                {
+                    if (e.OriginalSource is TextBlock)
+                    {
+                        selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
+                        ContextMenu cm = this.FindResource("EditActionButtonContextMenu") as ContextMenu;
+                        cm.PlacementTarget = sender as Button;
+                        cm.IsOpen = true;
+                    }
+                }
+                else if (config.restrictions.block_buttons_edit == true && config.restrictions.block_buttons_remove == false)
+                {
+                    if (e.OriginalSource is TextBlock)
+                    {
+                        selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
+                        ContextMenu cm = this.FindResource("RemoveActionButtonContextMenu") as ContextMenu;
+                        cm.PlacementTarget = sender as Button;
+                        cm.IsOpen = true;
+                    }
+                }
+                else if (config.restrictions.block_buttons_edit == false && config.restrictions.block_buttons_remove == false)
+                {
+                    if (e.OriginalSource is TextBlock)
+                    {
+                        selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
+                        ContextMenu cm = this.FindResource("RemoveEditActionButtonContextMenu") as ContextMenu;
+                        cm.PlacementTarget = sender as Button;
+                        cm.IsOpen = true;
+                    }
                 }
             }
         }
@@ -821,6 +847,41 @@ namespace EasyJob
             {
                 MainTab.Items.Refresh();
                 this.UpdateLayout();
+            }
+        }
+
+        private void ContextMenuEditActionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedActionButton == null)
+            {
+                MessageBox.Show("Selected Action button is still null. Please try again.");
+                return;
+            }
+
+            EditActionButtonDialog eabd = new EditActionButtonDialog(selectedActionButton);
+            if(eabd.ShowDialog() == true)
+            {
+                for (int i = 0; i < MainTab.Items.Count; i++)
+                {
+                    if (MainTab.Items[i] is TabData button)
+                    {
+                        var item = button.TabActionButtons.Where(x => x.Equals(selectedActionButton)).FirstOrDefault();
+                        if (item != null)
+                        {
+                            item = eabd.actionButton;
+                        }
+                    }
+                }
+
+                if (SaveConfig())
+                {
+                    MainTab.Items.Refresh();
+                    this.UpdateLayout();
+                }
+            }
+            else
+            {
+                AddTextToEventsList("Edit button cancelled by user", false);
             }
         }
 

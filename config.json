@@ -9,7 +9,8 @@
     "block_tabs_remove": false,
     "block_buttons_remove": false,
     "block_tabs_add": false,
-    "block_buttons_add": false
+    "block_buttons_add": false,
+    "block_buttons_edit": false
   },
   "tabs": [
     {
