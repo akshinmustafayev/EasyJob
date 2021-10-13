@@ -44,6 +44,25 @@
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
+        <ContextMenu x:Key="ReorderActionButtonsContextMenu">
+            <MenuItem Header="Reorder buttons" Click="ContextMenuReorderActionButtons_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/reorderbuttons.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+        <ContextMenu x:Key="AddReorderActionButtonsContextMenu">
+            <MenuItem Header="Add button" Click="ContextMenuAddActionButton_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/addbutton.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Reorder buttons" Click="ContextMenuReorderActionButtons_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/reorderbuttons.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
         <ContextMenu x:Key="RemoveActionButtonContextMenu">
             <MenuItem Header="Remove button" Click="ContextMenuRemoveActionButton_Click">
                 <MenuItem.Icon>
@@ -80,67 +99,72 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" FlowDirection="LeftToRight" IsMainMenu="True">
             <MenuItem Header="File">
-                <MenuItem Header="Reload config" Click="ReloadConfigMenuItem_Click">
+                <MenuItem Name="FileReloadConfigMenuItem" Header="Reload config" Click="ReloadConfigMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/reload.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Open app folder" Click="OpenAppFolderMenuItem_Click">
+                <MenuItem Name="FileOpenAppFolderMenuItem" Header="Open app folder" Click="OpenAppFolderMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/folder.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Clear events list" Click="ClearEventsLogListMenuItem_Click">
+                <MenuItem Name="FileClearEventsLogListMenuItem" Header="Clear events list" Click="ClearEventsLogListMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/clear.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <Separator />
-                <MenuItem Header="Exit" Click="MenuItemExit_Click">
+                <Separator Name="FileSeparator1"/>
+                <MenuItem Name="FileExitMenuItem" Header="Exit" Click="ExitMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/exit.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Settings">
-                <MenuItem Header="Workflow">
+            <MenuItem Name="SettingsMenuItem" Header="Settings">
+                <MenuItem Name="SettingsWorkflowMenuItem" Header="Workflow">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/workflow.png"/>
                     </MenuItem.Icon>
-                    <MenuItem Header="Reorder tabs" Click="ReorderTabsMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowReorderTabsMenuItem" Header="Reorder tabs" Click="ReorderTabsMenuItem_Click">
                         <MenuItem.Icon>
-                            <Image Source="pack://application:,,,/Images/reorder.png"/>
+                            <Image Source="pack://application:,,,/Images/reordertabs.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Add tab" Click="AddTabMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowAddTabMenuItem" Header="Add tab" Click="AddTabMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/addtab.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Remove current tab" Click="RemoveCurrentTabMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowRemoveCurrentTabMenuItem" Header="Remove current tab" Click="RemoveCurrentTabMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/removetab.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Rename current tab" Click="RenameCurrentTabMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowRenameCurrentTabMenuItem" Header="Rename current tab" Click="RenameCurrentTabMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/renametab.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Add button to current tab" Click="AddButtonToCurrentTabMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowAddButtonToCurrentTabMenuItem" Header="Add button to current tab" Click="AddButtonToCurrentTabMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/addbutton.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem Name="SettingsWorkflowReorderButtonsInCurrentTabMenuItem" Header="Reorder buttons in current tab" Click="ReorderButtonsInCurrentTabMenuItem_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Images/reorderbuttons.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Help">
-                <MenuItem Header="Troubleshooting" Click="MenuTroubleshooting_Click">
+            <MenuItem Name="HelpMenuItem" Header="Help">
+                <MenuItem Name="HelpTroubleshootingMenuItem" Header="Troubleshooting" Click="MenuTroubleshooting_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/troubleshoot.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="About" Click="MenuAbout_Click">
+                <MenuItem Name="HelpAboutMenuItem" Header="About" Click="MenuAbout_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/about.png"/>
                     </MenuItem.Icon>

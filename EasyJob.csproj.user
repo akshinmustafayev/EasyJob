@@ -22,6 +22,9 @@
     <Compile Update="Windows\RenameTabDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\ReorderActionButtonsDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\ReorderTabsDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -49,6 +52,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\RenameTabDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\ReorderActionButtonsDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\ReorderTabsDialog.xaml">
