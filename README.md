@@ -45,7 +45,7 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 * You can _Add_ button from the GUI by right mouse click on button bar and then select Add button.
 
-![image](https://user-images.githubusercontent.com/29357955/136830784-270440e0-7cd5-4529-b71a-fda6b874ec45.png)
+![image](https://user-images.githubusercontent.com/29357955/137178361-2cd10c94-a4ac-4673-9d9d-02109ea29f21.png)
 
 
 * You can reorder Tabs from the _Settings->Workflow->Reorder_ tabs context menu
@@ -53,6 +53,7 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 * You can rename Tabs from the _Settings->Workflow->Remove current tab_ context menu
 * You can remove Tabs from the _Settings->Workflow->Rename current tab_ context menu
 * You can remove Add buttons from the _Settings->Workflow->Add button to current_ tab context menu
+* You can reorder buttons from the _Settings->Workflow->Reorder buttons in current_ tab context menu
 
 
 ## Configuration

@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
@@ -32,7 +32,8 @@
     <None Remove="Images\removebutton.png" />
     <None Remove="Images\removetab.png" />
     <None Remove="Images\renametab.png" />
-    <None Remove="Images\reorder.png" />
+    <None Remove="Images\reorderbuttons.png" />
+    <None Remove="Images\reordertabs.png" />
     <None Remove="Images\troubleshoot.png" />
     <None Remove="Images\up.png" />
     <None Remove="Images\workflow.png" />
@@ -61,7 +62,8 @@
     <Resource Include="Images\removebutton.png" />
     <Resource Include="Images\removetab.png" />
     <Resource Include="Images\renametab.png" />
-    <Resource Include="Images\reorder.png" />
+    <Resource Include="Images\reorderbuttons.png" />
+    <Resource Include="Images\reordertabs.png" />
     <Resource Include="Images\troubleshoot.png" />
     <Resource Include="Images\up.png" />
     <Resource Include="Images\workflow.png" />

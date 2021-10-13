@@ -31,6 +31,7 @@ namespace EasyJob
         {
             InitializeComponent();
             LoadConfig();
+            MainMenuItemsVisibility();
         }
 
         public void LoadConfig()
@@ -109,6 +110,30 @@ namespace EasyJob
             }
 
             return false;
+        }
+
+        private void MainMenuItemsVisibility()
+        {
+            // File
+            if (config.restrictions.hide_menu_item_file_reload_config == true) { FileReloadConfigMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_file_open_app_folder == true) { FileOpenAppFolderMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_file_clear_events_list == true) { FileClearEventsLogListMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_file_reload_config == true && config.restrictions.hide_menu_item_file_open_app_folder == true && config.restrictions.hide_menu_item_file_clear_events_list == true) { FileSeparator1.Visibility = Visibility.Collapsed; }
+
+            // Settings
+            if (config.restrictions.hide_menu_item_settings == true) { SettingsMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_settings_workflow == true) { SettingsWorkflowMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_settings_workflow_reorder_tabs == true) { SettingsWorkflowReorderTabsMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_settings_workflow_add_tab == true) { SettingsWorkflowAddTabMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_settings_workflow_remove_current_tab == true) { SettingsWorkflowRemoveCurrentTabMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_settings_workflow_rename_current_tab == true) { SettingsWorkflowRenameCurrentTabMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_settings_workflow_add_button_to_current_tab == true) { SettingsWorkflowAddButtonToCurrentTabMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_settings_workflow_reorder_buttons_in_current_tab == true) { SettingsWorkflowReorderButtonsInCurrentTabMenuItem.Visibility = Visibility.Collapsed; }
+
+            // Help
+            if (config.restrictions.hide_menu_item_help == true) { HelpMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_help_troubleshooting == true) { HelpTroubleshootingMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_help_about == true) { HelpAboutMenuItem.Visibility = Visibility.Collapsed; }
         }
 
         private void AddTextToConsole (string Text, int OwnerTab)
@@ -273,6 +298,17 @@ namespace EasyJob
         {
             NewTabDialog ntd = new NewTabDialog();
             ntd.ShowDialog();
+
+            LoadConfig();
+
+            MainTab.Items.Refresh();
+            this.UpdateLayout();
+        }
+
+        private void ShowReorderActionButtonsDialog()
+        {
+            ReorderActionButtonsDialog rabd = new ReorderActionButtonsDialog(MainTab.SelectedIndex);
+            rabd.ShowDialog();
 
             LoadConfig();
 
@@ -666,7 +702,12 @@ namespace EasyJob
             ShowAddButtonDialog();
         }
 
-        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        private void ReorderButtonsInCurrentTabMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ShowReorderActionButtonsDialog();
+        }
+
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         {
             if(tasksList.Count > 0)
             {
@@ -741,18 +782,38 @@ namespace EasyJob
 
         public void ActionButtonAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (config.restrictions.block_buttons_add == true)
-            {
-                return;
-            }
-
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (e.Source is ScrollViewer)
+                if (config.restrictions.block_buttons_add == true && config.restrictions.block_buttons_reorder == true)
                 {
-                    ContextMenu cm = this.FindResource("AddActionButtonContextMenu") as ContextMenu;
-                    cm.PlacementTarget = sender as ScrollViewer;
-                    cm.IsOpen = true;
+                    return;
+                }
+                else if (config.restrictions.block_buttons_add == false && config.restrictions.block_buttons_reorder == true)
+                {
+                    if (e.Source is ScrollViewer)
+                    {
+                        ContextMenu cm = this.FindResource("AddActionButtonContextMenu") as ContextMenu;
+                        cm.PlacementTarget = sender as ScrollViewer;
+                        cm.IsOpen = true;
+                    }
+                }
+                else if (config.restrictions.block_buttons_add == true && config.restrictions.block_buttons_reorder == false)
+                {
+                    if (e.Source is ScrollViewer)
+                    {
+                        ContextMenu cm = this.FindResource("ReorderActionButtonsContextMenu") as ContextMenu;
+                        cm.PlacementTarget = sender as ScrollViewer;
+                        cm.IsOpen = true;
+                    }
+                }
+                else if (config.restrictions.block_buttons_add == false && config.restrictions.block_buttons_reorder == false)
+                {
+                    if (e.Source is ScrollViewer)
+                    {
+                        ContextMenu cm = this.FindResource("AddReorderActionButtonsContextMenu") as ContextMenu;
+                        cm.PlacementTarget = sender as ScrollViewer;
+                        cm.IsOpen = true;
+                    }
                 }
             }
         }
@@ -888,6 +949,11 @@ namespace EasyJob
         private void ContextMenuAddActionButton_Click(object sender, RoutedEventArgs e)
         {
             ShowAddButtonDialog();
+        }
+
+        private void ContextMenuReorderActionButtons_Click(object sender, RoutedEventArgs e)
+        {
+            ShowReorderActionButtonsDialog();
         }
 
         #endregion
