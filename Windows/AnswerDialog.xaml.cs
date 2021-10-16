@@ -49,7 +49,7 @@ namespace EasyJob.Windows
             }
             if(AllowConfirm == false)
             {
-                MessageBox.Show("Please provide value to all textboxes!");
+                MessageBox.Show("Please provide value to all textboxes!", "Fill all data", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             DialogResult = true;
@@ -59,13 +59,5 @@ namespace EasyJob.Windows
         {
             DialogResult = false;
         }
-
-        /*
-        public string ResponseText
-        {
-            get { return ResponseTextBox.Text; }
-            set { ResponseTextBox.Text = value; }
-        }
-        */
     }
 }

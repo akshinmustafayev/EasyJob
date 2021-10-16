@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
@@ -15,18 +15,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="HelpDocumentation.xml" />
     <None Remove="Images\about.png" />
     <None Remove="Images\add.png" />
     <None Remove="Images\addbutton.png" />
     <None Remove="Images\addtab.png" />
     <None Remove="Images\clear.png" />
     <None Remove="Images\close.png" />
+    <None Remove="Images\configuration.png" />
     <None Remove="Images\convert.png" />
     <None Remove="Images\down.png" />
     <None Remove="Images\editbutton.png" />
     <None Remove="Images\exit.png" />
     <None Remove="Images\folder.png" />
     <None Remove="Images\github.png" />
+    <None Remove="Images\help.png" />
     <None Remove="Images\icon.ico" />
     <None Remove="Images\reload.png" />
     <None Remove="Images\removebutton.png" />
@@ -41,6 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Documentation\HelpDocumentation.xml" />
     <EmbeddedResource Include="LICENSE.txt" />
   </ItemGroup>
 
@@ -57,6 +61,7 @@
     <Resource Include="Images\exit.png" />
     <Resource Include="Images\folder.png" />
     <Resource Include="Images\github.png" />
+    <Resource Include="Images\help.png" />
     <Resource Include="Images\icon.ico" />
     <Resource Include="Images\reload.png" />
     <Resource Include="Images\removebutton.png" />
@@ -64,6 +69,7 @@
     <Resource Include="Images\renametab.png" />
     <Resource Include="Images\reorderbuttons.png" />
     <Resource Include="Images\reordertabs.png" />
+    <Resource Include="Images\configuration.png" />
     <Resource Include="Images\troubleshoot.png" />
     <Resource Include="Images\up.png" />
     <Resource Include="Images\workflow.png" />

@@ -92,5 +92,12 @@ namespace EasyJob.Windows
             }
             catch { }
         }
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            HelpDialog hd = new HelpDialog(button.Name);
+            hd.ShowDialog();
+        }
     }
 }

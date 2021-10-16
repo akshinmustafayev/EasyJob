@@ -49,13 +49,13 @@ namespace EasyJob
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     AddTextToEventsList("Error occured while loading file: " + ex.Message, false);
                 }
             }
             else
             {
-                MessageBox.Show("File " + AppDomain.CurrentDomain.BaseDirectory + "config.json does not exist.");
+                MessageBox.Show("File " + AppDomain.CurrentDomain.BaseDirectory + "config.json does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -93,14 +93,18 @@ namespace EasyJob
 
                     config.tabs = configTabs;
 
-                    string conf = System.Text.Json.JsonSerializer.Serialize(config);
-                    File.WriteAllText(path, conf, System.Text.Encoding.UTF8);
-
-                    return true;
+                    if (ConfigUtils.SaveFromConfigToFile(config) == true)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
             }
@@ -115,25 +119,26 @@ namespace EasyJob
         private void MainMenuItemsVisibility()
         {
             // File
-            if (config.restrictions.hide_menu_item_file_reload_config == true) { FileReloadConfigMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_file_open_app_folder == true) { FileOpenAppFolderMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_file_clear_events_list == true) { FileClearEventsLogListMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_file_reload_config == true && config.restrictions.hide_menu_item_file_open_app_folder == true && config.restrictions.hide_menu_item_file_clear_events_list == true) { FileSeparator1.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_file_reload_config == true) { FileReloadConfigMenuItem.Visibility = Visibility.Collapsed; } else { FileReloadConfigMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_file_open_app_folder == true) { FileOpenAppFolderMenuItem.Visibility = Visibility.Collapsed; } else { FileOpenAppFolderMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_file_clear_events_list == true) { FileClearEventsLogListMenuItem.Visibility = Visibility.Collapsed; } else { FileClearEventsLogListMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_file_reload_config == true && config.restrictions.hide_menu_item_file_open_app_folder == true && config.restrictions.hide_menu_item_file_clear_events_list == true) { FileSeparator1.Visibility = Visibility.Collapsed; } else { FileSeparator1.Visibility = Visibility.Visible; }
 
             // Settings
-            if (config.restrictions.hide_menu_item_settings == true) { SettingsMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_settings_workflow == true) { SettingsWorkflowMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_settings_workflow_reorder_tabs == true) { SettingsWorkflowReorderTabsMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_settings_workflow_add_tab == true) { SettingsWorkflowAddTabMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_settings_workflow_remove_current_tab == true) { SettingsWorkflowRemoveCurrentTabMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_settings_workflow_rename_current_tab == true) { SettingsWorkflowRenameCurrentTabMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_settings_workflow_add_button_to_current_tab == true) { SettingsWorkflowAddButtonToCurrentTabMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_settings_workflow_reorder_buttons_in_current_tab == true) { SettingsWorkflowReorderButtonsInCurrentTabMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_settings == true) { SettingsMenuItem.Visibility = Visibility.Collapsed; } else { SettingsMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_settings_workflow == true) { SettingsWorkflowMenuItem.Visibility = Visibility.Collapsed; } else { SettingsWorkflowMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_settings_workflow_reorder_tabs == true) { SettingsWorkflowReorderTabsMenuItem.Visibility = Visibility.Collapsed; } else { SettingsWorkflowReorderTabsMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_settings_workflow_add_tab == true) { SettingsWorkflowAddTabMenuItem.Visibility = Visibility.Collapsed; } else { SettingsWorkflowAddTabMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_settings_workflow_remove_current_tab == true) { SettingsWorkflowRemoveCurrentTabMenuItem.Visibility = Visibility.Collapsed; } else { SettingsWorkflowRemoveCurrentTabMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_settings_workflow_rename_current_tab == true) { SettingsWorkflowRenameCurrentTabMenuItem.Visibility = Visibility.Collapsed; } else { SettingsWorkflowRenameCurrentTabMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_settings_workflow_add_button_to_current_tab == true) { SettingsWorkflowAddButtonToCurrentTabMenuItem.Visibility = Visibility.Collapsed; } else { SettingsWorkflowAddButtonToCurrentTabMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_settings_workflow_reorder_buttons_in_current_tab == true) { SettingsWorkflowReorderButtonsInCurrentTabMenuItem.Visibility = Visibility.Collapsed; } else { SettingsWorkflowReorderButtonsInCurrentTabMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_settings_configuration == true) { SettingsConfigurationMenuItem.Visibility = Visibility.Collapsed; } else { SettingsConfigurationMenuItem.Visibility = Visibility.Visible; }
 
             // Help
-            if (config.restrictions.hide_menu_item_help == true) { HelpMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_help_troubleshooting == true) { HelpTroubleshootingMenuItem.Visibility = Visibility.Collapsed; }
-            if (config.restrictions.hide_menu_item_help_about == true) { HelpAboutMenuItem.Visibility = Visibility.Collapsed; }
+            if (config.restrictions.hide_menu_item_help == true) { HelpMenuItem.Visibility = Visibility.Collapsed; } else { HelpMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_help_troubleshooting == true) { HelpTroubleshootingMenuItem.Visibility = Visibility.Collapsed; } else { HelpTroubleshootingMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_help_about == true) { HelpAboutMenuItem.Visibility = Visibility.Collapsed; } else { HelpAboutMenuItem.Visibility = Visibility.Visible; }
         }
 
         private void AddTextToConsole (string Text, int OwnerTab)
@@ -535,7 +540,7 @@ namespace EasyJob
             }
             catch (Exception ex) 
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 AddTextToEventsList("Process cancelled failed: " + ex.Message, false);
             }
         }
@@ -603,7 +608,7 @@ namespace EasyJob
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 AddTextToEventsList("Relading config failed: " + ex.Message, false);
             }
         }
@@ -615,7 +620,7 @@ namespace EasyJob
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message); 
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error); 
                 AddTextToEventsList("Opened application running folder", false);
             }
         }
@@ -633,6 +638,17 @@ namespace EasyJob
             LoadConfig();
 
             MainTab.Items.Refresh();
+            this.UpdateLayout();
+        }
+
+        private void ConfigurationMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigurationDialog cfg = new ConfigurationDialog(config);
+            cfg.ShowDialog();
+
+            LoadConfig();
+            MainTab.Items.Refresh();
+            MainMenuItemsVisibility();
             this.UpdateLayout();
         }
 

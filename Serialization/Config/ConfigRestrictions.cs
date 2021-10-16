@@ -25,6 +25,7 @@ namespace EasyJob.Serialization
         public bool hide_menu_item_settings_workflow_rename_current_tab { get; set; }
         public bool hide_menu_item_settings_workflow_add_button_to_current_tab { get; set; }
         public bool hide_menu_item_settings_workflow_reorder_buttons_in_current_tab { get; set; }
+        public bool hide_menu_item_settings_configuration { get; set; }
         public bool hide_menu_item_help { get; set; }
         public bool hide_menu_item_help_troubleshooting { get; set; }
         public bool hide_menu_item_help_about { get; set; }
