@@ -79,10 +79,14 @@ namespace EasyJob.Windows
                     config.tabs.Clear();
                     config.tabs = Helper.SaveConfigs(TabItems);
 
-                    string conf = System.Text.Json.JsonSerializer.Serialize(config);
-                    File.WriteAllText(path, conf, Encoding.UTF8);
-
-                    return true;
+                    if (ConfigUtils.SaveFromConfigToFile(config) == true)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 catch
                 {

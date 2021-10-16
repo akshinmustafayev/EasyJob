@@ -7,7 +7,7 @@
         ui:WindowHelper.UseModernWindowStyle="True"
         xmlns:local="clr-namespace:EasyJob.Windows"
         mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Title="Rename tab" Height="260" Width="400">
+        Title="Rename tab" Height="260" Width="400" Icon="pack://application:,,,/Images/icon.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="90"/>

@@ -157,6 +157,11 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
+                <MenuItem Name="SettingsConfigurationMenuItem" Header="Configuration" Click="ConfigurationMenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Images/configuration.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Name="HelpMenuItem" Header="Help">
                 <MenuItem Name="HelpTroubleshootingMenuItem" Header="Troubleshooting" Click="MenuTroubleshooting_Click">
@@ -213,7 +218,7 @@
                                 <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="30"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Margin="2,0,5,0" Padding="5" Content="Clear Output" Click="ClearOutputButton_Click" />
+                            <Button Grid.Column="0" Margin="10,0,5,0" Padding="5" Content="Clear Output" Click="ClearOutputButton_Click" />
                             <Button Grid.Column="2" Margin="0,0,5,0" Padding="5" Click="ScrollToTopButton_Click">
                                 <Image Source="pack://application:,,,/Images/up.png" Margin="-1"/>
                             </Button>

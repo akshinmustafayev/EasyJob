@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+	<item>
+		<name>HelpAddActionButtonText</name>
+		<heading>Text</heading>
+		<description>The button text. This is an actual name of your button which will be shown on the panel.&#10;&#10;Example: "Restart server"</description>
+		<used>Adding button</used>
+	</item>
+	<item>
+		<name>HelpAddActionButtonDescription</name>
+		<heading>Description</heading>
+		<description>The button description. This parameter sets the description for the button which will be shown in tooltip when mouse is on the button.&#10;&#10;Example: "This button restarts specified server"</description>
+		<used>Adding button</used>
+	</item>
+	<item>
+		<name>HelpAddActionButtonScript</name>
+		<heading>Script</heading>
+		<description>The button script file. This is used to set path to the script. Value may differ based on the Script Path Type parameter.&#10;&#10;&#10;Example:&#10;&#10;If Script Path Type parameter is Relative then script file must be put to the direction where is EasyJob is located and should look like: "restart_server.ps1".&#10;&#10;If Script Path Type parameter is Absolute then script file must be put to any other direction and should look like: "C:\your\folder\name\restart_server.ps1"</description>
+		<used>Adding button</used>
+	</item>
+	<item>
+		<name>HelpAddActionButtonScriptPathType</name>
+		<heading>Script path type</heading>
+		<description>The button script path type. My be set to Relative or Absolute. Relative means that your script is in the same folder with an application executable. Absolute means that your script is located in any other folder in your system.&#10;&#10;Example: "Relative"</description>
+		<used>Adding button</used>
+	</item>
+	<item>
+		<name>HelpAddActionButtonScriptType</name>
+		<heading>Script type</heading>
+		<description>The button script type. My be set to PowerShell or Batch script.&#10;&#10;Example: "PowerShell"</description>
+		<used>Adding button</used>
+	</item>
+	<item>
+		<name>HelpAddActionButtonArguments</name>
+		<heading>Arguments</heading>
+		<description>The button arguments. You have to specify list of questions which will be asked when executiong your script.&#10;&#10;Example: "Please specify server DNS name or IP address"</description>
+		<used>Adding button</used>
+	</item>
+</items>
+
