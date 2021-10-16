@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyJob.Windows"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Icon="pack://application:,,,/Images/icon.ico"
         Title="Reorder Tabs" Height="360" Width="280" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>

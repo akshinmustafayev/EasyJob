@@ -6,7 +6,7 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
         xmlns:local="clr-namespace:EasyJob.Windows"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Icon="pack://application:,,,/Images/icon.ico"
         Title="Troubleshooting" Height="450" Width="700" WindowStartupLocation="CenterScreen" Loaded="TroubleshootingWindow_Loaded">
     <Grid>
         <Grid.RowDefinitions>
@@ -33,7 +33,7 @@
         </Grid>
 
         <ui:ScrollViewerEx Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <Grid Margin="0,0,15,0">
+            <Grid Margin="15,0,15,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="180"/>
                     <ColumnDefinition Width="*"/>
@@ -49,23 +49,22 @@
                 <Border Grid.Row="0" Grid.Column="0" BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <TextBlock Text="PowerShell path" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
                 </Border>
-                <TextBlock x:Name="PowerShellPath" Grid.Row="0" Grid.Column="1" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
+                <TextBlock Name="PowerShellPath" Grid.Row="0" Grid.Column="1" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
 
                 <Border Grid.Row="1" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <TextBlock Text="PowerShell arguments" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
                 </Border>
-                <TextBlock x:Name="PowerShellArguments" Grid.Row="1" Grid.Column="1" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
+                <TextBlock Name="PowerShellArguments" Grid.Row="1" Grid.Column="1" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
 
                 <Border Grid.Row="2" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <TextBlock Text="PowerShell version" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
                 </Border>
-                <TextBlock x:Name="PowerShellVersion" Grid.Row="2" Grid.Column="1" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
+                <TextBlock Name="PowerShellVersion" Grid.Row="2" Grid.Column="1" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
 
                 <Border Grid.Row="3" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <TextBlock Text="PowerShell modules" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Top"/>
                 </Border>
-                <TextBlock x:Name="PowerShellModules" Grid.Row="3" Grid.Column="1" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
-
+                <TextBlock Name="PowerShellModules" Grid.Row="3" Grid.Column="1" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
 
             </Grid>
         </ui:ScrollViewerEx>

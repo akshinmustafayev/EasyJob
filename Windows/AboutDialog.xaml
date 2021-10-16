@@ -7,7 +7,7 @@
         ui:WindowHelper.UseModernWindowStyle="True"
         xmlns:local="clr-namespace:EasyJob.Windows"
         mc:Ignorable="d"
-        WindowStyle="SingleBorderWindow"
+        WindowStyle="SingleBorderWindow" Icon="pack://application:,,,/Images/icon.ico"
         Title="About EasyJob" Height="420" Width="640" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid>
@@ -19,9 +19,11 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Padding="12" Grid.Column="0" Text="About" Style="{StaticResource HeaderTextBlockStyle}" Background="#E2E2E2"/>
                 <Image Grid.Column="1" Source="pack://application:,,,/Images/github.png" Height="Auto" Width="Auto" MouseLeftButtonDown="GithubImage_MouseLeftButtonDown" Cursor="Hand" Stretch="Fill"/>
+                <DockPanel Grid.Column="2" Background="#E2E2E2"/>
             </Grid>
             
             <Grid Grid.Row="1">
@@ -35,7 +37,7 @@
 
                 <Label Grid.Row="0" Name="lblTitle" VerticalAlignment="Center" Margin="10,0,10,0" Content="EasyJob Executor"/>
                 <Label Grid.Row="1" Name="lblInfo" VerticalAlignment="Center" Margin="10,0,10,0" Content="Author" />
-                <Label Grid.Row="2" Name="lblLicence" VerticalAlignment="Center" Margin="10,0,10,0" Content="Licence: Apache-2.0" />
+                <Label Grid.Row="2" Name="lblLicence" VerticalAlignment="Center" Margin="10,0,10,0" Content="Licence: GNU AGPLv3" />
                 
                 <RichTextBox Grid.Row="3" Margin="10,10,10,0" Name="RichTextBox1" HorizontalAlignment="Left" Background="Black" Foreground="White"
                          BorderThickness="0" IsDocumentEnabled="True" IsReadOnly="True" VerticalScrollBarVisibility="Visible" FontFamily="Consolas">

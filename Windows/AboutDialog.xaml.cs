@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using EasyJob.Utils;
+using HtmlAgilityPack;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -26,30 +27,10 @@ namespace EasyJob.Windows
         {
             lblTitle.Content = "EasyJob Executor " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
             lblInfo.Content = "Author: Akshin Mustafayev. Contrubutions made to the project by the Github community";
-            string readme = ReadLicenseFile();
+            string readme = CommonUtils.ReadAssemblyFile("LICENSE.txt");
             RichTextBox1.Document.Blocks.Clear();
             var plainText = ConvertToPlainText(readme);
             RichTextBox1.AppendText(plainText);
-        }
-
-        public string ReadLicenseFile()
-        {
-            string name = "LICENSE.txt";
-            // Determine path
-            var assembly = Assembly.GetExecutingAssembly();
-            string resourcePath = name;
-            // Format: "{Namespace}.{Folder}.{filename}.{Extension}"
-            if (!name.StartsWith(nameof(EasyJob)))
-            {
-                resourcePath = assembly.GetManifestResourceNames()
-                    .Single(str => str.EndsWith(name));
-            }
-
-            using (Stream stream = assembly.GetManifestResourceStream(resourcePath))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
         }
 
         private static void ConvertContentTo(HtmlNode node, TextWriter outText)
@@ -132,38 +113,17 @@ namespace EasyJob.Windows
 
         private void GetInspirationButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Process proc = new Process();
-                proc.StartInfo.UseShellExecute = true;
-                proc.StartInfo.FileName = "https://www.youtube.com/watch?v=l0U7SxXHkPY";
-                proc.Start();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            CommonUtils.OpenLinkInBrowser("https://www.youtube.com/watch?v=l0U7SxXHkPY");
         }
 
         private void CheckNewReleasesButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Process proc = new Process();
-                proc.StartInfo.UseShellExecute = true;
-                proc.StartInfo.FileName = "https://github.com/akshinmustafayev/EasyJob/releases";
-                proc.Start();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            CommonUtils.OpenLinkInBrowser("https://github.com/akshinmustafayev/EasyJob/releases");
         }
 
         private void GithubImage_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            try
-            {
-                Process proc = new Process();
-                proc.StartInfo.UseShellExecute = true;
-                proc.StartInfo.FileName = "https://github.com/akshinmustafayev/EasyJob";
-                proc.Start();
-            }
-            catch (Exception ex){ MessageBox.Show(ex.Message); }
+            CommonUtils.OpenLinkInBrowser("https://github.com/akshinmustafayev/EasyJob");
         }
     }
 }
