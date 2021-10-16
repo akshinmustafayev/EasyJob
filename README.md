@@ -54,6 +54,7 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 * You can remove Tabs from the _Settings->Workflow->Rename current tab_ context menu
 * You can remove Add buttons from the _Settings->Workflow->Add button to current_ tab context menu
 * You can reorder buttons from the _Settings->Workflow->Reorder buttons in current_ tab context menu
+* You can change application settings from the _Settings->Configuration_ context menu
 
 
 ## Configuration
@@ -88,6 +89,7 @@ Here is an example:
     "hide_menu_item_settings_workflow_rename_current_tab": false,
     "hide_menu_item_settings_workflow_add_button_to_current_tab": false,
     "hide_menu_item_settings_workflow_reorder_buttons_in_current_tab": false,
+    "hide_menu_item_settings_configuration": false,
     "hide_menu_item_help": false,
     "hide_menu_item_help_troubleshooting": false,
     "hide_menu_item_help_about": false
