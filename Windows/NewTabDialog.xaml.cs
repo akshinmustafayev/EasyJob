@@ -110,5 +110,9 @@ namespace EasyJob.Windows
                 MessageBox.Show("Tab header name should not be empty.");
             }
         }
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
     }
 }

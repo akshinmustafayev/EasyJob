@@ -45,30 +45,26 @@ namespace EasyJob.Windows
 
         private string ConvertScriptTypeComboBoxToString(ComboBox cb)
         {
-            string result = "";
             if (cb.SelectedIndex == 0)
             {
-                result = "powershell";
+                return "powershell";
             }
             else
             {
-                result = "bat";
+                return "bat";
             }
-            return result;
         }
 
         private string ConvertScriptPathTypeComboBoxToString(ComboBox cb)
         {
-            string result = "";
             if (cb.SelectedIndex == 0)
             {
-                result = "relative";
+                return "relative";
             }
             else
             {
-                result = "absolute";
+                return "absolute";
             }
-            return result;
         }
 
         private void ADDButton_Click(object sender, RoutedEventArgs e)
@@ -97,7 +93,7 @@ namespace EasyJob.Windows
             actionButton.ButtonDescription = ButtonDescription.Text;
             actionButton.ButtonScript = ButtonScript.Text;
             actionButton.ButtonScriptPathType = ConvertScriptPathTypeComboBoxToString(ButtonScriptPathType);
-            actionButton.ButtonScriptType = ConvertScriptPathTypeComboBoxToString(ButtonScriptType);
+            actionButton.ButtonScriptType = ConvertScriptTypeComboBoxToString(ButtonScriptType);
 
             actionButton.ButtonArguments.Clear();
             foreach (Answer ans in ButtonScriptArguments.Items)

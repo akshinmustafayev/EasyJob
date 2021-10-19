@@ -6,20 +6,37 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
         xmlns:local="clr-namespace:EasyJob.Windows"
-        mc:Ignorable="d" Icon="pack://application:,,,/Images/icon.ico"
-        Title="Help" Height="350" Width="250" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Icon="pack://application:,,,/Images/help.png"
+        Title="Help" Height="470" Width="300" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Name="HelpHeading" Text="" Padding="10" Background="#E2E2E2" FontSize="30" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Grid.Row="0" Name="HelpHeading" Text="" Padding="10" Background="#E2E2E2" FontSize="30" VerticalAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"/>
         <TextBlock Grid.Row="1" Name="HelpUsed" Text="" Padding="10,12,10,6" Foreground="#404040" TextWrapping="Wrap"/>
-
+        
         <ui:ScrollViewerEx Grid.Row="2" VerticalScrollBarVisibility="Auto">
-            <TextBlock Name="HelpDescription" Padding="10,8,10,8" TextWrapping="Wrap" FontStyle="Italic"/>
+            <Grid Name="HelpInfoGrid" Margin="15,0,15,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Name="HelpDescription" Padding="0,8,0,8" TextWrapping="Wrap" FontStyle="Italic"/>
+                <MediaElement Grid.Row="1" Name="HelpVideo" LoadedBehavior="Manual"/>
+                <Button Grid.Row="1" Margin="5" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ReloadVideoButton_Click">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent">
+                        <Image Source="pack://application:,,,/Images/reload.png" Margin="-8,-4,-8,-4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Grid.Row="1" Margin="5,5,30,5" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Top" Click="StopVideoButton_Click">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent">
+                        <Image Source="pack://application:,,,/Images/stop.png" Margin="-6,-2,-6,-2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
         </ui:ScrollViewerEx>
     </Grid>
 </Window>

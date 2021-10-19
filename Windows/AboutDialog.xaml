@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:EasyJob.Windows"
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow" Icon="pack://application:,,,/Images/icon.ico"
-        Title="About EasyJob" Height="420" Width="640" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="About EasyJob" Height="430" Width="640" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -32,7 +32,7 @@
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="44"/>
+                    <RowDefinition Height="55"/>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Name="lblTitle" VerticalAlignment="Center" Margin="10,0,10,0" Content="EasyJob Executor"/>

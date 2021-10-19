@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
@@ -37,6 +37,7 @@
     <None Remove="Images\renametab.png" />
     <None Remove="Images\reorderbuttons.png" />
     <None Remove="Images\reordertabs.png" />
+    <None Remove="Images\stop.png" />
     <None Remove="Images\troubleshoot.png" />
     <None Remove="Images\up.png" />
     <None Remove="Images\workflow.png" />
@@ -70,6 +71,7 @@
     <Resource Include="Images\reorderbuttons.png" />
     <Resource Include="Images\reordertabs.png" />
     <Resource Include="Images\configuration.png" />
+    <Resource Include="Images\stop.png" />
     <Resource Include="Images\troubleshoot.png" />
     <Resource Include="Images\up.png" />
     <Resource Include="Images\workflow.png" />
@@ -83,6 +85,105 @@
 
   <ItemGroup>
     <None Update="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpAddActionButtonArguments.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpAddActionButtonDescription.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpAddActionButtonScript.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpAddActionButtonScriptPathType.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpAddActionButtonScriptType.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpAddActionButtonText.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationBlockButtonsAdd.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationBlockButtonsEdit.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationBlockButtonsRemove.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationBlockButtonsReorder.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationBlockTabsAdd.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationBlockTabsRemove.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationClearEventsWhenReload.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationConsoleBackground.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationConsoleForeground.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationDefaultCMDPath.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationDefaultPowershellPath.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideAbout.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideClearEventsList.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideFileOpenAppFolder.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideFileReloadConfig.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideHelp.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideSettings.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideSettingsConfiguration.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideSettingsWorkflow.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideSettingsWorkflowAddButtonToCurrentTab.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideSettingsWorkflowAddTab.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideSettingsWorkflowRemoveCurrentTab.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideSettingsWorkflowRenameCurrentTab.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideSettingsWorkflowReorderButtonsInCurrentTab.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideSettingsWorkflowReorderTabs.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideTroubleshooting.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationPowerShellArguments.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
