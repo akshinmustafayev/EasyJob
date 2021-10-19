@@ -42,30 +42,26 @@ namespace EasyJob.Windows
         
         private string ConvertScriptTypeComboBoxToString(ComboBox cb)
         {
-            string result = "";
             if(cb.SelectedIndex == 0)
             {
-                result = "powershell";
+                return "powershell";
             }
             else
             {
-                result = "bat";
+                return "bat";
             }
-            return result;
         }
 
         private string ConvertScriptPathTypeComboBoxToString(ComboBox cb)
         {
-            string result = "";
             if (cb.SelectedIndex == 0)
             {
-                result = "relative";
+                return "relative";
             }
             else
             {
-                result = "absolute";
+                return "absolute";
             }
-            return result;
         }
 
         private void CANCELButton_Click(object sender, RoutedEventArgs e)

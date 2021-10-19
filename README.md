@@ -33,28 +33,28 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 
 ## Features
-* You can _Remove_ or _Edit_ button from the GUI by right mouse click on it and then select item in the context menu. Settings are automatically will be saved to your config.json file.
+* _Remove_ or _Edit_ button from the GUI by right mouse click on it and then select item in the context menu. Settings are automatically will be saved to your config.json file.
 
 ![image](https://user-images.githubusercontent.com/29357955/136830752-7c1ab401-3f90-4421-b0d5-21468ac80d08.png)
 
 
-* You can _Remove_ or _Add_ tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
+* _Remove_ or _Add_ tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
 
 ![image](https://user-images.githubusercontent.com/29357955/136830773-9adaf839-fb6f-4019-b537-3d332df94481.png)
 
 
-* You can _Add_ button from the GUI by right mouse click on button bar and then select Add button.
+* _Add_ button from the GUI by right mouse click on button bar and then select Add button.
 
 ![image](https://user-images.githubusercontent.com/29357955/137178361-2cd10c94-a4ac-4673-9d9d-02109ea29f21.png)
 
 
-* You can reorder Tabs from the _Settings->Workflow->Reorder_ tabs context menu
-* You can add Tabs from the _Settings->Workflow->Add tab_ context menu
-* You can rename Tabs from the _Settings->Workflow->Remove current tab_ context menu
-* You can remove Tabs from the _Settings->Workflow->Rename current tab_ context menu
-* You can remove Add buttons from the _Settings->Workflow->Add button to current_ tab context menu
-* You can reorder buttons from the _Settings->Workflow->Reorder buttons in current_ tab context menu
-* You can change application settings from the _Settings->Configuration_ context menu
+* Reorder Tabs from the _Settings->Workflow->Reorder_ tabs window
+* Add Tabs from the _Settings->Workflow->Add tab_ window
+* Rename Tabs from the _Settings->Workflow->Remove current tab_ window
+* Remove Tabs from the _Settings->Workflow->Rename current tab_ window
+* Remove Add buttons from the _Settings->Workflow->Add button to current_ tab window
+* Reorder buttons from the _Settings->Workflow->Reorder buttons in current_ tab window
+* Change application settings from the _Settings->Configuration_ window
 
 
 ## Configuration
@@ -189,7 +189,7 @@ _SHIFT+Left Mouse Click_ on the button will open the script attached to the butt
 
 ![image](https://user-images.githubusercontent.com/29357955/136832285-faf648b8-350f-4f23-9a88-7caf0a5a9bfd.png)
 
-6. Open __C:\temp\EasyJob-main\bin\Release\net5.0-windows__ and execute EasyJob.exe
+6. Open __C:\temp\EasyJob-main\bin\Release\net5.0-windows__ and execute __EasyJob.exe__
 
 ![image](https://user-images.githubusercontent.com/29357955/136832429-e348ae24-051a-4e30-af9f-f52d3819270a.png)
 

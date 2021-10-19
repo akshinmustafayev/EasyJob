@@ -148,11 +148,11 @@ namespace EasyJob
                 return;
             }
 
-            this.Dispatcher.Invoke(() =>
-            {
+            //this.Dispatcher.Invoke(() =>
+            //{
                 TabData td = (TabData)MainTab.Items[OwnerTab];
                 td.TabTextBoxText = td.TabTextBoxText + Environment.NewLine + Text;
-            });
+            //});
         }
 
         public void AddTextToEventsList(string Text, bool IsAsync)
@@ -302,12 +302,13 @@ namespace EasyJob
         private void ShowAddNewTabDialog()
         {
             NewTabDialog ntd = new NewTabDialog();
-            ntd.ShowDialog();
+            if(ntd.ShowDialog() == true)
+            {
+                LoadConfig();
 
-            LoadConfig();
-
-            MainTab.Items.Refresh();
-            this.UpdateLayout();
+                MainTab.Items.Refresh();
+                this.UpdateLayout();
+            }
         }
 
         private void ShowReorderActionButtonsDialog()
