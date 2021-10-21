@@ -1,0 +1,21 @@
+﻿<UserControl
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:xt="http://schemas.xceed.com/wpf/xaml/toolkit"
+			 xmlns:asis="clr-namespace:WpfRichText" 
+			xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic" 
+			x:Class="WpfRichText.RichTextEditor" x:Name="uxRichTextEditor">
+	
+	<Grid Background="{Binding BorderBrush, ElementName=uxRichTextEditor}">
+        <RichTextBox x:Name="mainRTB" 
+			AcceptsTab="True" 
+			asis:RichTextBoxAssistant.BoundDocument="{Binding Text, ElementName=uxRichTextEditor}" 
+			MinHeight="100" 
+			IsReadOnly="{Binding IsReadOnly, ElementName=uxRichTextEditor}" 
+			Background="{Binding Background, ElementName=uxRichTextEditor}"
+			Foreground="{Binding Foreground, ElementName=uxRichTextEditor}"
+			BorderBrush="{Binding BorderBrush, ElementName=uxRichTextEditor}" 
+			BorderThickness="{Binding BorderThickness, ElementName=uxRichTextEditor}" 
+            FontFamily="Consolas"/>
+    </Grid>
+</UserControl>

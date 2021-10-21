@@ -22,23 +22,57 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="44"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Text"/>
-        <TextBox x:Name="ButtonText" Grid.Row="1" Margin="10,2,10,0" FontSize="14" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="2" Margin="10,0,0,0" FontSize="14" VerticalAlignment="Bottom" Text="Description"/>
+        <DockPanel Grid.Row="0">
+            <TextBlock Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Text" HorizontalAlignment="Left"/>
+            <Button Name="HelpAddActionButtonText" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+                <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
+            </Button>
+        </DockPanel><TextBox x:Name="ButtonText" Grid.Row="1" Margin="10,2,10,0" FontSize="14" VerticalAlignment="Center"/>
+
+        <DockPanel Grid.Row="2">
+            <TextBlock Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Description" HorizontalAlignment="Left"/>
+            <Button Name="HelpAddActionButtonDescription" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+                <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
+            </Button>
+        </DockPanel>
         <TextBox x:Name="ButtonDescription" Grid.Row="3" Margin="10,2,10,0" FontSize="14" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
-        <TextBlock Grid.Row="4" Margin="10,0,0,0" FontSize="14" VerticalAlignment="Bottom" Text="Script"/>
+
+        <DockPanel Grid.Row="4">
+            <TextBlock Grid.Row="4" Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Script" HorizontalAlignment="Left"/>
+            <Button Name="HelpAddActionButtonScript" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+                <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
+            </Button>
+        </DockPanel>
         <TextBox x:Name="ButtonScript" Grid.Row="5" Margin="10,2,10,0" FontSize="14" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
-        <TextBlock Grid.Row="6" Margin="10,0,0,0" FontSize="14" VerticalAlignment="Bottom" Text="Script path type"/>
+
+        <DockPanel Grid.Row="6">
+            <TextBlock Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Script path type" HorizontalAlignment="Left"/>
+            <Button Name="HelpAddActionButtonScriptPathType" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+                <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
+            </Button>
+        </DockPanel>
         <ComboBox x:Name="ButtonScriptPathType" Grid.Row="7" Margin="10,2,10,0" FontSize="14">
             <ComboBoxItem IsSelected="True">Relative</ComboBoxItem>
             <ComboBoxItem >Absolute</ComboBoxItem>
         </ComboBox>
-        <TextBlock Grid.Row="8" Margin="10,0,0,0" FontSize="14" VerticalAlignment="Bottom" Text="Script type"/>
+
+        <DockPanel Grid.Row="8">
+            <TextBlock Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Script type" HorizontalAlignment="Left"/>
+            <Button Name="HelpAddActionButtonScriptType" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+                <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
+            </Button>
+        </DockPanel>
         <ComboBox x:Name="ButtonScriptType" Grid.Row="9" Margin="10,2,10,0" FontSize="14">
             <ComboBoxItem IsSelected="True">PowerShell</ComboBoxItem>
             <ComboBoxItem >Batch</ComboBoxItem>
         </ComboBox>
-        <TextBlock Grid.Row="10" Margin="10,0,0,0" FontSize="14" VerticalAlignment="Bottom" Text="Arguments"/>
+
+        <DockPanel Grid.Row="10">
+            <TextBlock Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Arguments" HorizontalAlignment="Left"/>
+            <Button Name="HelpAddActionButtonArguments" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+                <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
+            </Button>
+        </DockPanel>
         <Grid Grid.Row="11">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -63,7 +97,7 @@
             <Button Grid.Row="1" Content="Add" Click="ADDButton_Click" Margin="10,0,0,0" Padding="5"/>
             <TextBox x:Name="ButtonScriptArgumentText" Grid.Row="2" Margin="55,6,10,6"/>
         </Grid>
-        <Button Grid.Row="13" Content="Save" Margin="5" Padding="5" HorizontalAlignment="Right" Click="SaveButton_Click"/>
+        <Button Grid.Row="13" Content="Save" Margin="5" Padding="5" HorizontalAlignment="Right" Style="{StaticResource AccentButtonStyle}" Click="SaveButton_Click"/>
         <Button Grid.Row="13" Content="Cancel" Margin="5,5,50,5" Padding="5" HorizontalAlignment="Right" Click="CancelButton_Click"/>
     </Grid>
 </Window>

@@ -16,6 +16,7 @@ using EasyJob.TabItems;
 using EasyJob.Utils;
 using EasyJob.Windows;
 using Newtonsoft.Json;
+using WpfRichText;
 
 namespace EasyJob
 {
@@ -23,10 +24,10 @@ namespace EasyJob
     {
         TabData selectedTabItem = null;
         ActionButton selectedActionButton = null;
-        public string configJson = "";
-        public Config config;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
-        
+        public Config config;
+        public string configJsonPath = AppDomain.CurrentDomain.BaseDirectory + "config.json";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -36,16 +37,16 @@ namespace EasyJob
 
         public void LoadConfig()
         {
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "config.json"))
+            if (File.Exists(configJsonPath))
             {
                 try
                 {
-                    configJson = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "config.json");
+                    string configJson = File.ReadAllText(configJsonPath);
                     config = JsonConvert.DeserializeObject<Config>(configJson);
 
                     MainTab.ItemsSource = Helper.LoadConfigs(config);
 
-                    AddTextToEventsList("Config loaded from file: " + AppDomain.CurrentDomain.BaseDirectory + "config.json", false);
+                    AddTextToEventsList("Config loaded from file: " + configJsonPath, false);
                 }
                 catch (Exception ex)
                 {
@@ -55,14 +56,13 @@ namespace EasyJob
             }
             else
             {
-                MessageBox.Show("File " + AppDomain.CurrentDomain.BaseDirectory + "config.json does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("File " + configJsonPath + " does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         public bool SaveConfig()
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "config.json";
-            if (File.Exists(path))
+            if (File.Exists(configJsonPath))
             {
                 try
                 {
@@ -151,7 +151,7 @@ namespace EasyJob
             //this.Dispatcher.Invoke(() =>
             //{
                 TabData td = (TabData)MainTab.Items[OwnerTab];
-                td.TabTextBoxText = td.TabTextBoxText + Environment.NewLine + Text;
+                td.TabTextBoxText = td.TabTextBoxText + "<br>" + Text;
             //});
         }
 
@@ -309,6 +309,10 @@ namespace EasyJob
                 MainTab.Items.Refresh();
                 this.UpdateLayout();
             }
+            else
+            {
+                AddTextToEventsList("Adding new Tab cancelled by user", false);
+            }
         }
 
         private void ShowReorderActionButtonsDialog()
@@ -320,6 +324,7 @@ namespace EasyJob
 
             MainTab.Items.Refresh();
             this.UpdateLayout();
+            AddTextToEventsList("Reorder action buttons dialog ended!", false);
         }
 
         public void ClearOutputButton_Click(object sender, RoutedEventArgs e)
@@ -425,7 +430,7 @@ namespace EasyJob
             }
 
             List<Answer> buttonArguments = ((ActionButton)actionButton.DataContext).ButtonArguments;
-            AddTextToConsole("Start script: " + scriptPath + Environment.NewLine + "===============================================================" + Environment.NewLine, ownerTab);
+            AddTextToConsole("Start script: " + scriptPath + "<br><span style=\"color:yellow;\">=====================================================================</span><br>", ownerTab);
             AddTextToEventsList("Execution of " + scriptPath + " has been started.", false);
 
             if (buttonArguments.Count == 0)
@@ -489,7 +494,7 @@ namespace EasyJob
             {
                 RemoveTaskFromTasksList(process.Id, true);
                 tcs.SetResult(process.ExitCode);
-                AddTextToConsole(Environment.NewLine + "Task finished!" + Environment.NewLine, OwnerTab);
+                AddTextToConsole("<br><span style=\"color:yellow;\">Task finished!</span><br>", OwnerTab);
                 AddTextToEventsList("Task " + process.StartInfo.Arguments.Replace("-File ", "") + " finished", true);
                 ScrollToBottomListBox(EventsList, true);
             };
@@ -506,7 +511,7 @@ namespace EasyJob
                 {
                     if (ea.Data != "")
                     {
-                        AddTextToConsole("Error: " + ea.Data, OwnerTab);
+                        AddTextToConsole("<span style=\"color:red;\">Error: " + ea.Data + "</span>", OwnerTab);
                         AddTextToEventsList("Task " + process.StartInfo.Arguments.Replace("-File ", "") + " failed", true);
                     }
                 }
@@ -550,8 +555,11 @@ namespace EasyJob
         {
             try
             {
-                TextBox console = FindVisualChild<TextBox>(MainTab);
-                console.ScrollToHome();
+                RichTextEditor console = FindVisualChild<RichTextEditor>(MainTab);
+                console.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+                var scrollViewElement = console.Parent;
+                ScrollViewer scrollView = scrollViewElement as ScrollViewer;
+                scrollView.ScrollToTop();
             }
             catch { }
         }
@@ -560,8 +568,11 @@ namespace EasyJob
         {
             try
             {
-                TextBox console = FindVisualChild<TextBox>(MainTab);
-                console.ScrollToEnd();
+                RichTextEditor console = FindVisualChild<RichTextEditor>(MainTab);
+                console.MoveFocus(new TraversalRequest(FocusNavigationDirection.Last));
+                var scrollViewElement = console.Parent;
+                ScrollViewer scrollView = scrollViewElement as ScrollViewer;
+                scrollView.ScrollToBottom();
             }
             catch { }
         }
@@ -582,7 +593,6 @@ namespace EasyJob
             }
             return null;
         }
-
 
 
         #region MenuItems
@@ -640,6 +650,7 @@ namespace EasyJob
 
             MainTab.Items.Refresh();
             this.UpdateLayout();
+            AddTextToEventsList("Reorder tabs dialog ended!", false);
         }
 
         private void ConfigurationMenuItem_Click(object sender, RoutedEventArgs e)
@@ -651,6 +662,7 @@ namespace EasyJob
             MainTab.Items.Refresh();
             MainMenuItemsVisibility();
             this.UpdateLayout();
+            AddTextToEventsList("Configuration dialog ended!", false);
         }
 
         private void AddTabMenuItem_Click(object sender, RoutedEventArgs e)
