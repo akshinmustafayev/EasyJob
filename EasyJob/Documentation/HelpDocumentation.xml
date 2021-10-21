@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+	<item>
+		<name>HelpAddActionButtonText</name>
+		<heading>Text</heading>
+		<description>The button text. This is an actual name of your button which will be shown on the panel.&#10;&#10;Example: "Restart server"</description>
+		<used>Adding button</used>
+		<video>HelpAddActionButtonText.mp4</video>
+	</item>
+	<item>
+		<name>HelpAddActionButtonDescription</name>
+		<heading>Description</heading>
+		<description>The button description. This parameter sets the description for the button which will be shown in tooltip when mouse is on the button.&#10;&#10;Example: "This button restarts specified server"</description>
+		<used>Adding button</used>
+		<video>HelpAddActionButtonDescription.mp4</video>
+	</item>
+	<item>
+		<name>HelpAddActionButtonScript</name>
+		<heading>Script</heading>
+		<description>The button script file. This is used to set path to the script. Value may differ based on the Script Path Type parameter.&#10;&#10;&#10;Example:&#10;&#10;If Script Path Type parameter is Relative then script file must be put to the direction where is EasyJob is located and should look like: "restart_server.ps1".&#10;&#10;If Script Path Type parameter is Absolute then script file must be put to any other direction and should look like: "C:\your\folder\name\restart_server.ps1"</description>
+		<used>Adding button</used>
+		<video>HelpAddActionButtonScript.mp4</video>
+	</item>
+	<item>
+		<name>HelpAddActionButtonScriptPathType</name>
+		<heading>Script path type</heading>
+		<description>The button script path type. My be set to Relative or Absolute. Relative means that your script is in the same folder with an application executable. Absolute means that your script is located in any other folder in your system.&#10;&#10;Example: "Relative"</description>
+		<used>Adding button</used>
+		<video>HelpAddActionButtonScriptPathType.mp4</video>
+	</item>
+	<item>
+		<name>HelpAddActionButtonScriptType</name>
+		<heading>Script type</heading>
+		<description>The button script type. My be set to PowerShell or Batch script.&#10;&#10;Example: "PowerShell"</description>
+		<used>Adding button</used>
+		<video>HelpAddActionButtonScriptType.mp4</video>
+	</item>
+	<item>
+		<name>HelpAddActionButtonArguments</name>
+		<heading>Arguments</heading>
+		<description>The button arguments. You have to specify list of questions which will be asked when executiong your script.&#10;&#10;Example: "Please specify server DNS name or IP address"</description>
+		<used>Adding button</used>
+		<video>HelpAddActionButtonArguments.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationDefaultPowershellPath</name>
+		<heading>Default PowerShell path</heading>
+		<description>Absolute path to PowerShell.exe. You can specify path to new versions of PowerShell.&#10;&#10;Example: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationDefaultPowershellPath.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationDefaultCMDPath</name>
+		<heading>Default CMD path</heading>
+		<description>Absolute path to command promt.&#10;&#10;Example: "C:\Windows\System32\cmd.exe"</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationDefaultCMDPath.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationPowerShellArguments</name>
+		<heading>PowerShell arguments</heading>
+		<description>Additional parameters sent to PowerShell.&#10;&#10;Example: -ExecutionPolicy Unrestricted</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationPowerShellArguments.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationConsoleBackground</name>
+		<heading>Console background</heading>
+		<description>Background color of the console.&#10;&#10;Example: Black</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationConsoleBackground.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationConsoleForeground</name>
+		<heading>Console foreground</heading>
+		<description>Color of the text in the console.&#10;&#10;Example: Red</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationConsoleForeground.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationClearEventsWhenReload</name>
+		<heading>Clear events when reload</heading>
+		<description>Clear events on Events list after configuration reload from the File-> Reload config menu.&#10;&#10;Example: Yes</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationClearEventsWhenReload.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockTabsRemove</name>
+		<heading>Block tabs remove</heading>
+		<description>Hides "Remove Tab" context menu item from when Right click on the Tab.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationBlockTabsRemove.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockButtonsRemove</name>
+		<heading>Block buttons remove</heading>
+		<description>Hides "Remove button" context menu item when Right click on the buttons bar.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationBlockButtonsRemove.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockTabsAdd</name>
+		<heading>Block tabs add</heading>
+		<description>Hides "Add tab" context menu item when Right Click on the Tab.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationBlockTabsAdd.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockButtonsAdd</name>
+		<heading>Block buttons add</heading>
+		<description>Hides "Add button" context menu item when Right click on the buttons bar.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationBlockButtonsAdd.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockButtonsReorder</name>
+		<heading>Block buttons reorder</heading>
+		<description>Hides "Reorder buttons" context menu item when Right click on the buttons bar.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationBlockButtonsReorder.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockButtonsEdit</name>
+		<heading>Block buttons edit</heading>
+		<description>Hides "Edit button" context menu item when Right click on the button.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationBlockButtonsEdit.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideFileReloadConfig</name>
+		<heading>Hide File->Reload config</heading>
+		<description>Hides "File->Reload config" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideFileReloadConfig.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideFileOpenAppFolder</name>
+		<heading>Hide File->Open app folder</heading>
+		<description>Hides "File->Open app folder" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideFileOpenAppFolder.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideClearEventsList</name>
+		<heading>Hide File->Clear events list</heading>
+		<description>Hides "Hide File->Clear events list" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideClearEventsList.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideSettings</name>
+		<heading>Hide Settings</heading>
+		<description>Hides "Hide Settings" main menu item.&#10;&#10;Example: No&#10;&#10;Note: In order to bring back Settings menu, you have to manually find "hide_menu_item_settings" parameter in config.json and change its value to "false"</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideSettings.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideSettingsWorkflow</name>
+		<heading>Hide Settings->Workflow</heading>
+		<description>Hides "Hide Settings->Workflow" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideSettingsWorkflow.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideSettingsWorkflowReorderTabs</name>
+		<heading>Hide Settings->Workflow->Reorder tabs</heading>
+		<description>Hides "Hide Settings->Workflow->Reorder tabs" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideSettingsWorkflowReorderTabs.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideSettingsWorkflowAddTab</name>
+		<heading>Hide Settings->Workflow->Add tab</heading>
+		<description>Hides "Hide Settings->Workflow->Add tab" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideSettingsWorkflowAddTab.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideSettingsWorkflowRemoveCurrentTab</name>
+		<heading>Hide Settings->Workflow->Remove current tab</heading>
+		<description>Hides "Hide Settings->Workflow->Remove current tab" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideSettingsWorkflowRemoveCurrentTab.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideSettingsWorkflowRenameCurrentTab</name>
+		<heading>Hide Settings->Workflow->Rename current tab</heading>
+		<description>Hides "Hide Settings->Workflow->Rename current tab" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideSettingsWorkflowRenameCurrentTab.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideSettingsWorkflowAddButtonToCurrentTab</name>
+		<heading>Hide Settings->Workflow->Add button to current tab" main menu item.&#10;&#10;Example: No</heading>
+		<description>Hides "Hide Settings->Workflow->Add button to current tab</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideSettingsWorkflowAddButtonToCurrentTab.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideSettingsWorkflowReorderButtonsInCurrentTab</name>
+		<heading>Hide Settings->Workflow->Reorder buttons in current tab</heading>
+		<description>Hides "Hide Settings->Workflow->Reorder buttons in current tab" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideSettingsWorkflowReorderButtonsInCurrentTab.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideSettingsConfiguration</name>
+		<heading>Hide Settings->Configuration</heading>
+		<description>Hides "Hide Settings->Configuration" main menu item.&#10;&#10;Example: No&#10;&#10;Note: In order to bring back Configuration menu, you have to manually find "hide_menu_item_settings_configuration" parameter in config.json and change its value to "false"</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideSettingsConfiguration.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideHelp</name>
+		<heading>Hide Help</heading>
+		<description>Hides "Hide Help" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideHelp.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideTroubleshooting</name>
+		<heading>Hide Help->Troubleshooting</heading>
+		<description>Hides "Hide Help->Troubleshooting" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideTroubleshooting.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationHideAbout</name>
+		<heading>Hide Help->About</heading>
+		<description>Hides "Hide Help->About" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideAbout.mp4</video>
+	</item>
+</items>
+
