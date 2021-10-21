@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfRichText", "WpfRichText\WpfRichText.csproj", "{78147C43-DB7B-4571-BC7A-E7F0075B4B78}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78147C43-DB7B-4571-BC7A-E7F0075B4B78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78147C43-DB7B-4571-BC7A-E7F0075B4B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78147C43-DB7B-4571-BC7A-E7F0075B4B78}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{78147C43-DB7B-4571-BC7A-E7F0075B4B78}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{78147C43-DB7B-4571-BC7A-E7F0075B4B78}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{78147C43-DB7B-4571-BC7A-E7F0075B4B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78147C43-DB7B-4571-BC7A-E7F0075B4B78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78147C43-DB7B-4571-BC7A-E7F0075B4B78}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{78147C43-DB7B-4571-BC7A-E7F0075B4B78}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{78147C43-DB7B-4571-BC7A-E7F0075B4B78}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1ADBABE2-7721-42E2-AE94-7B66D165C486}
+	EndGlobalSection
+EndGlobal

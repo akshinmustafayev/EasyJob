@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpfRichTextBox="clr-namespace:WpfRichText;assembly=WpfRichText"
         xmlns:ej="clr-namespace:EasyJob.Windows"
         xmlns:local="clr-namespace:EasyJob" 
         xmlns:myAttachedProperties="clr-namespace:EasyJob.Utils" 
@@ -210,7 +211,10 @@
                             </ItemsControl>
                         </ScrollViewer>
                         <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"/>
-                        <TextBox Grid.Row="2" myAttachedProperties:TextBoxAttachedProperties.AutoScrollToEnd="True" Text="{Binding Path=TabTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" FontFamily="Consolas" Background="{Binding Path=ConsoleBackground}" Foreground="{Binding Path=ConsoleForeground}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled"/>
+                        <ScrollViewer Grid.Row="2" myAttachedProperties:ScrollViewerExtensions.AlwaysScrollToEnd="True">
+                            <wpfRichTextBox:RichTextEditor Text="{Binding Path=TabTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Consolas" Background="{Binding Path=ConsoleBackground}" Foreground="{Binding Path=ConsoleForeground}"/>
+                            <!--<TextBox Text="{Binding Path=TabTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" FontFamily="Consolas" Background="{Binding Path=ConsoleBackground}" Foreground="{Binding Path=ConsoleForeground}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled"/>-->
+                        </ScrollViewer>
                         <Grid Grid.Row="3" Margin="0,5,0,5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -219,10 +223,10 @@
                                 <ColumnDefinition Width="30"/>
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0" Margin="10,0,5,0" Padding="5" Content="Clear Output" Click="ClearOutputButton_Click" />
-                            <Button Grid.Column="2" Margin="0,0,5,0" Padding="5" Click="ScrollToTopButton_Click">
+                            <Button x:Name="ScrollToTopButton" Grid.Column="2" Margin="0,0,5,0" Padding="5" Click="ScrollToTopButton_Click">
                                 <Image Source="pack://application:,,,/Images/up.png" Margin="-1"/>
                             </Button>
-                            <Button Grid.Column="3"  Margin="0,0,5,0" Padding="5" Click="ScrollToBottomButton_Click">
+                            <Button x:Name="ScrollToBottomButton" Grid.Column="3"  Margin="0,0,5,0" Padding="5" Click="ScrollToBottomButton_Click">
                                 <Image Source="pack://application:,,,/Images/down.png" Margin="-1"/>
                             </Button>
                         </Grid>
