@@ -23,11 +23,11 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 
 ## Overview
-![image](https://user-images.githubusercontent.com/29357955/136666562-90ae503d-f60c-4528-a2ae-db3b666d14ae.png)
+![image](https://user-images.githubusercontent.com/29357955/138327334-02aedf80-3119-4220-8f2e-1d27ca680e26.png)
 
-![image](https://user-images.githubusercontent.com/29357955/136666569-27cd5987-8a63-4ded-973a-942f655ce5a0.png)
+![image](https://user-images.githubusercontent.com/29357955/138327363-072fe889-745d-4f57-b8df-7ce567258191.png)
 
-![image](https://user-images.githubusercontent.com/29357955/136707109-41022bd8-7966-4a8d-ae30-4ce3acb230c9.png)
+![image](https://user-images.githubusercontent.com/29357955/138327384-740485f3-1a0a-4717-81a0-75f209207c32.png)
 
 ![image](https://user-images.githubusercontent.com/29357955/136707408-518324f0-1de3-4b66-9d77-ed186d25c1fe.png)
 
@@ -55,6 +55,7 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 * Remove Add buttons from the _Settings->Workflow->Add button to current_ tab window
 * Reorder buttons from the _Settings->Workflow->Reorder buttons in current_ tab window
 * Change application settings from the _Settings->Configuration_ window
+* Colored console support
 
 
 ## Configuration
