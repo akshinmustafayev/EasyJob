@@ -1,0 +1,159 @@
+{
+  "default_powershell_path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "default_cmd_path": "C:\\Windows\\System32\\cmd.exe",
+  "powershell_arguments": "",
+  "console_background": "Black",
+  "console_foreground": "White",
+  "clear_events_when_reload": true,
+  "restrictions": {
+    "block_tabs_remove": false,
+    "block_buttons_remove": false,
+    "block_tabs_add": false,
+    "block_buttons_add": false,
+    "block_buttons_reorder": false,
+    "block_buttons_edit": false,
+    "hide_menu_item_file_reload_config": false,
+    "hide_menu_item_file_open_app_folder": false,
+    "hide_menu_item_file_clear_events_list": false,
+    "hide_menu_item_settings": false,
+    "hide_menu_item_settings_workflow": false,
+    "hide_menu_item_settings_workflow_reorder_tabs": false,
+    "hide_menu_item_settings_workflow_add_tab": false,
+    "hide_menu_item_settings_workflow_remove_current_tab": false,
+    "hide_menu_item_settings_workflow_rename_current_tab": false,
+    "hide_menu_item_settings_workflow_add_button_to_current_tab": false,
+    "hide_menu_item_settings_workflow_reorder_buttons_in_current_tab": false,
+    "hide_menu_item_settings_configuration": false,
+    "hide_menu_item_help": false,
+    "hide_menu_item_help_troubleshooting": false,
+    "hide_menu_item_help_about": false
+  },
+  "tabs": [
+    {
+      "ID": "357f9827-f4f7-439f-b62c-792e880fd06c",
+      "Header": "Common actions",
+      "Buttons": [
+        {
+          "Id": "5e371407-140f-4fa2-abf3-2cec4bb174b2",
+          "Text": "test01",
+          "Description": "Some test script",
+          "Script": "scripts\\common\\test01.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
+        },
+        {
+          "Id": "9159b485-39e5-42d6-adb4-275753db9027",
+          "Text": "test02",
+          "Description": "Some second test script",
+          "Script": "scripts\\test02.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
+        },
+        {
+          "Id": "eaaff0bf-2a9f-4037-bdd6-e8405830d90e",
+          "Text": "bat",
+          "Description": "Some second test script",
+          "Script": "scripts\\1.bat",
+          "ScriptPathType": "relative",
+          "ScriptType": "cmd",
+          "Arguments": []
+        },
+        {
+          "Id": "5ec086d9-7987-43ef-84fb-1d8481b05aea",
+          "Text": "Absolute script",
+          "Description": "",
+          "Script": "C:\\scripts\\absolute_script.ps1",
+          "ScriptPathType": "absolute",
+          "ScriptType": "powershell",
+          "Arguments": []
+        },
+        {
+          "Id": "a7b94662-4d66-4a8a-af33-b326a99215cf",
+          "Text": "test03",
+          "Description": "Some test 03 script with arguments",
+          "Script": "scripts\\common\\test03.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": [
+            {
+              "ArgumentQuestion": "Enter IP address or DNS name",
+              "ArgumentAnswer": ""
+            }
+          ]
+        },
+        {
+          "Id": "aabc2bf5-e26c-4a73-8e89-e702f14eaa8b",
+          "Text": "test04",
+          "Description": "Some test 04 script with arguments",
+          "Script": "scripts\\common\\test04.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": [
+            {
+              "ArgumentQuestion": "What is your name?",
+              "ArgumentAnswer": ""
+            },
+            {
+              "ArgumentQuestion": "What is your surname",
+              "ArgumentAnswer": ""
+            },
+            {
+              "ArgumentQuestion": "No, really what is your name?",
+              "ArgumentAnswer": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ID": "fa774e10-7772-4074-8d8e-c57b09e9377e",
+      "Header": "Second Tab",
+      "Buttons": [
+        {
+          "Id": "b3ebb860-7682-4613-8f82-0ca59226b0f9",
+          "Text": "Some button",
+          "Description": "no description",
+          "Script": "scripts\\some_button_script.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
+        },
+        {
+          "Id": "f9fc3c8f-fb36-432d-96c9-09c4169d540e",
+          "Text": "Some button",
+          "Description": "no description",
+          "Script": "scripts\\some_button_script2.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
+        }
+      ]
+    },
+    {
+      "ID": "a744a5e3-4dc0-4f42-abac-ee67dd17c6a1",
+      "Header": "Second Tab",
+      "Buttons": [
+        {
+          "Id": "5839ed21-7c33-4aac-9b3c-663cc794e3f5",
+          "Text": "Some button 1",
+          "Description": "no description",
+          "Script": "scripts\\some_button_script.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
+        },
+        {
+          "Id": "7ecdea7a-8865-45d7-a037-0dd4dd1cb996",
+          "Text": "Button",
+          "Description": "",
+          "Script": "D:\\net50\\test04.ps1",
+          "ScriptPathType": "absolute",
+          "ScriptType": "powershell",
+          "Arguments": []
+        }
+      ]
+    }
+  ]
+}

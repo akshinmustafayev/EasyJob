@@ -1,0 +1,47 @@
+﻿<Window x:Class="EasyJob.Windows.ReorderTabsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasyJob.Windows"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Icon="pack://application:,,,/Images/icon.ico"
+        Title="Reorder Tabs" Height="360" Width="280" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" BorderBrush="#E3E3E3" BorderThickness="0,0,2,0">
+            <Border BorderBrush="#E3E3E3" BorderThickness="1" CornerRadius="2" Margin="12">
+            <ListView Name="MainWindowTabsList" ItemsSource="{Binding TabItems}">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn DisplayMemberBinding="{Binding ID}" Width="0"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding TabHeader}" />
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+            </Border>
+        </Border>
+
+        <DockPanel Grid.Column="1" Height="80" HorizontalAlignment="Center">
+            <Button DockPanel.Dock="Top" HorizontalAlignment="Center" Height="28" Width="28" Click="TabsReorderUp_Click">
+                <Image Source="pack://application:,,,/Images/up.png" Margin="-4"/>
+            </Button>
+            <Button DockPanel.Dock="Bottom" HorizontalAlignment="Center" Height="28" Width="28" Click="TabsRedorderDown_Click">
+                <Image Source="pack://application:,,,/Images/down.png" Margin="-4"/>
+            </Button>
+        </DockPanel>
+        
+    </Grid>
+</Window>
