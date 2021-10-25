@@ -25,59 +25,49 @@ namespace EasyJob.Windows
     /// </summary>
     public partial class ReorderActionButtonsDialog : Window
     {
-        public string configJson = "";
         public Config config;
         public int currentTabIndex = 0;
+        public bool changesOccured = false;
         ObservableCollection<TabData> TabItems = null;
         ObservableCollection<ActionButton> ActionButtons = null;
 
-        public ReorderActionButtonsDialog(int _currentTabIndex)
+        public ReorderActionButtonsDialog(int _currentTabIndex, Config _config)
         {
             InitializeComponent();
+            config = _config;
             currentTabIndex = _currentTabIndex;
             LoadConfig();
         }
 
         public void LoadConfig()
         {
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "config.json"))
+            try
             {
-                try
-                {
-                    configJson = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "config.json");
-                    config = JsonConvert.DeserializeObject<Config>(configJson);
+                MainWindowActionButtonsList.ItemsSource = null;
 
-                    MainWindowActionButtonsList.ItemsSource = null;
+                TabItems = ConfigUtils.ConvertTabsFromConfigToUI(config);
 
-                    TabItems = Helper.LoadConfigs(config);
+                List<ActionButton> list = TabItems[currentTabIndex].TabActionButtons;
+                ObservableCollection<ActionButton> collection = new ObservableCollection<ActionButton>(list);
 
-                    List<ActionButton> list = TabItems[currentTabIndex].TabActionButtons;
-                    ObservableCollection<ActionButton> collection = new ObservableCollection<ActionButton>(list);
-
-                    ActionButtons = collection;
-                    
-                    MainWindowActionButtonsList.ItemsSource = ActionButtons;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                ActionButtons = collection;
+                
+                MainWindowActionButtonsList.ItemsSource = ActionButtons;
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("File " + AppDomain.CurrentDomain.BaseDirectory + "config.json does not exist.");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public bool SaveConfig()
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "config.json";
-            if (File.Exists(path))
+            if (File.Exists(ConfigUtils.ConfigJsonPath))
             {
                 try
                 {
                     config.tabs.Clear();
-                    config.tabs = Helper.SaveConfigs(TabItems);
+                    config.tabs = ConfigUtils.ConvertTabsFromUIToConfig(TabItems);
 
                     if (ConfigUtils.SaveFromConfigToFile(config) == true)
                     {
@@ -118,10 +108,11 @@ namespace EasyJob.Windows
                 ActionButtons.Insert(selectedIndex + 1, itemToMoveDown);
                 MainWindowActionButtonsList.SelectedIndex = selectedIndex + 1;
 
-                //List<ActionButton> myList = new List<ActionButton>(MainWindowActionButtonsList.DataContext);
                 List<ActionButton> myList = new List<ActionButton>(ActionButtons);
                 TabItems[currentTabIndex].TabActionButtons = myList;
             }
+
+            changesOccured = true;
 
             SaveConfig();
         }
@@ -145,6 +136,8 @@ namespace EasyJob.Windows
                 List<ActionButton> myList = new List<ActionButton>(ActionButtons);
                 TabItems[currentTabIndex].TabActionButtons = myList;
             }
+
+            changesOccured = true;
 
             SaveConfig();
         }

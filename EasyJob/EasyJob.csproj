@@ -5,17 +5,25 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.1.4</Version>
+    <Version>1.1.5</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
     <PackageProjectUrl>https://github.com/akshinmustafayev/EasyJob</PackageProjectUrl>
     <RepositoryUrl>https://github.com/akshinmustafayev/EasyJob</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
+    <AssemblyVersion>1.1.5.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <OutputPath>..\bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>..\bin\Release\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,6 +43,7 @@
     <None Remove="Images\github.png" />
     <None Remove="Images\help.png" />
     <None Remove="Images\icon.ico" />
+    <None Remove="Images\play.png" />
     <None Remove="Images\reload.png" />
     <None Remove="Images\removebutton.png" />
     <None Remove="Images\removetab.png" />
@@ -68,6 +77,7 @@
     <Resource Include="Images\github.png" />
     <Resource Include="Images\help.png" />
     <Resource Include="Images\icon.ico" />
+    <Resource Include="Images\play.png" />
     <Resource Include="Images\reload.png" />
     <Resource Include="Images\removebutton.png" />
     <Resource Include="Images\removetab.png" />
@@ -127,6 +137,9 @@
     <None Update="Documentation\Videos\HelpConfigurationBlockTabsRemove.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Documentation\Videos\HelpConfigurationBlockTabsRename.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Documentation\Videos\HelpConfigurationClearEventsWhenReload.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -134,6 +147,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Documentation\Videos\HelpConfigurationConsoleForeground.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationConsoleIgnoreColorTags.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Documentation\Videos\HelpConfigurationDefaultCMDPath.mp4">
@@ -191,12 +207,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
-  <ItemGroup>
-    <Content Include="EasyJobPS\**">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-</ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\WpfRichText\WpfRichText.csproj" />

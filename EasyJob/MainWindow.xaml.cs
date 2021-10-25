@@ -26,7 +26,6 @@ namespace EasyJob
         ActionButton selectedActionButton = null;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
         public Config config;
-        public string configJsonPath = AppDomain.CurrentDomain.BaseDirectory + "config.json";
 
         public MainWindow()
         {
@@ -37,16 +36,16 @@ namespace EasyJob
 
         public void LoadConfig()
         {
-            if (File.Exists(configJsonPath))
+            if (File.Exists(ConfigUtils.ConfigJsonPath))
             {
                 try
                 {
-                    string configJson = File.ReadAllText(configJsonPath);
+                    string configJson = File.ReadAllText(ConfigUtils.ConfigJsonPath);
                     config = JsonConvert.DeserializeObject<Config>(configJson);
 
-                    MainTab.ItemsSource = Helper.LoadConfigs(config);
+                    MainTab.ItemsSource = ConfigUtils.ConvertTabsFromConfigToUI(config);
 
-                    AddTextToEventsList("Config loaded from file: " + configJsonPath, false);
+                    AddTextToEventsList("Config loaded from file: " + ConfigUtils.ConfigJsonPath, false);
                 }
                 catch (Exception ex)
                 {
@@ -56,13 +55,13 @@ namespace EasyJob
             }
             else
             {
-                MessageBox.Show("File " + configJsonPath + " does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("File " + ConfigUtils.ConfigJsonPath + " does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         public bool SaveConfig()
         {
-            if (File.Exists(configJsonPath))
+            if (File.Exists(ConfigUtils.ConfigJsonPath))
             {
                 try
                 {
@@ -148,6 +147,11 @@ namespace EasyJob
                 return;
             }
 
+            if (config.console_ignore_color_tags == false)
+            {
+                Text = CommonUtils.ApplyConsoleColorTagsToText(Text);
+            }
+
             //this.Dispatcher.Invoke(() =>
             //{
                 TabData td = (TabData)MainTab.Items[OwnerTab];
@@ -167,16 +171,23 @@ namespace EasyJob
                 this.Dispatcher.Invoke(() =>
                 {
                     EventsList.Items.Add(Text);
+                    EventsList.ScrollIntoView(EventsList.Items.Count - 1);
                 });
             }
             else
             {
                 EventsList.Items.Add(Text);
+                EventsList.ScrollIntoView(EventsList.Items.Count - 1);
             }
         }
 
         private void ScrollToBottomListBox(ListBox listBox, bool IsAsync)
         {
+            if(listBox == null && listBox.Items.Count == 0)
+            {
+                return;
+            }
+
             if (IsAsync == true)
             {
                 this.Dispatcher.Invoke(() =>
@@ -299,6 +310,37 @@ namespace EasyJob
             }
         }
 
+        private void ShowRenameTabDialog(int SelectedTab, string SelectedTabHeader)
+        {
+            RenameTabDialog rtd = new RenameTabDialog(SelectedTabHeader);
+            if (rtd.ShowDialog() == true)
+            {
+                List<TabData> newSourceTabs = new List<TabData>();
+                foreach (TabData tab in MainTab.Items)
+                {
+                    TabData currentTab = MainTab.Items[SelectedTab] as TabData;
+                    if (tab == currentTab)
+                    {
+                        tab.TabHeader = rtd.NewTabName;
+                    }
+                    newSourceTabs.Add(tab);
+                }
+
+                MainTab.ItemsSource = null;
+                MainTab.ItemsSource = newSourceTabs;
+
+                if (SaveConfig())
+                {
+                    MainTab.Items.Refresh();
+                    this.UpdateLayout();
+                }
+            }
+            else
+            {
+                AddTextToEventsList("Current tab rename cancelled by user", false);
+            }
+        }
+
         private void ShowAddNewTabDialog()
         {
             NewTabDialog ntd = new NewTabDialog();
@@ -317,14 +359,24 @@ namespace EasyJob
 
         private void ShowReorderActionButtonsDialog()
         {
-            ReorderActionButtonsDialog rabd = new ReorderActionButtonsDialog(MainTab.SelectedIndex);
+            int currentTab = MainTab.SelectedIndex;
+
+            ReorderActionButtonsDialog rabd = new ReorderActionButtonsDialog(MainTab.SelectedIndex, config);
             rabd.ShowDialog();
 
-            LoadConfig();
+            if (rabd.changesOccured)
+            {
+                LoadConfig();
 
-            MainTab.Items.Refresh();
-            this.UpdateLayout();
-            AddTextToEventsList("Reorder action buttons dialog ended!", false);
+                MainTab.Items.Refresh();
+                this.UpdateLayout();
+                AddTextToEventsList("Reorder action buttons dialog ended!", false);
+                MainTab.SelectedIndex = currentTab;
+            }
+            else
+            {
+                AddTextToEventsList("Reorder action buttons dialog ended. No changes occured!", false);
+            }
         }
 
         public void ClearOutputButton_Click(object sender, RoutedEventArgs e)
@@ -643,14 +695,20 @@ namespace EasyJob
 
         private void ReorderTabsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ReorderTabsDialog rtd = new ReorderTabsDialog();
+            ReorderTabsDialog rtd = new ReorderTabsDialog(config);
             rtd.ShowDialog();
+            if (rtd.changesOccured)
+            {
+                LoadConfig();
 
-            LoadConfig();
-
-            MainTab.Items.Refresh();
-            this.UpdateLayout();
-            AddTextToEventsList("Reorder tabs dialog ended!", false);
+                MainTab.Items.Refresh();
+                this.UpdateLayout();
+                AddTextToEventsList("Reorder tabs dialog ended!", false);
+            }
+            else
+            {
+                AddTextToEventsList("Reorder tabs dialog ended. No changes occured!", false);
+            }
         }
 
         private void ConfigurationMenuItem_Click(object sender, RoutedEventArgs e)
@@ -662,7 +720,7 @@ namespace EasyJob
             MainTab.Items.Refresh();
             MainMenuItemsVisibility();
             this.UpdateLayout();
-            AddTextToEventsList("Configuration dialog ended!", false);
+            AddTextToEventsList("Configuration ended!", false);
         }
 
         private void AddTabMenuItem_Click(object sender, RoutedEventArgs e)
@@ -697,33 +755,8 @@ namespace EasyJob
 
         private void RenameCurrentTabMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            RenameTabDialog rtd = new RenameTabDialog();
-            if(rtd.ShowDialog() == true)
-            {
-                List<TabData> newSourceTabs = new List<TabData>();
-                foreach (TabData tab in MainTab.Items)
-                {
-                    TabData currentTab = MainTab.Items[MainTab.SelectedIndex] as TabData;
-                    if (tab == currentTab)
-                    {
-                        tab.TabHeader = rtd.NewTabName;
-                    }
-                    newSourceTabs.Add(tab);
-                }
-
-                MainTab.ItemsSource = null;
-                MainTab.ItemsSource = newSourceTabs;
-
-                if (SaveConfig())
-                {
-                    MainTab.Items.Refresh();
-                    this.UpdateLayout();
-                }
-            }
-            else
-            {
-                AddTextToEventsList("Current tab rename cancelled by user", false);
-            }
+            TabData tab = (TabData)MainTab.Items[MainTab.SelectedIndex];
+            ShowRenameTabDialog(MainTab.SelectedIndex, tab.TabHeader);
         }
 
         private void AddButtonToCurrentTabMenuItem_Click(object sender, RoutedEventArgs e)
@@ -772,112 +805,126 @@ namespace EasyJob
         {
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (config.restrictions.block_buttons_edit == true && config.restrictions.block_buttons_remove == true)
+                selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
+                ContextMenu cm = this.FindResource("OnActionButtonContextMenu") as ContextMenu;
+
+                if (e.Source is not ScrollViewer && e.OriginalSource is TextBlock)
                 {
-                    return;
-                }
-                else if (config.restrictions.block_buttons_edit == false && config.restrictions.block_buttons_remove == true)
-                {
-                    if (e.OriginalSource is TextBlock)
+                    if (config.restrictions.block_buttons_edit == true && config.restrictions.block_buttons_remove == true)
                     {
-                        selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
-                        ContextMenu cm = this.FindResource("EditActionButtonContextMenu") as ContextMenu;
-                        cm.PlacementTarget = sender as Button;
-                        cm.IsOpen = true;
+                        return;
                     }
-                }
-                else if (config.restrictions.block_buttons_edit == true && config.restrictions.block_buttons_remove == false)
-                {
-                    if (e.OriginalSource is TextBlock)
+                    else if (config.restrictions.block_buttons_edit == false && config.restrictions.block_buttons_remove == true)
                     {
-                        selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
-                        ContextMenu cm = this.FindResource("RemoveActionButtonContextMenu") as ContextMenu;
-                        cm.PlacementTarget = sender as Button;
-                        cm.IsOpen = true;
+                        (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                        (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
                     }
-                }
-                else if (config.restrictions.block_buttons_edit == false && config.restrictions.block_buttons_remove == false)
-                {
-                    if (e.OriginalSource is TextBlock)
+                    else if (config.restrictions.block_buttons_edit == true && config.restrictions.block_buttons_remove == false)
                     {
-                        selectedActionButton = ((Button)e.Source).DataContext as ActionButton;
-                        ContextMenu cm = this.FindResource("RemoveEditActionButtonContextMenu") as ContextMenu;
-                        cm.PlacementTarget = sender as Button;
-                        cm.IsOpen = true;
+                        (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
+                        (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
                     }
+                    else if (config.restrictions.block_buttons_edit == false && config.restrictions.block_buttons_remove == false)
+                    {
+                        (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                        (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                    }
+
+                    cm.PlacementTarget = sender as Button;
+                    cm.IsOpen = true;
                 }
             }
         }
 
-        public void ActionButtonAdd_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        public void OnActionButtonPannel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (config.restrictions.block_buttons_add == true && config.restrictions.block_buttons_reorder == true)
+                ContextMenu cm = this.FindResource("OnActionButtonPannelContextMenu") as ContextMenu;
+                if (e.Source is ScrollViewer && e.OriginalSource is not TextBlock)
                 {
-                    return;
-                }
-                else if (config.restrictions.block_buttons_add == false && config.restrictions.block_buttons_reorder == true)
-                {
-                    if (e.Source is ScrollViewer)
+                    if (config.restrictions.block_buttons_add == true && config.restrictions.block_buttons_reorder == true)
                     {
-                        ContextMenu cm = this.FindResource("AddActionButtonContextMenu") as ContextMenu;
-                        cm.PlacementTarget = sender as ScrollViewer;
-                        cm.IsOpen = true;
+                        return;
                     }
-                }
-                else if (config.restrictions.block_buttons_add == true && config.restrictions.block_buttons_reorder == false)
-                {
-                    if (e.Source is ScrollViewer)
+                    else if (config.restrictions.block_buttons_add == false && config.restrictions.block_buttons_reorder == true)
                     {
-                        ContextMenu cm = this.FindResource("ReorderActionButtonsContextMenu") as ContextMenu;
-                        cm.PlacementTarget = sender as ScrollViewer;
-                        cm.IsOpen = true;
+                        (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                        (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
                     }
-                }
-                else if (config.restrictions.block_buttons_add == false && config.restrictions.block_buttons_reorder == false)
-                {
-                    if (e.Source is ScrollViewer)
+                    else if (config.restrictions.block_buttons_add == true && config.restrictions.block_buttons_reorder == false)
                     {
-                        ContextMenu cm = this.FindResource("AddReorderActionButtonsContextMenu") as ContextMenu;
-                        cm.PlacementTarget = sender as ScrollViewer;
-                        cm.IsOpen = true;
+                        (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
+                        (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
                     }
+                    else if (config.restrictions.block_buttons_add == false && config.restrictions.block_buttons_reorder == false)
+                    {
+                        (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                        (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                    }
+
+                    cm.PlacementTarget = sender as ScrollViewer;
+                    cm.IsOpen = true;
                 }
             }
         }
 
-        private void TabHeaderSelector_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void OnTabHeader_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_add == true)
+                selectedTabItem = ((Label)e.Source).DataContext as TabData;
+                ContextMenu cm = this.FindResource("OnTabContextMenu") as ContextMenu;
+
+                if (config.restrictions.block_tabs_add == true && config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_rename == true)
                 {
                     return;
                 }
-                else if (config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_add == true)
+                else if (config.restrictions.block_tabs_add == false && config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_rename == true)
                 {
-                    selectedTabItem = ((Label)e.Source).DataContext as TabData;
-                    ContextMenu cm = this.FindResource("RemoveTabContextMenu") as ContextMenu;
-                    cm.PlacementTarget = sender as Label;
-                    cm.IsOpen = true;
-                    return;
+                    (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                    (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                    (cm.Items[2] as MenuItem).Visibility = Visibility.Collapsed;
                 }
-                else if (config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_add == false)
+                else if (config.restrictions.block_tabs_add == false && config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_rename == true)
                 {
-                    selectedTabItem = ((Label)e.Source).DataContext as TabData;
-                    ContextMenu cm = this.FindResource("AddTabContextMenu") as ContextMenu;
-                    cm.PlacementTarget = sender as Label;
-                    cm.IsOpen = true;
-                    return;
+                    (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                    (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
+                    (cm.Items[2] as MenuItem).Visibility = Visibility.Collapsed;
                 }
-                else if (config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_add == false)
+                else if (config.restrictions.block_tabs_add == true && config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_rename == true)
                 {
-                    selectedTabItem = ((Label)e.Source).DataContext as TabData;
-                    ContextMenu cm = this.FindResource("RemoveAddTabContextMenu") as ContextMenu;
-                    cm.PlacementTarget = sender as Label;
-                    cm.IsOpen = true;
+                    (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
+                    (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                    (cm.Items[2] as MenuItem).Visibility = Visibility.Collapsed;
                 }
+                else if (config.restrictions.block_tabs_add == true && config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_rename == false)
+                {
+                    (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
+                    (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
+                    (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
+                }
+                else if (config.restrictions.block_tabs_add == true && config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_rename == false)
+                {
+                    (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
+                    (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                    (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
+                }
+                else if (config.restrictions.block_tabs_add == false && config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_rename == false)
+                {
+                    (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                    (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
+                    (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
+                }
+                else if (config.restrictions.block_tabs_add == false && config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_rename == false)
+                {
+                    (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                    (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                    (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
+                }
+
+                cm.PlacementTarget = sender as Label;
+                cm.IsOpen = true;
             }
         }
 
@@ -905,6 +952,31 @@ namespace EasyJob
             {
                 MainTab.Items.Refresh();
                 this.UpdateLayout();
+            }
+        }
+
+        private void ContextMenuRenameTab_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedTabItem == null)
+            {
+                MessageBox.Show("Selected Tab is still null. Please try again.");
+                return;
+            }
+
+            int currentTabIndex = 0;
+
+            List<TabData> newSourceTabs = new List<TabData>();
+            foreach (TabData tab in MainTab.Items)
+            {
+                if (tab == selectedTabItem)
+                {
+                    ShowRenameTabDialog(currentTabIndex, selectedTabItem.TabHeader);
+                    return;
+                }
+                else
+                {
+                    currentTabIndex = currentTabIndex + 1;
+                }
             }
         }
 
