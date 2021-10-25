@@ -44,7 +44,7 @@ namespace EasyJob.Windows
                     configJson = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "config.json");
                     config = JsonConvert.DeserializeObject<Config>(configJson);
 
-                    TabItems = Helper.LoadConfigs(config);
+                    TabItems = ConfigUtils.ConvertTabsFromConfigToUI(config);
                 }
                 catch (Exception ex)
                 {
@@ -65,7 +65,7 @@ namespace EasyJob.Windows
                 try
                 {
                     config.tabs.Clear();
-                    config.tabs = Helper.SaveConfigs(TabItems);
+                    config.tabs = ConfigUtils.ConvertTabsFromUIToConfig(TabItems);
 
                     if (ConfigUtils.SaveFromConfigToFile(config) == true)
                     {

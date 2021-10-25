@@ -25,8 +25,8 @@ namespace EasyJob.Windows
 
         public void LoadDataInfoIntoTheForm()
         {
-            lblTitle.Content = "EasyJob Executor " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            lblInfo.Content = "Author: Akshin Mustafayev. Contrubutions made to the project by the Github community";
+            AboutTitle.Content = "EasyJob Executor " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            AboutInfo.Content = "Author: Akshin Mustafayev. Contrubutions made to the project by the Github community";
             string readme = CommonUtils.ReadAssemblyFile("LICENSE.txt");
             RichTextBox1.Document.Blocks.Clear();
             var plainText = ConvertToPlainText(readme);

@@ -39,6 +39,7 @@ namespace EasyJob.Windows
             PowerShellArguments.Text = config.powershell_arguments;
             ConsoleBackground.Text = config.console_background;
             ConsoleForeground.Text = config.console_foreground;
+            SetComboBoxFromValue(ConsoleIgnoreColorTags, config.console_ignore_color_tags);
             SetComboBoxFromValue(ClearEventsWhenReload, config.clear_events_when_reload);
 
             // Restrictions
@@ -48,6 +49,7 @@ namespace EasyJob.Windows
             SetComboBoxFromValue(BlockButtonsAdd, config.restrictions.block_buttons_add);
             SetComboBoxFromValue(BlockButtonsReorder, config.restrictions.block_buttons_reorder);
             SetComboBoxFromValue(BlockButtonsEdit, config.restrictions.block_buttons_edit);
+            SetComboBoxFromValue(BlockTabsRename, config.restrictions.block_tabs_rename);
             SetComboBoxFromValue(HideFileReloadConfigMenuItem, config.restrictions.hide_menu_item_file_reload_config);
             SetComboBoxFromValue(HideFileOpenAppFolderMenuItem, config.restrictions.hide_menu_item_file_open_app_folder);
             SetComboBoxFromValue(HideFileClearEventsListMenuItem, config.restrictions.hide_menu_item_file_clear_events_list);
@@ -96,6 +98,7 @@ namespace EasyJob.Windows
             config.powershell_arguments = PowerShellArguments.Text;
             config.console_background = ConsoleBackground.Text;
             config.console_foreground = ConsoleForeground.Text;
+            config.console_ignore_color_tags = GetComboBoxValue(ConsoleIgnoreColorTags);
             config.clear_events_when_reload = GetComboBoxValue(ClearEventsWhenReload);
 
             config.restrictions.block_tabs_remove = GetComboBoxValue(BlockTabsRemove);
@@ -104,6 +107,7 @@ namespace EasyJob.Windows
             config.restrictions.block_buttons_add = GetComboBoxValue(BlockButtonsAdd);
             config.restrictions.block_buttons_reorder = GetComboBoxValue(BlockButtonsReorder);
             config.restrictions.block_buttons_edit = GetComboBoxValue(BlockButtonsEdit);
+            config.restrictions.block_tabs_rename = GetComboBoxValue(BlockTabsRename);
             config.restrictions.hide_menu_item_file_reload_config = GetComboBoxValue(HideFileReloadConfigMenuItem);
             config.restrictions.hide_menu_item_file_open_app_folder = GetComboBoxValue(HideFileOpenAppFolderMenuItem);
             config.restrictions.hide_menu_item_file_clear_events_list = GetComboBoxValue(HideFileClearEventsListMenuItem);

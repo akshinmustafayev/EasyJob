@@ -78,6 +78,13 @@
 		<video>HelpConfigurationConsoleForeground.mp4</video>
 	</item>
 	<item>
+		<name>HelpConfigurationConsoleIgnoreColorTags</name>
+		<heading>Console ignore color tags</heading>
+		<description>Determines if special color tags are ignored during output.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationConsoleIgnoreColorTags.mp4</video>
+	</item>
+	<item>
 		<name>HelpConfigurationClearEventsWhenReload</name>
 		<heading>Clear events when reload</heading>
 		<description>Clear events on Events list after configuration reload from the File-> Reload config menu.&#10;&#10;Example: Yes</description>
@@ -125,6 +132,13 @@
 		<description>Hides "Edit button" context menu item when Right click on the button.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 		<video>HelpConfigurationBlockButtonsEdit.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockTabsRename</name>
+		<heading>Block tabs rename</heading>
+		<description>Hides "Rename tab" context menu item when Right click on the tab.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationBlockTabsRename.mp4</video>
 	</item>
 	<item>
 		<name>HelpConfigurationHideFileReloadConfig</name>

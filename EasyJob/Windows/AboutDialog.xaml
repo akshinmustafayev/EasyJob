@@ -35,9 +35,9 @@
                     <RowDefinition Height="55"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Name="lblTitle" VerticalAlignment="Center" Margin="10,0,10,0" Content="EasyJob Executor"/>
-                <Label Grid.Row="1" Name="lblInfo" VerticalAlignment="Center" Margin="10,0,10,0" Content="Author" />
-                <Label Grid.Row="2" Name="lblLicence" VerticalAlignment="Center" Margin="10,0,10,0" Content="Licence: GNU AGPLv3" />
+                <Label Grid.Row="0" Name="AboutTitle" VerticalAlignment="Center" Margin="10,0,10,0" Content="EasyJob Executor"/>
+                <Label Grid.Row="1" Name="AboutInfo" VerticalAlignment="Center" Margin="10,0,10,0" Content="Author" />
+                <Label Grid.Row="2" VerticalAlignment="Center" Margin="10,0,10,0" Content="Licence: GNU AGPLv3" />
                 
                 <RichTextBox Grid.Row="3" Margin="10,10,10,0" Name="RichTextBox1" HorizontalAlignment="Left" Background="Black" Foreground="White"
                          BorderThickness="0" IsDocumentEnabled="True" IsReadOnly="True" VerticalScrollBarVisibility="Visible" FontFamily="Consolas">

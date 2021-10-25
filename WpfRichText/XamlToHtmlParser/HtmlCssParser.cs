@@ -8,17 +8,17 @@
 //
 //---------------------------------------------------------------------------
 
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Text;
+using System.Xml;
+
 namespace WpfRichText
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	// DependencyProperty
-	using System.Globalization; // TextElement
-	using System.Text;
-	using System.Xml;
-  
     internal static class HtmlCssParser
     {
         // .................................................................
