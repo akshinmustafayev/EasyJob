@@ -132,6 +132,13 @@ Write-Host "<span style=`"color:#FF0008;`">Some other color!</span>"
 Write-Host "<span style=`"color:#4CFF00;`">Some other color!</span>"
 ```
 
+
+## EasyJobPSTools
+
+EasyJobPSTools - is a PowerShell Module which enables Graphic features for your scripts.
+
+You can read more about it [Here](https://github.com/akshinmustafayev/EasyJobPSTools)
+
 ## Configuration
 
 Configuration could be done from config.json file located with the app executable.
