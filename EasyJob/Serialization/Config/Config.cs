@@ -9,6 +9,7 @@ namespace EasyJob.Serialization
         public string powershell_arguments { get; set; }
         public string console_background { get; set; }
         public string console_foreground { get; set; }
+        public bool console_ignore_color_tags { get; set; }
         public bool clear_events_when_reload { get; set; }
         public ConfigRestrictions restrictions { get; set; }
         public List<ConfigTab> tabs { get; set; }
