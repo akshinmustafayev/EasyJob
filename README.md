@@ -23,7 +23,7 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 
 ## Overview
-![image](https://user-images.githubusercontent.com/29357955/138327334-02aedf80-3119-4220-8f2e-1d27ca680e26.png)
+![image](https://user-images.githubusercontent.com/29357955/138738649-e80dc995-5bfb-423d-9822-6427540f0b46.png)
 
 ![image](https://user-images.githubusercontent.com/29357955/138327363-072fe889-745d-4f57-b8df-7ce567258191.png)
 
