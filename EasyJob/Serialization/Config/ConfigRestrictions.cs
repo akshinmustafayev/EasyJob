@@ -14,6 +14,7 @@ namespace EasyJob.Serialization
         public bool block_buttons_add { get; set; }
         public bool block_buttons_reorder { get; set; }
         public bool block_buttons_edit { get; set; }
+        public bool block_tabs_rename { get; set; }
         public bool hide_menu_item_file_reload_config { get; set; }
         public bool hide_menu_item_file_open_app_folder { get; set; }
         public bool hide_menu_item_file_clear_events_list { get; set; }

@@ -21,9 +21,10 @@ namespace EasyJob.Windows
     {
         public string NewTabName = "";
 
-        public RenameTabDialog()
+        public RenameTabDialog(string SelectedTabHeader)
         {
             InitializeComponent();
+            RenameTabTextBox.Text = SelectedTabHeader;
         }
 
         private void CancelRenameButton_Click(object sender, RoutedEventArgs e)

@@ -15,49 +15,39 @@ namespace EasyJob.Windows
     /// </summary>
     public partial class ReorderTabsDialog : Window
     {
-        public string configJson = "";
         public Config config;
         ObservableCollection<TabData> TabItems = null;
+        public bool changesOccured = false;
 
-        public ReorderTabsDialog()
+        public ReorderTabsDialog(Config _config)
         {
             InitializeComponent();
+            config = _config;
             LoadConfig();
         }
 
         public void LoadConfig()
         {
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "config.json"))
+            try
             {
-                try
-                {
-                    configJson = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "config.json");
-                    config = JsonConvert.DeserializeObject<Config>(configJson);
-
-                    MainWindowTabsList.ItemsSource = null;
-                    TabItems = Helper.LoadConfigs(config);
-                    MainWindowTabsList.ItemsSource = TabItems;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                MainWindowTabsList.ItemsSource = null;
+                TabItems = ConfigUtils.ConvertTabsFromConfigToUI(config);
+                MainWindowTabsList.ItemsSource = TabItems;
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("File " + AppDomain.CurrentDomain.BaseDirectory + "config.json does not exist.");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public bool SaveConfig()
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "config.json";
-            if (File.Exists(path))
+            if (File.Exists(ConfigUtils.ConfigJsonPath))
             {
                 try
                 {
                     config.tabs.Clear();
-                    config.tabs = Helper.SaveConfigs(TabItems);
+                    config.tabs = ConfigUtils.ConvertTabsFromUIToConfig(TabItems);
 
                     if (ConfigUtils.SaveFromConfigToFile(config) == true)
                     {
@@ -99,6 +89,8 @@ namespace EasyJob.Windows
                 MainWindowTabsList.SelectedIndex = selectedIndex + 1;
             }
 
+            changesOccured = true;
+
             SaveConfig();
         }
 
@@ -109,6 +101,8 @@ namespace EasyJob.Windows
                 MessageBox.Show("Please select item to reorder");
                 return;
             }
+
+            changesOccured = true;
 
             var selectedIndex = MainWindowTabsList.SelectedIndex;
 
@@ -122,6 +116,5 @@ namespace EasyJob.Windows
 
             SaveConfig();
         }
-
     }
 }

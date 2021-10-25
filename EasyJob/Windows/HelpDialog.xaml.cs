@@ -63,5 +63,10 @@ namespace EasyJob.Windows
         {
             HelpVideo.Stop();
         }
+
+        private void PlayVideoButton_Click(object sender, RoutedEventArgs e)
+        {
+            HelpVideo.Play();
+        }
     }
 }

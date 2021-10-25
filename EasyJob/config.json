@@ -4,6 +4,7 @@
   "powershell_arguments": "",
   "console_background": "Black",
   "console_foreground": "White",
+  "console_ignore_color_tags": false,
   "clear_events_when_reload": true,
   "restrictions": {
     "block_tabs_remove": false,
@@ -12,6 +13,7 @@
     "block_buttons_add": false,
     "block_buttons_reorder": false,
     "block_buttons_edit": false,
+    "block_tabs_rename": false,
     "hide_menu_item_file_reload_config": false,
     "hide_menu_item_file_open_app_folder": false,
     "hide_menu_item_file_clear_events_list": false,
@@ -122,7 +124,7 @@
         },
         {
           "Id": "f9fc3c8f-fb36-432d-96c9-09c4169d540e",
-          "Text": "Some button",
+          "Text": "Test11",
           "Description": "no description",
           "Script": "scripts\\some_button_script2.ps1",
           "ScriptPathType": "relative",
@@ -133,7 +135,7 @@
     },
     {
       "ID": "a744a5e3-4dc0-4f42-abac-ee67dd17c6a1",
-      "Header": "Second Tab",
+      "Header": "Third Tab",
       "Buttons": [
         {
           "Id": "5839ed21-7c33-4aac-9b3c-663cc794e3f5",
@@ -146,7 +148,7 @@
         },
         {
           "Id": "7ecdea7a-8865-45d7-a037-0dd4dd1cb996",
-          "Text": "Button",
+          "Text": "Button asd",
           "Description": "",
           "Script": "D:\\net50\\test04.ps1",
           "ScriptPathType": "absolute",

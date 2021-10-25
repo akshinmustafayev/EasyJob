@@ -107,11 +107,11 @@ namespace EasyJob.Windows
 
         private void TroubleshootingWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
                 Task.Factory.StartNew(() =>
                 {
-                    /*
                     string URL = "https://google.com";
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
                     request.ContentType = "text/html";
@@ -121,7 +121,6 @@ namespace EasyJob.Windows
                         StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                         MessageBox.Show(reader.ReadToEnd());
                     }
-                    */
 
                 }).ContinueWith((task) =>
                 {
@@ -129,6 +128,7 @@ namespace EasyJob.Windows
                 }, System.Threading.CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+            */
         }
     }
 }

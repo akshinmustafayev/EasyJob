@@ -8,20 +8,17 @@
 //
 //---------------------------------------------------------------------------
 
+using System;
+using System.Xml;
+using System.Diagnostics;
+using System.Collections;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Documents;
+using System.Globalization;
+
 namespace WpfRichText
 {
-    using System;
-    using System.Xml;
-    using System.Diagnostics;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.IO;
-
-    using System.Windows; // DependencyProperty
-    using System.Windows.Documents;
-	using System.Globalization; // TextElement
-  
     /// <summary>
     /// HtmlToXamlConverter is a static class that takes an HTML string
     /// and converts it into XAML
