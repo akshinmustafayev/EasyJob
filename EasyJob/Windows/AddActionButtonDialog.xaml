@@ -27,53 +27,53 @@
         
         <DockPanel Grid.Row="0">
             <TextBlock Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Text" HorizontalAlignment="Left"/>
-            <Button Name="HelpAddActionButtonText" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+            <Button AutomationProperties.Name="Help for script button text" Name="HelpAddActionButtonText" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
                 <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
             </Button>
         </DockPanel>
-        <TextBox x:Name="ButtonText" Grid.Row="1" Margin="10,2,10,0" FontSize="14" VerticalAlignment="Center"/>
+        <TextBox AutomationProperties.Name="Text displayed on script button" x:Name="ButtonText" Grid.Row="1" Margin="10,2,10,0" FontSize="14" VerticalAlignment="Center"/>
 
         <DockPanel Grid.Row="2">
             <TextBlock Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Description" HorizontalAlignment="Left"/>
-            <Button Name="HelpAddActionButtonDescription" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+            <Button AutomationProperties.Name="Help on description text" Name="HelpAddActionButtonDescription" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
                 <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
             </Button>
         </DockPanel>
-        <TextBox x:Name="ButtonDescription" Grid.Row="3" Margin="10,2,10,0" FontSize="14" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        <TextBox AutomationProperties.Name="Script description" x:Name="ButtonDescription" Grid.Row="3" Margin="10,2,10,0" FontSize="14" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
 
         <DockPanel Grid.Row="4">
             <TextBlock Grid.Row="4" Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Script" HorizontalAlignment="Left"/>
-            <Button Name="HelpAddActionButtonScript" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+            <Button AutomationProperties.Name="Help on script path" Name="HelpAddActionButtonScript" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
                 <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
             </Button>
         </DockPanel>
-        <TextBox x:Name="ButtonScript" Grid.Row="5" Margin="10,2,10,0" FontSize="14" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        <TextBox AutomationProperties.Name="Script path" x:Name="ButtonScript" Grid.Row="5" Margin="10,2,10,0" FontSize="14" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
 
         <DockPanel Grid.Row="6">
-            <TextBlock Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Script path type" HorizontalAlignment="Left"/>
-            <Button Name="HelpAddActionButtonScriptPathType" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+            <TextBlock AutomationProperties.Name="Path type" Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Script path type" HorizontalAlignment="Left"/>
+            <Button AutomationProperties.Name="Help for script path type" Name="HelpAddActionButtonScriptPathType" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
                 <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
             </Button>
         </DockPanel>
-        <ComboBox x:Name="ButtonScriptPathType" Grid.Row="7" Margin="10,2,10,0" FontSize="14">
+        <ComboBox AutomationProperties.Name="Path type" x:Name="ButtonScriptPathType" Grid.Row="7" Margin="10,2,10,0" FontSize="14">
             <ComboBoxItem IsSelected="True">Relative</ComboBoxItem>
             <ComboBoxItem >Absolute</ComboBoxItem>
         </ComboBox>
 
         <DockPanel Grid.Row="8">
             <TextBlock Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Script type" HorizontalAlignment="Left"/>
-            <Button Name="HelpAddActionButtonScriptType" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+            <Button AutomationProperties.Name="Help for script type" Name="HelpAddActionButtonScriptType" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
                 <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
             </Button>
         </DockPanel>
-        <ComboBox x:Name="ButtonScriptType" Grid.Row="9" Margin="10,2,10,0" FontSize="14">
+        <ComboBox AutomationProperties.Name="Script type" x:Name="ButtonScriptType" Grid.Row="9" Margin="10,2,10,0" FontSize="14">
             <ComboBoxItem IsSelected="True">PowerShell</ComboBoxItem>
             <ComboBoxItem >Batch</ComboBoxItem>
         </ComboBox>
 
         <DockPanel Grid.Row="10">
             <TextBlock Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Arguments" HorizontalAlignment="Left"/>
-            <Button Name="HelpAddActionButtonArguments" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+            <Button AutomationProperties.Name="Help for script arguements" Name="HelpAddActionButtonArguments" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
                 <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
             </Button>
         </DockPanel>
@@ -83,11 +83,11 @@
                 <RowDefinition Height="44"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Margin="10,0,10,0" BorderBrush="#333333" BorderThickness="1" CornerRadius="2">
-                <ListBox x:Name="ButtonScriptArguments">
+                <ListBox AutomationProperties.Name="Script arguements" x:Name="ButtonScriptArguments">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="-5" Orientation="Horizontal">
-                                <Button x:Name="DeleteArgumentButton" Margin="0" Height="25" Width="25" Click="DeleteArgumentButton_Click">
+                                <Button AutomationProperties.Name="Delete" x:Name="DeleteArgumentButton" Margin="0" Height="25" Width="25" Click="DeleteArgumentButton_Click">
                                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent">
                                         <Image Source="pack://application:,,,/Images/close.png" Margin="-6,-2,-6,-2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </StackPanel>
@@ -98,10 +98,10 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </Border>
-            <Button Grid.Row="1" Content="Add" Click="ADDButton_Click" Margin="10,0,0,0" Padding="5"/>
-            <TextBox x:Name="ButtonScriptArgumentText" Grid.Row="2" Margin="55,6,10,6"/>
+            <Button AutomationProperties.Name="Add script arguement" Grid.Row="1" Content="Add" Click="ADDButton_Click" Margin="10,0,0,0" Padding="5"/>
+            <TextBox AutomationProperties.Name="Script arguement" x:Name="ButtonScriptArgumentText" Grid.Row="2" Margin="55,6,10,6"/>
         </Grid>
         <Button Grid.Row="13" Content="OK" Click="OKButton_Click" Margin="5" Padding="5" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right"/>
-        <Button Grid.Row="13" Content="Cancel" Click="CANCELButton_Click" Margin="5,5,40,5" Padding="5" HorizontalAlignment="Right"/>
+        <Button AutomationProperties.Name="Cancel" Grid.Row="13" Content="Cancel" Click="CANCELButton_Click" Margin="5,5,40,5" Padding="5" HorizontalAlignment="Right"/>
     </Grid>
 </Window>

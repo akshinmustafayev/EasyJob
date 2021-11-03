@@ -14,7 +14,7 @@
 
         <Border Grid.Column="0" BorderBrush="#E3E3E3" BorderThickness="0,0,2,0">
             <Border BorderBrush="#E3E3E3" BorderThickness="1" CornerRadius="2" Margin="12">
-                <ListView Name="MainWindowActionButtonsList" ItemsSource="{Binding ActionButtons}">
+                <ListView AutomationProperties.Name="Reorder script buttons" Name="MainWindowActionButtonsList" ItemsSource="{Binding ActionButtons}">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -33,10 +33,10 @@
         </Border>
 
         <DockPanel Grid.Column="1" Height="80" HorizontalAlignment="Center">
-            <Button DockPanel.Dock="Top" HorizontalAlignment="Center" Height="28" Width="28" Click="ActionButtonsReorderUp_Click">
+            <Button AutomationProperties.Name="Move up" DockPanel.Dock="Top" HorizontalAlignment="Center" Height="28" Width="28" Click="ActionButtonsReorderUp_Click">
                 <Image Source="pack://application:,,,/Images/up.png" Margin="-4"/>
             </Button>
-            <Button DockPanel.Dock="Bottom" HorizontalAlignment="Center" Height="28" Width="28" Click="ActionButtonsRedorderDown_Click">
+            <Button AutomationProperties.Name="Move down" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Height="28" Width="28" Click="ActionButtonsRedorderDown_Click">
                 <Image Source="pack://application:,,,/Images/down.png" Margin="-4"/>
             </Button>
         </DockPanel>
