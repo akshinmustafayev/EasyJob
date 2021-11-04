@@ -43,7 +43,10 @@
 
         <DockPanel Grid.Row="4">
             <TextBlock Grid.Row="4" Margin="10,0,0,0" FontSize="14" VerticalAlignment="Center" Text="Script" HorizontalAlignment="Left"/>
-            <Button AutomationProperties.Name="Help on script path" Name="HelpAddActionButtonScript" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+            <Button AutomationProperties.Name="Select file dialog on script path" Width="14" Height="14" Margin="8,0,0,0" Click="SelectFileButton_Click">
+                <Image Source="pack://application:,,,/Images/find.png" Margin="-9,-5,-5,-6"/>
+            </Button>
+			<Button AutomationProperties.Name="Help on script path" Name="HelpAddActionButtonScript" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
                 <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
             </Button>
         </DockPanel>
