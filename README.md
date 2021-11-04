@@ -103,11 +103,11 @@ Write-Host "\c10EJColor with tag 10/c10EJ"
 ```
 11. <img src="ej/color_tags/tag11.png" style="height:18px;width:18px;"> __\c11EJ__ Some text __/c11EJ__
 ```PowerShell
-Write-Host "\c11EJColor with tag 11/c10EJ"
+Write-Host "\c11EJColor with tag 11/c11EJ"
 ```
 12. <img src="ej/color_tags/tag12.png" style="height:18px;width:18px;"> __\c12EJ__ Some text __/c12EJ__
 ```PowerShell
-Write-Host "\c12EJColor with tag 12/c10EJ"
+Write-Host "\c12EJColor with tag 12/c12EJ"
 ```
 13. <img src="ej/color_tags/tag13.png" style="height:18px;width:18px;"> __\c13EJ__ Some text __/c13EJ__
 ```PowerShell
