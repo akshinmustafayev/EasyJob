@@ -21,7 +21,7 @@
                     <ColumnDefinition Width="90"/>
                     <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Padding="12" Grid.Column="0" Text="About" Style="{StaticResource HeaderTextBlockStyle}" Background="#E2E2E2"/>
+                <TextBlock AutomationProperties.Name="About" Padding="12" Grid.Column="0" Text="About" Style="{StaticResource HeaderTextBlockStyle}" Background="#E2E2E2"/>
                 <Image Grid.Column="1" Source="pack://application:,,,/Images/github.png" Height="Auto" Width="Auto" MouseLeftButtonDown="GithubImage_MouseLeftButtonDown" Cursor="Hand" Stretch="Fill"/>
                 <DockPanel Grid.Column="2" Background="#E2E2E2"/>
             </Grid>

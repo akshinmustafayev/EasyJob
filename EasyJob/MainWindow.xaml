@@ -13,41 +13,41 @@
         Title="EasyJob Executor" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ContextMenu x:Key="OnTabContextMenu">
-            <MenuItem Header="Add tab" Click="ContextMenuAddTab_Click">
+            <MenuItem Header="_Add tab" Click="ContextMenuAddTab_Click">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/addtab.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Remove tab" Click="ContextMenuRemoveTab_Click">
+            <MenuItem Header="_Remove tab" Click="ContextMenuRemoveTab_Click">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/removetab.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Rename tab" Click="ContextMenuRenameTab_Click">
+            <MenuItem Header="Re_name tab" Click="ContextMenuRenameTab_Click">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/renametab.png"/>
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
         <ContextMenu x:Key="OnActionButtonPannelContextMenu">
-            <MenuItem Header="Add button" Click="ContextMenuAddActionButton_Click">
+            <MenuItem Header="_Add button" Click="ContextMenuAddActionButton_Click">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/addbutton.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Reorder buttons" Click="ContextMenuReorderActionButtons_Click">
+            <MenuItem Header="Re_order buttons" Click="ContextMenuReorderActionButtons_Click">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/reorderbuttons.png"/>
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
         <ContextMenu x:Key="OnActionButtonContextMenu">
-            <MenuItem Header="Edit button" Click="ContextMenuEditActionButton_Click">
+            <MenuItem Header="_Edit button" Click="ContextMenuEditActionButton_Click">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/editbutton.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Remove button" Click="ContextMenuRemoveActionButton_Click">
+            <MenuItem Header="_Remove button" Click="ContextMenuRemoveActionButton_Click">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/removebutton.png"/>
                 </MenuItem.Icon>
@@ -62,78 +62,78 @@
             <RowDefinition Height="84"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" FlowDirection="LeftToRight" IsMainMenu="True">
-            <MenuItem Header="File">
-                <MenuItem Name="FileReloadConfigMenuItem" Header="Reload config" Click="ReloadConfigMenuItem_Click">
+            <MenuItem Header="_File" Focusable="False" IsTabStop="False">
+                <MenuItem Name="FileReloadConfigMenuItem" Header="Re_load config" Click="ReloadConfigMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/reload.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="FileOpenAppFolderMenuItem" Header="Open app folder" Click="OpenAppFolderMenuItem_Click">
+                <MenuItem Name="FileOpenAppFolderMenuItem" Header="_Open app folder" Click="OpenAppFolderMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/folder.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="FileClearEventsLogListMenuItem" Header="Clear events list" Click="ClearEventsLogListMenuItem_Click">
+                <MenuItem Name="FileClearEventsLogListMenuItem" Header="_Clear events list" Click="ClearEventsLogListMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/clear.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator Name="FileSeparator1"/>
-                <MenuItem Name="FileExitMenuItem" Header="Exit" Click="ExitMenuItem_Click">
+                <MenuItem Name="FileExitMenuItem" Header="E_xit" Click="ExitMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/exit.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Name="SettingsMenuItem" Header="Settings">
-                <MenuItem Name="SettingsWorkflowMenuItem" Header="Workflow">
+            <MenuItem Name="SettingsMenuItem" Header="_Settings" Focusable="False" IsTabStop="False">
+                <MenuItem Name="SettingsWorkflowMenuItem" Header="_Workflow">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/workflow.png"/>
                     </MenuItem.Icon>
-                    <MenuItem Name="SettingsWorkflowReorderTabsMenuItem" Header="Reorder tabs" Click="ReorderTabsMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowReorderTabsMenuItem" Header="Re_order tabs" Click="ReorderTabsMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/reordertabs.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Name="SettingsWorkflowAddTabMenuItem" Header="Add tab" Click="AddTabMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowAddTabMenuItem" Header="_Add tab" Click="AddTabMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/addtab.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Name="SettingsWorkflowRemoveCurrentTabMenuItem" Header="Remove current tab" Click="RemoveCurrentTabMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowRemoveCurrentTabMenuItem" Header="Remo_ve current tab" Click="RemoveCurrentTabMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/removetab.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Name="SettingsWorkflowRenameCurrentTabMenuItem" Header="Rename current tab" Click="RenameCurrentTabMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowRenameCurrentTabMenuItem" Header="_Rename current tab" Click="RenameCurrentTabMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/renametab.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Name="SettingsWorkflowAddButtonToCurrentTabMenuItem" Header="Add button to current tab" Click="AddButtonToCurrentTabMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowAddButtonToCurrentTabMenuItem" Header="Add _button to current tab" Click="AddButtonToCurrentTabMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/addbutton.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Name="SettingsWorkflowReorderButtonsInCurrentTabMenuItem" Header="Reorder buttons in current tab" Click="ReorderButtonsInCurrentTabMenuItem_Click">
+                    <MenuItem Name="SettingsWorkflowReorderButtonsInCurrentTabMenuItem" Header="R_eorder buttons in current tab" Click="ReorderButtonsInCurrentTabMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/Images/reorderbuttons.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Name="SettingsConfigurationMenuItem" Header="Configuration" Click="ConfigurationMenuItem_Click">
+                <MenuItem Name="SettingsConfigurationMenuItem" Header="_Configuration" Click="ConfigurationMenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/configuration.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Name="HelpMenuItem" Header="Help">
-                <MenuItem Name="HelpTroubleshootingMenuItem" Header="Troubleshooting" Click="MenuTroubleshooting_Click">
+            <MenuItem Name="HelpMenuItem" Header="_Help" Focusable="False" IsTabStop="False">
+                <MenuItem Name="HelpTroubleshootingMenuItem" Header="_Troubleshooting" Click="MenuTroubleshooting_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/troubleshoot.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="HelpAboutMenuItem" Header="About" Click="MenuAbout_Click">
+                <MenuItem Name="HelpAboutMenuItem" Header="_About" Click="MenuAbout_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/about.png"/>
                     </MenuItem.Icon>
@@ -143,7 +143,7 @@
         <TabControl x:Name="MainTab" Grid.Row="1">
             <TabControl.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding TabHeader}" Name="TabHeaderSelector" PreviewMouseDown="OnTabHeader_PreviewMouseDown"/>
+                    <Label AutomationProperties.Name="{Binding TabHeader}" Content="{Binding TabHeader}" Name="TabHeaderSelector" PreviewMouseDown="OnTabHeader_PreviewMouseDown"/>
                 </DataTemplate>
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
@@ -155,7 +155,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <ScrollViewer x:Name="MainScroll" Grid.Row="0" Background="#F7F7F7" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" PreviewMouseDown="OnActionButtonPannel_PreviewMouseDown">
+                        <ScrollViewer Focusable="False" IsTabStop="False" x:Name="MainScroll" Grid.Row="0" Background="#F7F7F7" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" PreviewMouseDown="OnActionButtonPannel_PreviewMouseDown">
                             <ItemsControl ItemsSource="{Binding TabActionButtons}" Margin="8">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -164,9 +164,9 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Button Margin="0,5,5,0" Padding="5" Content="{Binding ButtonText}" Click="ActionButton_Click" PreviewMouseDown="ActionButton_PreviewMouseDown">
+                                        <Button AutomationProperties.Name="{Binding ButtonText}" Margin="0,5,5,0" Padding="5" Content="{Binding ButtonText}" Click="ActionButton_Click" PreviewMouseDown="ActionButton_PreviewMouseDown">
                                             <Button.ToolTip>
-                                                <ToolTip Content="{Binding ButtonDescription}" />
+                                                <ToolTip Focusable="False" IsTabStop="False" Content="{Binding ButtonDescription}" />
                                             </Button.ToolTip>
                                         </Button>
                                     </DataTemplate>
@@ -174,8 +174,8 @@
                             </ItemsControl>
                         </ScrollViewer>
                         <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch"/>
-                        <ScrollViewer Grid.Row="2" myAttachedProperties:ScrollViewerExtensions.AlwaysScrollToEnd="True">
-                            <wpfRichTextBox:RichTextEditor Text="{Binding Path=TabTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Consolas" Background="{Binding Path=ConsoleBackground}" Foreground="{Binding Path=ConsoleForeground}"/>
+                        <ScrollViewer IsTabStop="False" Focusable="False" Grid.Row="2" myAttachedProperties:ScrollViewerExtensions.AlwaysScrollToEnd="True">
+                            <wpfRichTextBox:RichTextEditor Text="{Binding Path=TabTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Content" FontFamily="Consolas" Background="{Binding Path=ConsoleBackground}" Foreground="{Binding Path=ConsoleForeground}"/>
                             <!--<TextBox Text="{Binding Path=TabTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" FontFamily="Consolas" Background="{Binding Path=ConsoleBackground}" Foreground="{Binding Path=ConsoleForeground}" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled"/>-->
                         </ScrollViewer>
                         <Grid Grid.Row="3" Margin="0,5,0,5">
@@ -185,11 +185,11 @@
                                 <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="30"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Margin="10,0,5,0" Padding="5" Content="Clear Output" Click="ClearOutputButton_Click" />
-                            <Button x:Name="ScrollToTopButton" Grid.Column="2" Margin="0,0,5,0" Padding="5" Click="ScrollToTopButton_Click">
+                            <Button AutomationProperties.Name="Clear content" Grid.Column="0" Margin="10,0,5,0" Padding="5" Content="_Clear Output" Click="ClearOutputButton_Click" />
+                            <Button AutomationProperties.Name="Scroll to top" x:Name="ScrollToTopButton" Grid.Column="2" Margin="0,0,5,0" Padding="5" Click="ScrollToTopButton_Click">
                                 <Image Source="pack://application:,,,/Images/up.png" Margin="-1"/>
                             </Button>
-                            <Button x:Name="ScrollToBottomButton" Grid.Column="3"  Margin="0,0,5,0" Padding="5" Click="ScrollToBottomButton_Click">
+                            <Button AutomationProperties.Name="Scroll to bottom" x:Name="ScrollToBottomButton" Grid.Column="3"  Margin="0,0,5,0" Padding="5" Click="ScrollToBottomButton_Click">
                                 <Image Source="pack://application:,,,/Images/down.png" Margin="-1"/>
                             </Button>
                         </Grid>
@@ -197,14 +197,14 @@
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>
-        <GridSplitter Grid.Row="2" Height="5" HorizontalAlignment="Stretch"/>
+        <GridSplitter Focusable="False" IsTabStop="False" Grid.Row="2" Height="5" HorizontalAlignment="Stretch"/>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="7"/>
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
-            <ListBox Grid.Column="0" x:Name="EventsList" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox AutomationProperties.Name="Events list" Grid.Column="0" x:Name="EventsList" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -213,13 +213,13 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
-            <ListBox x:Name="TasksList" Grid.Column="2">
+            <GridSplitter Focusable="False" IsTabStop="False" Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+            <ListBox AutomationProperties.Name="Tasks list" x:Name="TasksList" Grid.Column="2">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="2" Orientation="Horizontal">
-                            <Button Name="TasksListStop" Margin="0" Height="25" Width="25" Click="TasksListStop_Click">
-                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent">
+                            <Button AutomationProperties.Name="Stop task" Name="TasksListStop" Margin="0" Height="25" Width="25" Click="TasksListStop_Click">
+                                <StackPanel Focusable="False"  VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Background="Transparent">
                                     <Image Source="pack://application:,,,/Images/close.png" Margin="-6,-2,-6,-2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
