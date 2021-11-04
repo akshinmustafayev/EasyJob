@@ -12,8 +12,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <ScrollViewer Grid.Row="0" Margin="0,8,0,8" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-            <ItemsControl x:Name="AnswerDialogItems" ItemsSource="{Binding Answers}" Margin="8">
+        <ScrollViewer Focusable="False" IsTabStop="False" Grid.Row="0" Margin="0,8,0,8" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+            <ItemsControl AutomationProperties.Name="Answers" x:Name="AnswerDialogItems" ItemsSource="{Binding Answers}" Margin="8">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Vertical"/>
@@ -26,14 +26,14 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock HorizontalAlignment="Left" Grid.Row="0" Text="{Binding AnswerQuestion}"/>
+                            <TextBlock AutomationProperties.Name="{Binding AnswerQuestion}" HorizontalAlignment="Left" Grid.Row="0" Text="{Binding AnswerQuestion}"/>
                             <TextBox Grid.Row="1" Margin="5" Text="{Binding AnswerResult}"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <Button Grid.Row="1" Content="Cancel" Click="CANCELButton_Click" Margin="5,5,40,5" Padding="5" HorizontalAlignment="Right"/>
-        <Button Grid.Row="1" Content="OK" Click="OKButton_Click" Margin="5" Padding="5" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right"/>
+        <Button AutomationProperties.Name="Cancel" Grid.Row="1" Content="Cancel" Click="CANCELButton_Click" Margin="5,5,40,5" Padding="5" HorizontalAlignment="Right"/>
+        <Button AutomationProperties.Name="Okay" Grid.Row="1" Content="OK" Click="OKButton_Click" Margin="5" Padding="5" Style="{StaticResource AccentButtonStyle}" HorizontalAlignment="Right"/>
     </Grid>
 </Window>

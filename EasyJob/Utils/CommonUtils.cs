@@ -79,5 +79,16 @@ namespace EasyJob.Utils
 
             return Text;
         }
+
+        public static string ConvertPartToRelative(string Path)
+        {
+            Path = Path.Replace(AppDomain.CurrentDomain.BaseDirectory, "");
+            return Path;
+        }
+
+        public static string ApplicationStartupPath()
+        {
+            return AppDomain.CurrentDomain.BaseDirectory;
+        }
     }
 }

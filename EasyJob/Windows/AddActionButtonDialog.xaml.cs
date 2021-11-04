@@ -1,5 +1,7 @@
 ﻿using EasyJob.Serialization;
 using EasyJob.Serialization.AnswerDialog;
+using EasyJob.Utils;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,6 +96,24 @@ namespace EasyJob.Windows
             Button button = sender as Button;
             HelpDialog hd = new HelpDialog(button.Name);
             hd.ShowDialog();
+        }
+
+        private void SelectFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = false;
+            ofd.InitialDirectory = CommonUtils.ApplicationStartupPath();
+            if (ofd.ShowDialog() == true)
+            {
+                if(ButtonScriptPathType.SelectedIndex == 0)
+                {
+                    ButtonScript.Text = CommonUtils.ConvertPartToRelative(ofd.FileName);
+                }
+                else
+                {
+                    ButtonScript.Text = ofd.FileName;
+                }
+            }
         }
     }
 }
