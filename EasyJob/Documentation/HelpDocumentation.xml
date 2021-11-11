@@ -239,6 +239,13 @@
 		<video>HelpConfigurationHideTroubleshooting.mp4</video>
 	</item>
 	<item>
+		<name>HelpConfigurationHideColorTags</name>
+		<heading>Hide Help->Troubleshooting</heading>
+		<description>Hides "Hide Help->Color tags" main menu item.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationHideColorTags.mp4</video>
+	</item>
+	<item>
 		<name>HelpConfigurationHideAbout</name>
 		<heading>Hide Help->About</heading>
 		<description>Hides "Hide Help->About" main menu item.&#10;&#10;Example: No</description>
