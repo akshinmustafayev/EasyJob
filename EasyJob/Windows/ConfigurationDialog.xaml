@@ -54,6 +54,7 @@
                     <RowDefinition Height="48"/>
                     <RowDefinition Height="48"/>
                     <RowDefinition Height="48"/>
+                    <RowDefinition Height="48"/>
                     <RowDefinition Height="68"/>
                 </Grid.RowDefinitions>
 
@@ -414,18 +415,31 @@
 
                 <Border Grid.Row="30" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
+                        <TextBlock Text="Hide Help->Color tags" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
+                        <Button AutomationProperties.Name="Help for Hide Help Color tags" Name="HelpConfigurationHideColorTags" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+                            <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
+                        </Button>
+                    </DockPanel>
+                </Border>
+                <ComboBox AutomationProperties.Name="Hide Help Color tags" Name="HideHelpColorTagsMenuItem" Grid.Row="30" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                    <ComboBoxItem>Yes</ComboBoxItem>
+                    <ComboBoxItem>No</ComboBoxItem>
+                </ComboBox>
+
+                <Border Grid.Row="31" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                    <DockPanel>
                         <TextBlock Text="Hide Help->About" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for Hide Help About" Name="HelpConfigurationHideAbout" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
                             <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Hide Help About" Name="HideHelpAboutMenuItem" Grid.Row="30" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Hide Help About" Name="HideHelpAboutMenuItem" Grid.Row="31" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Button AutomationProperties.Name="Save" Grid.Row="31" Grid.Column="1" Content="Save" HorizontalAlignment="Right" Margin="10,4,10,14" VerticalAlignment="Bottom" Style="{StaticResource AccentButtonStyle}" Click="SaveButton_Click"/>
+                <Button AutomationProperties.Name="Save" Grid.Row="32" Grid.Column="1" Content="Save" HorizontalAlignment="Right" Margin="10,4,10,14" VerticalAlignment="Bottom" Style="{StaticResource AccentButtonStyle}" Click="SaveButton_Click"/>
             </Grid>
         </ui:ScrollViewerEx>
     </Grid>

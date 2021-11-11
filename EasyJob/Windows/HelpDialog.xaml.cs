@@ -40,17 +40,20 @@ namespace EasyJob.Windows
             HelpHeading.Text = nodeList[0]["heading"].InnerText;
             HelpUsed.Text = nodeList[0]["used"].InnerText;
             HelpDescription.Text = nodeList[0]["description"].InnerText;
-            try
+            if (nodeList[0]["video"].InnerText != "" || nodeList[0]["video"].InnerText != null)
             {
-                HelpVideo.HorizontalAlignment = HorizontalAlignment.Stretch;
-                HelpVideo.VerticalAlignment = VerticalAlignment.Stretch;
-                HelpVideo.Stretch = Stretch.Fill;
-                HelpVideo.Volume = 0;
-                HelpVideo.Source = new Uri(@"Documentation\Videos\" + nodeList[0]["video"].InnerText, UriKind.Relative);
-                HelpVideo.Position = TimeSpan.FromSeconds(0);
-                HelpVideo.Play();
+                try
+                {
+                    HelpVideo.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    HelpVideo.VerticalAlignment = VerticalAlignment.Stretch;
+                    HelpVideo.Stretch = Stretch.Fill;
+                    HelpVideo.Volume = 0;
+                    HelpVideo.Source = new Uri(@"Documentation\Videos\" + nodeList[0]["video"].InnerText, UriKind.Relative);
+                    HelpVideo.Position = TimeSpan.FromSeconds(0);
+                    HelpVideo.Play();
+                }
+                catch { }
             }
-            catch { }
         }
 
         private void ReloadVideoButton_Click(object sender, RoutedEventArgs e)
