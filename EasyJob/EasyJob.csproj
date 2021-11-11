@@ -5,14 +5,14 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.1.5</Version>
+    <Version>1.1.7</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
     <PackageProjectUrl>https://github.com/akshinmustafayev/EasyJob</PackageProjectUrl>
     <RepositoryUrl>https://github.com/akshinmustafayev/EasyJob</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <AssemblyVersion>1.1.5.0</AssemblyVersion>
+    <AssemblyVersion>1.1.7.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -34,11 +34,27 @@
     <None Remove="Images\addtab.png" />
     <None Remove="Images\clear.png" />
     <None Remove="Images\close.png" />
+    <None Remove="Images\colortags.png" />
+    <None Remove="Images\ColorTags\tag01.png" />
+    <None Remove="Images\ColorTags\tag02.png" />
+    <None Remove="Images\ColorTags\tag03.png" />
+    <None Remove="Images\ColorTags\tag04.png" />
+    <None Remove="Images\ColorTags\tag05.png" />
+    <None Remove="Images\ColorTags\tag06.png" />
+    <None Remove="Images\ColorTags\tag07.png" />
+    <None Remove="Images\ColorTags\tag08.png" />
+    <None Remove="Images\ColorTags\tag09.png" />
+    <None Remove="Images\ColorTags\tag10.png" />
+    <None Remove="Images\ColorTags\tag11.png" />
+    <None Remove="Images\ColorTags\tag12.png" />
+    <None Remove="Images\ColorTags\tag13.png" />
+    <None Remove="Images\ColorTags\tag14.png" />
     <None Remove="Images\configuration.png" />
     <None Remove="Images\convert.png" />
     <None Remove="Images\down.png" />
     <None Remove="Images\editbutton.png" />
     <None Remove="Images\exit.png" />
+    <None Remove="Images\find.png" />
     <None Remove="Images\folder.png" />
     <None Remove="Images\github.png" />
     <None Remove="Images\help.png" />
@@ -69,10 +85,26 @@
     <Resource Include="Images\addtab.png" />
     <Resource Include="Images\clear.png" />
     <Resource Include="Images\close.png" />
+    <Resource Include="Images\colortags.png" />
+    <Resource Include="Images\ColorTags\tag01.png" />
+    <Resource Include="Images\ColorTags\tag02.png" />
+    <Resource Include="Images\ColorTags\tag03.png" />
+    <Resource Include="Images\ColorTags\tag04.png" />
+    <Resource Include="Images\ColorTags\tag05.png" />
+    <Resource Include="Images\ColorTags\tag06.png" />
+    <Resource Include="Images\ColorTags\tag07.png" />
+    <Resource Include="Images\ColorTags\tag08.png" />
+    <Resource Include="Images\ColorTags\tag09.png" />
+    <Resource Include="Images\ColorTags\tag10.png" />
+    <Resource Include="Images\ColorTags\tag11.png" />
+    <Resource Include="Images\ColorTags\tag12.png" />
+    <Resource Include="Images\ColorTags\tag13.png" />
+    <Resource Include="Images\ColorTags\tag14.png" />
     <Resource Include="Images\convert.png" />
     <Resource Include="Images\down.png" />
     <Resource Include="Images\editbutton.png" />
     <Resource Include="Images\exit.png" />
+    <Resource Include="Images\find.png" />
     <Resource Include="Images\folder.png" />
     <Resource Include="Images\github.png" />
     <Resource Include="Images\help.png" />
@@ -162,6 +194,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Documentation\Videos\HelpConfigurationHideClearEventsList.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationHideColorTags.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Documentation\Videos\HelpConfigurationHideFileOpenAppFolder.mp4">

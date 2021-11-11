@@ -29,6 +29,7 @@ namespace EasyJob.Serialization
         public bool hide_menu_item_settings_configuration { get; set; }
         public bool hide_menu_item_help { get; set; }
         public bool hide_menu_item_help_troubleshooting { get; set; }
+        public bool hide_menu_item_help_colortags { get; set; }
         public bool hide_menu_item_help_about { get; set; }
     }
 }

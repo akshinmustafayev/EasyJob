@@ -13,6 +13,9 @@
     <Compile Update="Windows\AnswerDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\ColorTagsDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\ConfigurationDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -49,6 +52,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\AnswerDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\ColorTagsDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\ConfigurationDialog.xaml">

@@ -133,6 +133,11 @@
                         <Image Source="pack://application:,,,/Images/troubleshoot.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Name="HelpColorTagsMenuItem" Header="_Color tags" Click="MenuColorTags_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Images/colortags.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Name="HelpAboutMenuItem" Header="_About" Click="MenuAbout_Click">
                     <MenuItem.Icon>
                         <Image Source="pack://application:,,,/Images/about.png"/>

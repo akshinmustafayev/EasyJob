@@ -64,6 +64,7 @@ namespace EasyJob.Windows
             SetComboBoxFromValue(HideSettingsConfigurationMenuItem, config.restrictions.hide_menu_item_settings_configuration);
             SetComboBoxFromValue(HideHelpMenuItem, config.restrictions.hide_menu_item_help);
             SetComboBoxFromValue(HideHelpTroubleshootingMenuItem, config.restrictions.hide_menu_item_help_troubleshooting);
+            SetComboBoxFromValue(HideHelpColorTagsMenuItem, config.restrictions.hide_menu_item_help_colortags);
             SetComboBoxFromValue(HideHelpAboutMenuItem, config.restrictions.hide_menu_item_help_about);
         }
 
@@ -122,6 +123,7 @@ namespace EasyJob.Windows
             config.restrictions.hide_menu_item_settings_configuration = GetComboBoxValue(HideSettingsConfigurationMenuItem);
             config.restrictions.hide_menu_item_help = GetComboBoxValue(HideHelpMenuItem);
             config.restrictions.hide_menu_item_help_troubleshooting = GetComboBoxValue(HideHelpTroubleshootingMenuItem);
+            config.restrictions.hide_menu_item_help_colortags = GetComboBoxValue(HideHelpColorTagsMenuItem);
             config.restrictions.hide_menu_item_help_about = GetComboBoxValue(HideHelpAboutMenuItem);
 
             if(ConfigUtils.SaveFromConfigToFile(config) == true)
