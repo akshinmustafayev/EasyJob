@@ -137,6 +137,7 @@ namespace EasyJob
             // Help
             if (config.restrictions.hide_menu_item_help == true) { HelpMenuItem.Visibility = Visibility.Collapsed; } else { HelpMenuItem.Visibility = Visibility.Visible; }
             if (config.restrictions.hide_menu_item_help_troubleshooting == true) { HelpTroubleshootingMenuItem.Visibility = Visibility.Collapsed; } else { HelpTroubleshootingMenuItem.Visibility = Visibility.Visible; }
+            if (config.restrictions.hide_menu_item_help_colortags == true) { HelpColorTagsMenuItem.Visibility = Visibility.Collapsed; } else { HelpColorTagsMenuItem.Visibility = Visibility.Visible; }
             if (config.restrictions.hide_menu_item_help_about == true) { HelpAboutMenuItem.Visibility = Visibility.Collapsed; } else { HelpAboutMenuItem.Visibility = Visibility.Visible; }
         }
 
@@ -794,6 +795,12 @@ namespace EasyJob
         {
             TroubleshootingWindow troubleshootingDialog = new TroubleshootingWindow(config);
             troubleshootingDialog.Show();
+        }
+
+        private void MenuColorTags_Click(object sender, RoutedEventArgs e)
+        {
+            ColorTagsDialog colorTagsDialog = new ColorTagsDialog();
+            colorTagsDialog.Show();
         }
 
 
