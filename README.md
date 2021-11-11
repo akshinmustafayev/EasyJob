@@ -255,7 +255,7 @@ Here is an example:
 
 _Note 1: Do not specify argument_answer value, since it will be ignored when executing script_
 
-_Note 2: ID my be any other random GUID number. You may not specify it, application will regenerate it after changes if it is absent or not present._
+_Note 2: ID my be any other random GUID number. You may not specify it, application will regenerate it after changes if it is absent._
 
 
 ## Easy access
