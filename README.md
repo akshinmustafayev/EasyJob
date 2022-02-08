@@ -265,18 +265,8 @@ _SHIFT+Left Mouse Click_ on the button will open the script attached to the butt
 
 ## Compilation
 
-1. Download and install .NET 5 SDK from [Here](https://dotnet.microsoft.com/download/visual-studio-sdks)
-2. Download source code and extract it to __C:\temp__
-3. Open Command Promt (cmd) from the start menu
-4. Execute __cd C:\temp\EasyJob-main__
-5. Execute __dotnet build -c release__
-
-![image](https://user-images.githubusercontent.com/29357955/136832285-faf648b8-350f-4f23-9a88-7caf0a5a9bfd.png)
-
-6. Open __C:\temp\EasyJob-main\bin\Release\net5.0-windows__ and execute __EasyJob.exe__
-
-![image](https://user-images.githubusercontent.com/29357955/136832429-e348ae24-051a-4e30-af9f-f52d3819270a.png)
-
+1. Download and install Visual Studio 2019
+2. Open project in Visual Studio and build it
 
 ## Contributing
 
