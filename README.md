@@ -176,6 +176,7 @@ Here is an example:
     "hide_menu_item_settings_configuration": false,
     "hide_menu_item_help": false,
     "hide_menu_item_help_troubleshooting": false,
+    "hide_menu_item_help_colortags": false,
     "hide_menu_item_help_about": false
   },
   "tabs": [
