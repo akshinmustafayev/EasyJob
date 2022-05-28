@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyJob.Windows"
         mc:Ignorable="d" Icon="pack://application:,,,/Images/icon.ico"
-        Title="Select" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        Title="Select" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" MinWidth="400">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" MaxHeight="450"/>
+            <RowDefinition Height="64"/>
         </Grid.RowDefinitions>
         
-        <ScrollViewer Focusable="False" IsTabStop="False" Grid.Row="0" Margin="0,8,0,8" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+        <ScrollViewer Focusable="False" IsTabStop="False" Grid.Row="0" Margin="0,8,0,8" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <ItemsControl AutomationProperties.Name="Answers" x:Name="AnswerDialogItems" ItemsSource="{Binding Answers}" Margin="8">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Vertical"/>
+                        <WrapPanel Orientation="Vertical" ItemWidth="500" Margin="10,0,10,0"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
