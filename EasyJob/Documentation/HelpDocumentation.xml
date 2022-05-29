@@ -141,6 +141,20 @@
 		<video>HelpConfigurationBlockTabsRename.mp4</video>
 	</item>
 	<item>
+		<name>HelpConfigurationBlockButtonsPaste</name>
+		<heading>Block buttons paste</heading>
+		<description>Hides "Paste button" context menu item when Right click on the tab.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationBlockButtonsPaste.mp4</video>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockButtonsCopy</name>
+		<heading>Block buttons copy</heading>
+		<description>Hides "Copy button" context menu item when Right click on the tab.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+		<video>HelpConfigurationBlockButtonsCopy.mp4</video>
+	</item>
+	<item>
 		<name>HelpConfigurationHideFileReloadConfig</name>
 		<heading>Hide File->Reload config</heading>
 		<description>Hides "File->Reload config" main menu item.&#10;&#10;Example: No</description>
