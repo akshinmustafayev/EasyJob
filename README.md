@@ -33,7 +33,7 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 
 ## Features
-* _Remove_ or _Edit_ button from the GUI by right mouse click on it and then select item in the context menu. Settings are automatically will be saved to your config.json file.
+* _Remove_, _Edit_ or _Copy_ button from the GUI by right mouse click on it and then select item in the context menu. Settings are automatically will be saved to your config.json file.
 
 ![image](https://user-images.githubusercontent.com/29357955/136830752-7c1ab401-3f90-4421-b0d5-21468ac80d08.png)
 
