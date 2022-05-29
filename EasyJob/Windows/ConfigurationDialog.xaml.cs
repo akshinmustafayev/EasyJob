@@ -50,6 +50,8 @@ namespace EasyJob.Windows
             SetComboBoxFromValue(BlockButtonsReorder, config.restrictions.block_buttons_reorder);
             SetComboBoxFromValue(BlockButtonsEdit, config.restrictions.block_buttons_edit);
             SetComboBoxFromValue(BlockTabsRename, config.restrictions.block_tabs_rename);
+            SetComboBoxFromValue(BlockButtonsPaste, config.restrictions.block_buttons_paste);
+            SetComboBoxFromValue(BlockButtonsCopy, config.restrictions.block_buttons_copy);
             SetComboBoxFromValue(HideFileReloadConfigMenuItem, config.restrictions.hide_menu_item_file_reload_config);
             SetComboBoxFromValue(HideFileOpenAppFolderMenuItem, config.restrictions.hide_menu_item_file_open_app_folder);
             SetComboBoxFromValue(HideFileClearEventsListMenuItem, config.restrictions.hide_menu_item_file_clear_events_list);
@@ -109,6 +111,8 @@ namespace EasyJob.Windows
             config.restrictions.block_buttons_reorder = GetComboBoxValue(BlockButtonsReorder);
             config.restrictions.block_buttons_edit = GetComboBoxValue(BlockButtonsEdit);
             config.restrictions.block_tabs_rename = GetComboBoxValue(BlockTabsRename);
+            config.restrictions.block_buttons_paste = GetComboBoxValue(BlockButtonsPaste);
+            config.restrictions.block_buttons_copy = GetComboBoxValue(BlockButtonsCopy);
             config.restrictions.hide_menu_item_file_reload_config = GetComboBoxValue(HideFileReloadConfigMenuItem);
             config.restrictions.hide_menu_item_file_open_app_folder = GetComboBoxValue(HideFileOpenAppFolderMenuItem);
             config.restrictions.hide_menu_item_file_clear_events_list = GetComboBoxValue(HideFileClearEventsListMenuItem);

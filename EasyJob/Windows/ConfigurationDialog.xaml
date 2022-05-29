@@ -44,6 +44,8 @@
                     <RowDefinition Height="48"/>
                     <RowDefinition Height="48"/>
                     <RowDefinition Height="48"/>
+                    <RowDefinition Height="48"/>
+                    <RowDefinition Height="48"/>
                     <RowDefinition Height="58"/>
                     <RowDefinition Height="58"/>
                     <RowDefinition Height="58"/>
@@ -233,18 +235,44 @@
 
                 <Border Grid.Row="16" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
+                        <TextBlock Text="Block buttons paste" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
+                        <Button AutomationProperties.Name="Help for buttons paste" Name="HelpConfigurationBlockButtonsPaste" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+                            <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
+                        </Button>
+                    </DockPanel>
+                </Border>
+                <ComboBox AutomationProperties.Name="Block buttons paste" Name="BlockButtonsPaste" Grid.Row="16" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                    <ComboBoxItem>Yes</ComboBoxItem>
+                    <ComboBoxItem>No</ComboBoxItem>
+                </ComboBox>
+
+                <Border Grid.Row="17" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                    <DockPanel>
+                        <TextBlock Text="Block buttons copy" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
+                        <Button AutomationProperties.Name="Help for allow buttons copy" Name="HelpConfigurationBlockButtonsCopy" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
+                            <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
+                        </Button>
+                    </DockPanel>
+                </Border>
+                <ComboBox AutomationProperties.Name="Block buttons copy" Name="BlockButtonsCopy" Grid.Row="17" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                    <ComboBoxItem>Yes</ComboBoxItem>
+                    <ComboBoxItem>No</ComboBoxItem>
+                </ComboBox>
+
+                <Border Grid.Row="18" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                    <DockPanel>
                         <TextBlock Text="Hide File->Reload config" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for allow reload config" Name="HelpConfigurationHideFileReloadConfig" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
                             <Image Source="pack://application:,,,/Images/help.png" Margin="-9,-5,-5,-6"/>
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Allow reloading config" Name="HideFileReloadConfigMenuItem" Grid.Row="16" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Allow reloading config" Name="HideFileReloadConfigMenuItem" Grid.Row="18" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
                 
-                <Border Grid.Row="17" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="19" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide File->Open app folder" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for Allow open app settings folder" Name="HelpConfigurationHideFileOpenAppFolder" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
@@ -252,12 +280,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Allow opening app settings folder" Name="HideFileOpenAppFolderMenuItem" Grid.Row="17" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Allow opening app settings folder" Name="HideFileOpenAppFolderMenuItem" Grid.Row="19" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
                 
-                <Border Grid.Row="18" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="20" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide File->Clear events list" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for allow clear events list" Name="HelpConfigurationHideClearEventsList" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
@@ -265,12 +293,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Allow clear events list" Name="HideFileClearEventsListMenuItem" Grid.Row="18" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Allow clear events list" Name="HideFileClearEventsListMenuItem" Grid.Row="20" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
                 
-                <Border Grid.Row="19" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="21" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Settings" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for allow configure settings" Name="HelpConfigurationHideSettings" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
@@ -278,12 +306,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Allow configure settings" Name="HideSettingsMenuItem" Grid.Row="19" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Allow configure settings" Name="HideSettingsMenuItem" Grid.Row="21" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="20" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="22" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Settings->Workflow" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for Hide workflow" Name="HelpConfigurationHideSettingsWorkflow" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
@@ -291,12 +319,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Hide settings workflow" Name="HideSettingsWorkflowMenuItem" Grid.Row="20" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Hide settings workflow" Name="HideSettingsWorkflowMenuItem" Grid.Row="22" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="21" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="23" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Settings->Workflow->Reorder tabs" FontSize="16" Margin="10,4,10,4" Padding="0,0,8,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
                         <Button AutomationProperties.Name="Help for hide workflow reorder tabs" Name="HelpConfigurationHideSettingsWorkflowReorderTabs" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
@@ -304,12 +332,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Hide settings workflow reorder tabs" Name="HideSettingsWorkflowReorderTabsMenuItem" Grid.Row="21" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Hide settings workflow reorder tabs" Name="HideSettingsWorkflowReorderTabsMenuItem" Grid.Row="23" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="22" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="24" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Settings->Workflow->Add tab" FontSize="16" Margin="10,4,18,4" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
                         <Button AutomationProperties.Name="Help for hide settings workflow add tab" Name="HelpConfigurationHideSettingsWorkflowAddTab" Width="14" Height="14" Margin="2,0,0,0" Click="HelpButton_Click">
@@ -317,12 +345,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Hide settings workflow add tab" Name="HideSettingsWorkflowAddTabMenuItem" Grid.Row="22" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Hide settings workflow add tab" Name="HideSettingsWorkflowAddTabMenuItem" Grid.Row="24" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="23" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="25" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Settings->Workflow->Remove current tab" FontSize="16" Margin="10,4,18,4" VerticalAlignment="Center" TextWrapping="Wrap"/>
                         <Button AutomationProperties.Name="Help for add settings workflow hide current tab" Name="HelpConfigurationHideSettingsWorkflowRemoveCurrentTab" Width="14" Height="14" Margin="4,0,0,0" Click="HelpButton_Click">
@@ -330,12 +358,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Allow settings workflow hide current tab" Name="HideSettingsWorkflowRemoveCurrentTabMenuItem" Grid.Row="23" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Allow settings workflow hide current tab" Name="HideSettingsWorkflowRemoveCurrentTabMenuItem" Grid.Row="25" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="24" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="26" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Settings->Workflow->Rename current tab" FontSize="16" Margin="10,4,18,4" VerticalAlignment="Center" TextWrapping="Wrap"/>
                         <Button AutomationProperties.Name="Help for workflow settings hide rename current tab" Name="HelpConfigurationHideSettingsWorkflowRenameCurrentTab" Width="14" Height="14" Margin="4,0,0,0" Click="HelpButton_Click">
@@ -343,12 +371,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="settings workflow hide rename current tab" Name="HideSettingsWorkflowRenameCurrentTabMenuItem" Grid.Row="24" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="settings workflow hide rename current tab" Name="HideSettingsWorkflowRenameCurrentTabMenuItem" Grid.Row="26" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="25" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="27" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Settings->Workflow->Add button to current tab" FontSize="16" Margin="10,4,22,4" VerticalAlignment="Center" TextWrapping="Wrap"/>
                         <Button AutomationProperties.Name="Help for settings workflow hide add button to current tab" Name="HelpConfigurationHideSettingsWorkflowAddButtonToCurrentTab" Width="14" Height="14" Margin="2,0,0,0" Click="HelpButton_Click">
@@ -356,12 +384,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Settings Workflow hide add button to current tab" Name="HideSettingsWorkflowAddButtonToCurrentTabMenuItem" Grid.Row="25" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Settings Workflow hide add button to current tab" Name="HideSettingsWorkflowAddButtonToCurrentTabMenuItem" Grid.Row="27" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="26" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="28" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Settings->Workflow->Reorder buttons in current tab" FontSize="16" Margin="10,4,22,4" VerticalAlignment="Center" TextWrapping="Wrap"/>
                         <Button AutomationProperties.Name="Help for settings workflow hide reorder  buttons in current tab" Name="HelpConfigurationHideSettingsWorkflowReorderButtonsInCurrentTab" Width="14" Height="14" Margin="2,0,0,0" Click="HelpButton_Click">
@@ -369,12 +397,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Settings Workflow hide reorder buttons in current tab" Name="HideSettingsWorkflowReorderButtonsInCurrentTabMenuItem" Grid.Row="26" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Settings Workflow hide reorder buttons in current tab" Name="HideSettingsWorkflowReorderButtonsInCurrentTabMenuItem" Grid.Row="28" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="27" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="29" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Settings->Configuration" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for Hide settings" Name="HelpConfigurationHideSettingsConfiguration" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
@@ -382,12 +410,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Hide settings" Name="HideSettingsConfigurationMenuItem" Grid.Row="27" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Hide settings" Name="HideSettingsConfigurationMenuItem" Grid.Row="29" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="28" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="30" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Help" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for Hide Help menu" Name="HelpConfigurationHideHelp" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
@@ -395,12 +423,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Hide help menu" Name="HideHelpMenuItem" Grid.Row="28" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Hide help menu" Name="HideHelpMenuItem" Grid.Row="30" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="29" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="31" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Help->Troubleshooting" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for Hide Help Troubleshoot" Name="HelpConfigurationHideTroubleshooting" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
@@ -408,12 +436,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Hide Help Troubleshoot" Name="HideHelpTroubleshootingMenuItem" Grid.Row="29" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Hide Help Troubleshoot" Name="HideHelpTroubleshootingMenuItem" Grid.Row="31" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="30" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="32" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Help->Color tags" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for Hide Help Color tags" Name="HelpConfigurationHideColorTags" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
@@ -421,12 +449,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Hide Help Color tags" Name="HideHelpColorTagsMenuItem" Grid.Row="30" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Hide Help Color tags" Name="HideHelpColorTagsMenuItem" Grid.Row="32" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Border Grid.Row="31" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
+                <Border Grid.Row="33" Grid.Column="0"  BorderBrush="#E2E2E2" BorderThickness="0,0,1,0">
                     <DockPanel>
                         <TextBlock Text="Hide Help->About" FontSize="16" Margin="10,4,10,4" VerticalAlignment="Center"/>
                         <Button AutomationProperties.Name="Help for Hide Help About" Name="HelpConfigurationHideAbout" Width="14" Height="14" Margin="8,0,0,0" Click="HelpButton_Click">
@@ -434,12 +462,12 @@
                         </Button>
                     </DockPanel>
                 </Border>
-                <ComboBox AutomationProperties.Name="Hide Help About" Name="HideHelpAboutMenuItem" Grid.Row="31" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                <ComboBox AutomationProperties.Name="Hide Help About" Name="HideHelpAboutMenuItem" Grid.Row="33" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
                     <ComboBoxItem>Yes</ComboBoxItem>
                     <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
 
-                <Button AutomationProperties.Name="Save" Grid.Row="32" Grid.Column="1" Content="Save" HorizontalAlignment="Right" Margin="10,4,10,14" VerticalAlignment="Bottom" Style="{StaticResource AccentButtonStyle}" Click="SaveButton_Click"/>
+                <Button AutomationProperties.Name="Save" Grid.Row="34" Grid.Column="1" Content="Save" HorizontalAlignment="Right" Margin="10,4,10,14" VerticalAlignment="Bottom" Style="{StaticResource AccentButtonStyle}" Click="SaveButton_Click"/>
             </Grid>
         </ui:ScrollViewerEx>
     </Grid>
