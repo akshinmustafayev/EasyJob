@@ -40,6 +40,11 @@
                     <Image Source="pack://application:,,,/Images/reorderbuttons.png"/>
                 </MenuItem.Icon>
             </MenuItem>
+            <MenuItem Header="_Paste button" IsEnabled="False" Click="ContextMenuPasteActionButton_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/paste.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
         </ContextMenu>
         <ContextMenu x:Key="OnActionButtonContextMenu">
             <MenuItem Header="_Edit button" Click="ContextMenuEditActionButton_Click">
@@ -50,6 +55,11 @@
             <MenuItem Header="_Remove button" Click="ContextMenuRemoveActionButton_Click">
                 <MenuItem.Icon>
                     <Image Source="pack://application:,,,/Images/removebutton.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="_Copy button" Click="ContextMenuCopyActionButton_Click">
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Images/copy.png"/>
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>

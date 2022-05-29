@@ -22,6 +22,7 @@ namespace EasyJob
 {
     public partial class MainWindow : Window
     {
+        ActionButton actionButtonForCopy = null;
         TabData selectedTabItem = null;
         ActionButton selectedActionButton = null;
         ObservableCollection<TaskListTask> tasksList = new ObservableCollection<TaskListTask>();
@@ -817,24 +818,38 @@ namespace EasyJob
 
                 if (e.Source is not ScrollViewer && e.OriginalSource is TextBlock)
                 {
-                    if (config.restrictions.block_buttons_edit == true && config.restrictions.block_buttons_remove == true)
+                    if (config.restrictions.block_buttons_edit == true && config.restrictions.block_buttons_remove == true && config.restrictions.block_buttons_copy == true)
                     {
                         return;
                     }
-                    else if (config.restrictions.block_buttons_edit == false && config.restrictions.block_buttons_remove == true)
+                    else
                     {
-                        (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
-                        (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
-                    }
-                    else if (config.restrictions.block_buttons_edit == true && config.restrictions.block_buttons_remove == false)
-                    {
-                        (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
-                        (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
-                    }
-                    else if (config.restrictions.block_buttons_edit == false && config.restrictions.block_buttons_remove == false)
-                    {
-                        (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
-                        (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                        if (config.restrictions.block_buttons_edit == false)
+                        {
+                            (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
+                        }
+
+                        if (config.restrictions.block_buttons_remove == false)
+                        {
+                            (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
+                        }
+
+                        if (config.restrictions.block_buttons_copy == false)
+                        {
+                            (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            (cm.Items[2] as MenuItem).Visibility = Visibility.Collapsed;
+                        }
                     }
 
                     cm.PlacementTarget = sender as Button;
@@ -850,24 +865,47 @@ namespace EasyJob
                 ContextMenu cm = this.FindResource("OnActionButtonPannelContextMenu") as ContextMenu;
                 if (e.Source is ScrollViewer && e.OriginalSource is not TextBlock)
                 {
-                    if (config.restrictions.block_buttons_add == true && config.restrictions.block_buttons_reorder == true)
+                    if (config.restrictions.block_buttons_add == true && config.restrictions.block_buttons_reorder == true && config.restrictions.block_buttons_paste == true)
                     {
                         return;
                     }
-                    else if (config.restrictions.block_buttons_add == false && config.restrictions.block_buttons_reorder == true)
+                    else
                     {
-                        (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
-                        (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
-                    }
-                    else if (config.restrictions.block_buttons_add == true && config.restrictions.block_buttons_reorder == false)
-                    {
-                        (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
-                        (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
-                    }
-                    else if (config.restrictions.block_buttons_add == false && config.restrictions.block_buttons_reorder == false)
-                    {
-                        (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
-                        (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                        if (config.restrictions.block_buttons_add == false)
+                        {
+                            (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
+                        }
+
+                        if (config.restrictions.block_buttons_reorder == false)
+                        {
+                            (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
+                        }
+
+                        if (config.restrictions.block_buttons_paste == false)
+                        {
+                            (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
+
+                            if(actionButtonForCopy != null)
+                            {
+                                (cm.Items[2] as MenuItem).IsEnabled = true;
+                            }
+                            else
+                            {
+                                (cm.Items[2] as MenuItem).IsEnabled = false;
+                            }
+                        }
+                        else
+                        {
+                            (cm.Items[2] as MenuItem).Visibility = Visibility.Collapsed;
+                        }
                     }
 
                     cm.PlacementTarget = sender as ScrollViewer;
@@ -887,47 +925,34 @@ namespace EasyJob
                 {
                     return;
                 }
-                else if (config.restrictions.block_tabs_add == false && config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_rename == true)
+                else
                 {
-                    (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
-                    (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
-                    (cm.Items[2] as MenuItem).Visibility = Visibility.Collapsed;
-                }
-                else if (config.restrictions.block_tabs_add == false && config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_rename == true)
-                {
-                    (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
-                    (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
-                    (cm.Items[2] as MenuItem).Visibility = Visibility.Collapsed;
-                }
-                else if (config.restrictions.block_tabs_add == true && config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_rename == true)
-                {
-                    (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
-                    (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
-                    (cm.Items[2] as MenuItem).Visibility = Visibility.Collapsed;
-                }
-                else if (config.restrictions.block_tabs_add == true && config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_rename == false)
-                {
-                    (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
-                    (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
-                    (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
-                }
-                else if (config.restrictions.block_tabs_add == true && config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_rename == false)
-                {
-                    (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
-                    (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
-                    (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
-                }
-                else if (config.restrictions.block_tabs_add == false && config.restrictions.block_tabs_remove == true && config.restrictions.block_tabs_rename == false)
-                {
-                    (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
-                    (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
-                    (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
-                }
-                else if (config.restrictions.block_tabs_add == false && config.restrictions.block_tabs_remove == false && config.restrictions.block_tabs_rename == false)
-                {
-                    (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
-                    (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
-                    (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
+                    if (config.restrictions.block_tabs_add == false)
+                    {
+                        (cm.Items[0] as MenuItem).Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        (cm.Items[0] as MenuItem).Visibility = Visibility.Collapsed;
+                    }
+
+                    if (config.restrictions.block_tabs_remove == false)
+                    {
+                        (cm.Items[1] as MenuItem).Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        (cm.Items[1] as MenuItem).Visibility = Visibility.Collapsed;
+                    }
+
+                    if (config.restrictions.block_tabs_rename == false)
+                    {
+                        (cm.Items[2] as MenuItem).Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        (cm.Items[2] as MenuItem).Visibility = Visibility.Collapsed;
+                    }
                 }
 
                 cm.PlacementTarget = sender as Label;
@@ -1019,6 +1044,17 @@ namespace EasyJob
             }
         }
 
+        private void ContextMenuCopyActionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedActionButton == null)
+            {
+                MessageBox.Show("Selected Action button is still null. Please try again.");
+                return;
+            }
+
+            actionButtonForCopy = selectedActionButton;
+        }
+
         private void ContextMenuEditActionButton_Click(object sender, RoutedEventArgs e)
         {
             if (selectedActionButton == null)
@@ -1062,6 +1098,24 @@ namespace EasyJob
         private void ContextMenuReorderActionButtons_Click(object sender, RoutedEventArgs e)
         {
             ShowReorderActionButtonsDialog();
+        }
+
+        private void ContextMenuPasteActionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (actionButtonForCopy == null)
+            {
+                return;
+            }
+
+            TabData tab = (TabData) MainTab.Items[MainTab.SelectedIndex];
+            actionButtonForCopy.ID = Guid.NewGuid();
+            tab.TabActionButtons.Add(actionButtonForCopy);
+
+            if (SaveConfig())
+            {
+                MainTab.Items.Refresh();
+                this.UpdateLayout();
+            }
         }
 
         #endregion

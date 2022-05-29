@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\icon.ico</ApplicationIcon>
-    <Version>1.1.8</Version>
+    <Version>1.1.9</Version>
     <Authors>Akshin Mustafayev</Authors>
     <Description>Keep and execute your PowerShell scripts from one interface</Description>
     <Copyright>Akshin Mustafayev</Copyright>
@@ -51,6 +51,7 @@
     <None Remove="Images\ColorTags\tag14.png" />
     <None Remove="Images\configuration.png" />
     <None Remove="Images\convert.png" />
+    <None Remove="Images\copy.png" />
     <None Remove="Images\down.png" />
     <None Remove="Images\editbutton.png" />
     <None Remove="Images\exit.png" />
@@ -59,6 +60,7 @@
     <None Remove="Images\github.png" />
     <None Remove="Images\help.png" />
     <None Remove="Images\icon.ico" />
+    <None Remove="Images\paste.png" />
     <None Remove="Images\play.png" />
     <None Remove="Images\reload.png" />
     <None Remove="Images\removebutton.png" />
@@ -101,6 +103,7 @@
     <Resource Include="Images\ColorTags\tag13.png" />
     <Resource Include="Images\ColorTags\tag14.png" />
     <Resource Include="Images\convert.png" />
+    <Resource Include="Images\copy.png" />
     <Resource Include="Images\down.png" />
     <Resource Include="Images\editbutton.png" />
     <Resource Include="Images\exit.png" />
@@ -109,6 +112,7 @@
     <Resource Include="Images\github.png" />
     <Resource Include="Images\help.png" />
     <Resource Include="Images\icon.ico" />
+    <Resource Include="Images\paste.png" />
     <Resource Include="Images\play.png" />
     <Resource Include="Images\reload.png" />
     <Resource Include="Images\removebutton.png" />
@@ -154,7 +158,13 @@
     <None Update="Documentation\Videos\HelpConfigurationBlockButtonsAdd.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Documentation\Videos\HelpConfigurationBlockButtonsCopy.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Documentation\Videos\HelpConfigurationBlockButtonsEdit.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Documentation\Videos\HelpConfigurationBlockButtonsPaste.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Documentation\Videos\HelpConfigurationBlockButtonsRemove.mp4">
