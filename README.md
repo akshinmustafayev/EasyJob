@@ -162,6 +162,8 @@ Here is an example:
     "block_buttons_reorder": false,
     "block_buttons_edit": false,
     "block_tabs_rename": false,
+    "block_buttons_paste": false,
+    "block_buttons_copy": false,
     "hide_menu_item_file_reload_config": false,
     "hide_menu_item_file_open_app_folder": false,
     "hide_menu_item_file_clear_events_list": false,
