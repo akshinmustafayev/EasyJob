@@ -40,12 +40,12 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 
 * _Remove_, _Rename_ or _Add_ tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
 
+![image](https://raw.githubusercontent.com/akshinmustafayev/EasyJob/main/ej/feature2_1_1_5.png)
+
+
+* _Add_ or _Paste_ button from the GUI by right mouse click on button bar.
+
 ![image](https://raw.githubusercontent.com/akshinmustafayev/EasyJob/main/ej/feature3_1_1_9_0.PNG)
-
-
-* _Add_ button from the GUI by right mouse click on button bar and then select Add button.
-
-![image](https://user-images.githubusercontent.com/29357955/137178361-2cd10c94-a4ac-4673-9d9d-02109ea29f21.png)
 
 
 * Reorder Tabs from the _Settings->Workflow->Reorder_ tabs window
