@@ -268,7 +268,7 @@ _SHIFT+Left Mouse Click_ on the button will open the script attached to the butt
 
 ## :electric_plug: Compilation
 
-1. Download and install Visual Studio 2019
+1. Download and install Visual Studio 2022
 2. Open project in Visual Studio and build it
 
 ## :dart: Contributing
