@@ -1,4 +1,4 @@
-# EasyJob
+# <img src="assets/icon.png" height="42" width="42"/> EasyJob
 
 <a href="https://img.shields.io/github/license/akshinmustafayev/EasyJob">
   <img src="https://img.shields.io/github/license/akshinmustafayev/EasyJob" alt="License" />
@@ -17,12 +17,12 @@
 </a>
 
 
-## Description
+## :newspaper: Description
 
-EasyJob keep and execute your PowerShell and BAT scripts from one interface
+EasyJob - keep and execute your PowerShell and BAT scripts from one interface
 
 
-## Overview
+## :eye_speech_bubble: Overview
 ![image](https://user-images.githubusercontent.com/29357955/138738649-e80dc995-5bfb-423d-9822-6427540f0b46.png)
 
 ![image](https://user-images.githubusercontent.com/29357955/138327363-072fe889-745d-4f57-b8df-7ce567258191.png)
@@ -32,7 +32,7 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 ![image](https://user-images.githubusercontent.com/29357955/136707408-518324f0-1de3-4b66-9d77-ed186d25c1fe.png)
 
 
-## Features
+## :abacus: Features
 * _Remove_, _Edit_ or _Copy_ button from the GUI by right mouse click on it and then select item in the context menu. Settings are automatically will be saved to your config.json file.
 
 ![image](https://raw.githubusercontent.com/akshinmustafayev/EasyJob/main/ej/feature1_1_9_0.png)
@@ -58,7 +58,7 @@ EasyJob keep and execute your PowerShell and BAT scripts from one interface
 * Colored console support
 
 
-## Color tags support
+## :red_circle: Color tags support
 
 There are 14 available default tags which you may want to use
 1. <img src="ej/color_tags/tag01.png" style="height:18px;width:18px;"> __\c01EJ__ Some text __/c01EJ__
@@ -133,13 +133,13 @@ Write-Host "<span style=`"color:#4CFF00;`">Some other color!</span>"
 ```
 
 
-## EasyJobPSTools
+## :hammer: EasyJobPSTools
 
 EasyJobPSTools - is a PowerShell Module which enables Graphic features for your scripts.
 
 You can read more about it [Here](https://github.com/akshinmustafayev/EasyJobPSTools)
 
-## Configuration
+## :gear: Configuration
 
 Configuration could be done from config.json file located with the app executable.
 
@@ -261,17 +261,17 @@ _Note 1: Do not specify argument_answer value, since it will be ignored when exe
 _Note 2: ID my be any other random GUID number. You may not specify it, application will regenerate it after changes if it is absent._
 
 
-## Easy access
+## :triangular_flag_on_post: Easy access
 _CTRL+Left Mouse Click_ on the button will open folder where script attached to the button is located
 
 _SHIFT+Left Mouse Click_ on the button will open the script attached to the button with your default ps1 text editor
 
-## Compilation
+## :electric_plug: Compilation
 
 1. Download and install Visual Studio 2019
 2. Open project in Visual Studio and build it
 
-## Contributing
+## :dart: Contributing
 
 Contribution is very much appreciated. Hope that this tool might be useful for you!
 
