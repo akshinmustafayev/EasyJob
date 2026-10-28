@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Dialogs.TroubleshootingDialog"
+        Title="Troubleshooting" Classes="dialog" Width="720" Height="600" SizeToContent="Manual" CanResize="True" MinHeight="420">
+  <c:DialogShell Heading="Troubleshooting" Subheading="What EasyJob found on this machine. Copy it when reporting a problem.">
+    <Border Classes="card" ClipToBounds="True">
+      <ScrollViewer>
+        <StackPanel x:Name="Rows" Margin="18,6"/>
+      </ScrollViewer>
+    </Border>
+    <c:DialogShell.Footer>
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button Click="OnCopy">
+          <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="copy"/><TextBlock Text="Copy to clipboard"/></StackPanel>
+        </Button>
+        <Button Classes="primary" Content="Close" MinWidth="90" IsDefault="True" Click="OnClose"/>
+      </StackPanel>
+    </c:DialogShell.Footer>
+  </c:DialogShell>
+</Window>

@@ -1,0 +1,81 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:EasyJob.ViewModels"
+             xmlns:c="using:EasyJob.Controls"
+             x:Class="EasyJob.Views.RunCard"
+             x:DataType="vm:RunViewModel">
+
+  <UserControl.Styles>
+    <Style Selector="Ellipse.dot">
+      <Setter Property="Width" Value="10"/>
+      <Setter Property="Height" Value="10"/>
+      <Setter Property="Fill" Value="{DynamicResource MutedBrush}"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style Selector="Ellipse.dot.running"><Setter Property="Fill" Value="{DynamicResource AccentBrush}"/></Style>
+    <Style Selector="Ellipse.dot.ok"><Setter Property="Fill" Value="{DynamicResource SuccessBrush}"/></Style>
+    <Style Selector="Ellipse.dot.failed"><Setter Property="Fill" Value="{DynamicResource DangerBrush}"/></Style>
+    <Style Selector="Ellipse.dot.stopped"><Setter Property="Fill" Value="{DynamicResource WarnBrush}"/></Style>
+    <Style Selector="Ellipse.dot.running">
+      <Style.Animations>
+        <Animation Duration="0:0:1.2" IterationCount="Infinite">
+          <KeyFrame Cue="0%"><Setter Property="Opacity" Value="1"/></KeyFrame>
+          <KeyFrame Cue="50%"><Setter Property="Opacity" Value="0.3"/></KeyFrame>
+          <KeyFrame Cue="100%"><Setter Property="Opacity" Value="1"/></KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+
+    <Style Selector="TextBlock.status"><Setter Property="FontSize" Value="12"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Foreground" Value="{DynamicResource MutedBrush}"/></Style>
+    <Style Selector="TextBlock.status.running"><Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/></Style>
+    <Style Selector="TextBlock.status.ok"><Setter Property="Foreground" Value="{DynamicResource SuccessBrush}"/></Style>
+    <Style Selector="TextBlock.status.failed"><Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/></Style>
+    <Style Selector="TextBlock.status.stopped"><Setter Property="Foreground" Value="{DynamicResource WarnBrush}"/></Style>
+
+    <Style Selector="c|OutputView"><Setter Property="MaxHeight" Value="280"/></Style>
+    <Style Selector="c|OutputView.tall"><Setter Property="MaxHeight" Value="720"/></Style>
+  </UserControl.Styles>
+
+  <Border Classes="card" Margin="0,0,0,10" ClipToBounds="True">
+    <StackPanel>
+      <Border x:Name="Header" Background="Transparent" Padding="12,8,8,8" PointerPressed="OnHeaderPressed">
+        <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto">
+          <Ellipse Classes="dot" Classes.running="{Binding IsRunning}" Classes.ok="{Binding IsOk}"
+                   Classes.failed="{Binding IsFailed}" Classes.stopped="{Binding IsStopped}" Margin="0,0,10,0"/>
+          <Panel Grid.Column="1" Margin="0,0,8,0" VerticalAlignment="Center">
+            <c:Icon Kind="down" IsVisible="{Binding IsExpanded}" Foreground="{DynamicResource MutedBrush}"/>
+            <c:Icon Kind="right" IsVisible="{Binding !IsExpanded}" Foreground="{DynamicResource MutedBrush}"/>
+          </Panel>
+          <StackPanel Grid.Column="2" VerticalAlignment="Center" Spacing="1">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Text="{Binding Title}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+              <Border Classes="chip" VerticalAlignment="Center"><TextBlock Text="{Binding ScriptName}" FontSize="11" Classes="muted"/></Border>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <TextBlock Classes="status" Classes.running="{Binding IsRunning}" Classes.ok="{Binding IsOk}"
+                         Classes.failed="{Binding IsFailed}" Classes.stopped="{Binding IsStopped}" Text="{Binding StatusText}"/>
+              <TextBlock Classes="muted" FontSize="12" Text="·"/>
+              <TextBlock Classes="muted" FontSize="12" Text="{Binding DurationText}"/>
+              <TextBlock Classes="muted" FontSize="12" Text="·"/>
+              <TextBlock Classes="muted" FontSize="12" Text="{Binding StartedText}" ToolTip.Tip="Started at"/>
+              <TextBlock Classes="muted" FontSize="12" Text="{Binding ProcessId, StringFormat='· pid {0}'}" IsVisible="{Binding HasProcessId}"/>
+            </StackPanel>
+          </StackPanel>
+          <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="2">
+            <Button Classes="flat" Command="{Binding StopCommand}" IsVisible="{Binding IsRunning}" ToolTip.Tip="Stop this script">
+              <StackPanel Orientation="Horizontal" Spacing="5">
+                <c:Icon Kind="stop" Foreground="{DynamicResource DangerBrush}" Width="12" Height="12"/>
+                <TextBlock Text="Stop" FontSize="12" Foreground="{DynamicResource DangerBrush}"/>
+              </StackPanel>
+            </Button>
+            <Button Classes="flat" Command="{Binding RerunCommand}" IsVisible="{Binding IsFinished}" ToolTip.Tip="Run again"><c:Icon Kind="refresh"/></Button>
+            <Button Classes="flat" Click="OnCopyOutput" ToolTip.Tip="Copy output"><c:Icon Kind="copy"/></Button>
+            <Button Classes="flat" Command="{Binding ToggleTallCommand}" IsVisible="{Binding IsExpanded}" ToolTip.Tip="Taller / shorter output"><c:Icon Kind="expand"/></Button>
+            <Button Classes="flat" Command="{Binding DismissCommand}" IsVisible="{Binding IsFinished}" ToolTip.Tip="Remove this panel"><c:Icon Kind="close"/></Button>
+          </StackPanel>
+        </Grid>
+      </Border>
+      <c:OutputView x:Name="Output" Run="{Binding}" IsVisible="{Binding IsExpanded}" Classes.tall="{Binding IsTall}"/>
+    </StackPanel>
+  </Border>
+</UserControl>

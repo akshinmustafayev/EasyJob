@@ -1,0 +1,114 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ae="using:AvaloniaEdit"
+        xmlns:vm="using:EasyJob.ViewModels"
+        xmlns:views="using:EasyJob.Views"
+        xmlns:svc="using:EasyJob.Services"
+        xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Views.EditorWindow"
+        Title="Script editor" Icon="/Assets/icon.ico"
+        Width="1180" Height="780" MinWidth="720" MinHeight="460"
+        WindowStartupLocation="CenterScreen">
+
+  <DockPanel>
+    <!-- toolbar -->
+    <Border DockPanel.Dock="Top" Padding="10,8" BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="0,0,0,1">
+      <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+        <StackPanel Orientation="Horizontal" Spacing="4">
+          <Button x:Name="NewButton" Classes="flat" Click="OnNewClick" ToolTip.Tip="New script">
+            <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="plus"/><TextBlock Text="New"/><c:Icon Kind="down" Width="10" Height="10"/></StackPanel>
+          </Button>
+          <Button Classes="flat" Click="OnOpenClick" ToolTip.Tip="Open file (Ctrl/Cmd+O)">
+            <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="folder"/><TextBlock Text="Open"/></StackPanel>
+          </Button>
+          <Button x:Name="SaveButton" Classes="flat" Click="OnSaveClick" ToolTip.Tip="Save (Ctrl/Cmd+S)">
+            <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="save"/><TextBlock Text="Save"/></StackPanel>
+          </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="18,0,0,0">
+          <Button x:Name="RunButton" Classes="primary" Click="OnRunClick" ToolTip.Tip="Save and run (F5)">
+            <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="play" Width="11" Height="11"/><TextBlock Text="Run"/></StackPanel>
+          </Button>
+          <Button x:Name="StopButton" Click="OnStopClick" IsVisible="False" ToolTip.Tip="Stop the running script">
+            <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="stop" Foreground="{DynamicResource DangerBrush}" Width="11" Height="11"/><TextBlock Text="Stop" Foreground="{DynamicResource DangerBrush}"/></StackPanel>
+          </Button>
+          <TextBox x:Name="ArgsBox" Width="230" Watermark="Arguments for the script" ToolTip.Tip="Passed to the script when you press Run"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="8">
+          <ComboBox x:Name="LanguageBox" Width="150" ToolTip.Tip="Language used for syntax coloring and running"/>
+          <ToggleButton x:Name="WrapToggle" Content="Wrap" ToolTip.Tip="Wrap long lines" MinHeight="34" Padding="12,0" CornerRadius="8"/>
+          <Button Click="OnCommandsClick" ToolTip.Tip="Browse PowerShell commands (Ctrl/Cmd+Shift+P)">
+            <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="list"/><TextBlock Text="Commands"/></StackPanel>
+          </Button>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- status bar -->
+    <Border DockPanel.Dock="Bottom" Padding="12,5" BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="0,1,0,0">
+      <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+        <TextBlock x:Name="PathText" Classes="muted" FontSize="12" TextTrimming="PrefixCharacterEllipsis" VerticalAlignment="Center"/>
+        <TextBlock x:Name="PositionText" Grid.Column="1" Classes="muted" FontSize="12" Margin="16,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock x:Name="LanguageText" Grid.Column="2" Classes="muted" FontSize="12" Margin="16,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock x:Name="EncodingText" Grid.Column="3" Classes="muted" FontSize="12" Margin="16,0,0,0" VerticalAlignment="Center"/>
+      </Grid>
+    </Border>
+
+    <Grid x:Name="Body" RowDefinitions="Auto,*,Auto,0">
+      <!-- open documents -->
+      <ListBox x:Name="DocList" Grid.Row="0" Background="Transparent" Padding="6,4,6,0"
+               BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="0,0,0,1"
+               ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="2"/></ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="vm:EditorDocument">
+            <StackPanel Orientation="Horizontal" Spacing="8" Background="Transparent" ToolTip.Tip="{Binding Folder}">
+              <TextBlock Text="{Binding Title}" VerticalAlignment="Center"/>
+              <Ellipse Width="8" Height="8" Fill="{DynamicResource AccentBrush}" IsVisible="{Binding IsDirty}" VerticalAlignment="Center" ToolTip.Tip="Unsaved changes"/>
+              <Button Classes="flat" Padding="4" Click="OnCloseDocClick" ToolTip.Tip="Close (Ctrl/Cmd+W)"><c:Icon Kind="close" Width="10" Height="10"/></Button>
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+
+      <Panel Grid.Row="1">
+        <ae:TextEditor x:Name="Editor" ShowLineNumbers="True" FontSize="13.5" Padding="4,8"
+                       FontFamily="Cascadia Mono, Menlo, Consolas, DejaVu Sans Mono, monospace"
+                       HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
+        <StackPanel x:Name="EmptyState" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10" IsVisible="False">
+          <c:Icon Kind="file" Width="34" Height="34" Foreground="{DynamicResource MutedBrush}" HorizontalAlignment="Center"/>
+          <TextBlock Text="No file open" Classes="h1" HorizontalAlignment="Center"/>
+          <TextBlock Classes="muted" Text="Open a script or start a new one." HorizontalAlignment="Center"/>
+          <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+            <Button Content="Open file…" Click="OnOpenClick"/>
+            <Button Classes="primary" Content="New script" Click="OnNewClick"/>
+          </StackPanel>
+        </StackPanel>
+      </Panel>
+
+      <GridSplitter x:Name="Splitter" Grid.Row="2" Height="5" HorizontalAlignment="Stretch" Background="Transparent" IsVisible="False" ResizeDirection="Rows"/>
+
+      <!-- output of runs started from the editor -->
+      <Grid x:Name="OutputPanel" Grid.Row="3" RowDefinitions="Auto,*" IsVisible="False">
+        <Grid ColumnDefinitions="*,Auto" Margin="14,6,10,4">
+          <TextBlock Text="OUTPUT" Classes="section" Margin="0" VerticalAlignment="Center"/>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+            <Button Classes="flat" Click="OnClearOutputClick"><StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="trash"/><TextBlock Text="Clear" FontSize="12"/></StackPanel></Button>
+            <Button Classes="flat" Click="OnHideOutputClick" ToolTip.Tip="Hide the output panel"><c:Icon Kind="down"/></Button>
+          </StackPanel>
+        </Grid>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+          <ItemsControl x:Name="RunsList" Margin="14,0,14,10">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:RunViewModel"><views:RunCard/></DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
+      </Grid>
+    </Grid>
+  </DockPanel>
+</Window>

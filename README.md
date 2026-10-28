@@ -19,17 +19,38 @@
 
 ## :newspaper: Description
 
-EasyJob - keep and execute your PowerShell and BAT scripts from one interface
+EasyJob - keep and execute your PowerShell, Python, shell and BAT scripts from one interface. Runs on **Windows, macOS and Linux**.
 
 
-## :eye_speech_bubble: Overview
-![image](https://user-images.githubusercontent.com/29357955/138738649-e80dc995-5bfb-423d-9822-6427540f0b46.png)
+## :rocket: What's new in 2.0
+* Rebuilt on **.NET 10** and [Avalonia UI](https://avaloniaui.net), so the same app runs on Windows, macOS and Linux.
+* A new **run panel** replaces the old rich-text console. Every execution gets its own card with status, duration, PID, its own output, and *Stop* / *Run again* / *Copy* / *Collapse* actions. Running several scripts at once no longer mixes their output.
+* **Per-tab output**: each tab has its own list of runs. The same script can run several times at once, and *Run in tab* in the button's context menu sends a script's output to another tab.
+* Proper **ANSI color** support (PowerShell, git, dotnet, npm, ...) in addition to the EasyJob color tags.
+* **Python** scripts as a script type.
+* **Script editor** (Tools → Script editor, or Shift+click a script button): multi-file tabs, syntax coloring for PowerShell, Python, shell, batch, JSON, YAML, XML and Markdown (follows the light/dark theme), find (Ctrl/Cmd+F), save, and **Run (F5)** with live output in a panel under the editor.
+* **PowerShell command browser** (Tools → PowerShell commands): search every cmdlet, function and alias of your installed PowerShell, read syntax, description and examples, copy or insert a command into the editor.
+* A reorganised menu bar (File, Tabs, Scripts, Tools, View, Help) with keyboard shortcuts and a theme switch (system, light, dark).
+* Ready-to-use **test scripts** (`EasyJob/scripts`) and a matching `config.json` for PowerShell, Python, shell and batch, including argument prompts, failures, progress bars and output stress tests.
+* **Drag and drop** to reorder script buttons and tabs, right where they are. Tab and script actions (New tab, Add script, Reorder, Paste, rename/remove) are also one click away, no menu digging.
+* Refreshed look with light/dark theme following the system, empty states, a collapsible event log, and a unified editor dialog with a file picker.
 
-![image](https://user-images.githubusercontent.com/29357955/138327363-072fe889-745d-4f57-b8df-7ce567258191.png)
+## :computer: Requirements and running
+* [.NET 10 SDK](https://dotnet.microsoft.com/download) to build from source.
+* [PowerShell 7 (`pwsh`)](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) for `.ps1` scripts on macOS/Linux (Windows PowerShell also works on Windows).
 
-![image](https://user-images.githubusercontent.com/29357955/138327384-740485f3-1a0a-4717-81a0-75f209207c32.png)
+```
+dotnet run --project EasyJob
+dotnet publish EasyJob -c Release -r osx-arm64   # or win-x64, linux-x64, ...
+```
 
-![image](https://user-images.githubusercontent.com/29357955/136707408-518324f0-1de3-4b66-9d77-ed186d25c1fe.png)
+Script types: `powershell` (`.ps1`), `python` (`.py`, run with `python3 -u`; set `default_python_path` to override), `cmd` (`.bat`/`.cmd` on Windows, run with `/bin/sh` on macOS/Linux) and `shell` (`.sh`).
+
+**Config location.** If a `config.json` sits next to the executable it is used (portable mode); otherwise the app uses `config.json` in your user application-data folder (shown in the status bar). Relative script paths are resolved against the folder that contains `config.json`, and both `\` and `/` separators are accepted, so a config written on Windows works on macOS.
+
+**Ctrl/Cmd + click** a script button to show the script in your file manager, **Shift + click** to open it. Right-click for more actions.
+
+> `EasyJobPSTools` (the `Show-EJInputBox` WPF helper module) is Windows-only and is not part of the cross-platform build.
 
 
 ## :abacus: Features

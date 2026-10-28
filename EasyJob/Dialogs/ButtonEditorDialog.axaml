@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Dialogs.ButtonEditorDialog"
+        Classes="dialog" Width="600" Height="680" SizeToContent="Manual" CanResize="True" MinHeight="520" MinWidth="520">
+  <c:DialogShell x:Name="Shell" Subheading="A button runs one script. Add questions if it needs input each time.">
+    <ScrollViewer>
+      <StackPanel Margin="0,0,12,0">
+        <StackPanel Classes="labelrow first"><TextBlock Classes="label" Text="Name"/><c:HelpButton Topic="HelpAddActionButtonText"/></StackPanel>
+        <TextBox x:Name="TextBox" Watermark="Restart server"/>
+
+        <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="Description"/><TextBlock Classes="muted" Text="  optional" FontSize="12" VerticalAlignment="Center"/><c:HelpButton Topic="HelpAddActionButtonDescription"/></StackPanel>
+        <TextBox x:Name="DescriptionBox" Watermark="Shown under the name and as a tooltip"/>
+
+        <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="Script"/><c:HelpButton Topic="HelpAddActionButtonScript"/></StackPanel>
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBox x:Name="ScriptBox" Watermark="scripts/restart_server.ps1"/>
+          <Button Grid.Column="1" Margin="8,0,0,0" Click="OnBrowse">
+            <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="folder"/><TextBlock Text="Browse"/></StackPanel>
+          </Button>
+        </Grid>
+        <TextBlock x:Name="ScriptHint" Classes="hint"/>
+
+        <Grid ColumnDefinitions="*,16,*">
+          <StackPanel>
+            <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="Script type"/><c:HelpButton Topic="HelpAddActionButtonScriptType"/></StackPanel>
+            <ComboBox x:Name="TypeBox" HorizontalAlignment="Stretch" SelectedIndex="0">
+              <ComboBoxItem Tag="powershell">PowerShell (.ps1)</ComboBoxItem>
+              <ComboBoxItem Tag="python">Python (.py)</ComboBoxItem>
+              <ComboBoxItem Tag="shell">Shell (.sh)</ComboBoxItem>
+              <ComboBoxItem Tag="cmd">Command prompt (.bat, .cmd)</ComboBoxItem>
+            </ComboBox>
+          </StackPanel>
+          <StackPanel Grid.Column="2">
+            <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="Path is"/><c:HelpButton Topic="HelpAddActionButtonScriptPathType"/></StackPanel>
+            <ComboBox x:Name="PathTypeBox" HorizontalAlignment="Stretch" SelectedIndex="0">
+              <ComboBoxItem Tag="relative">Relative to the config folder</ComboBoxItem>
+              <ComboBoxItem Tag="absolute">Absolute</ComboBoxItem>
+            </ComboBox>
+          </StackPanel>
+        </Grid>
+
+        <StackPanel Classes="labelrow" Margin="0,22,0,5"><TextBlock Classes="label" Text="Questions"/><c:HelpButton Topic="HelpAddActionButtonArguments"/></StackPanel>
+        <TextBlock Classes="hint" Margin="0,0,0,8" Text="Each question is asked before the script runs. Answers are passed to the script as arguments, in this order."/>
+        <StackPanel x:Name="ArgRows" Spacing="8"/>
+        <Button Click="OnAddArgument" Margin="0,8,0,0" HorizontalAlignment="Left">
+          <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="plus"/><TextBlock Text="Add question"/></StackPanel>
+        </Button>
+      </StackPanel>
+    </ScrollViewer>
+    <c:DialogShell.Footer>
+      <Grid ColumnDefinitions="*,Auto" MinWidth="440">
+        <TextBlock x:Name="ErrorText" Foreground="{DynamicResource DangerBrush}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0"/>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+          <Button Content="Cancel" MinWidth="90" Click="OnCancel"/>
+          <Button x:Name="OkButton" Classes="primary" Content="Save" MinWidth="90" IsDefault="True" Click="OnOk"/>
+        </StackPanel>
+      </Grid>
+    </c:DialogShell.Footer>
+  </c:DialogShell>
+</Window>

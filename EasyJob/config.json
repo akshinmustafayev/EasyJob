@@ -1,9 +1,11 @@
 {
-  "default_powershell_path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-  "default_cmd_path": "C:\\Windows\\System32\\cmd.exe",
+  "default_powershell_path": "",
+  "default_cmd_path": "",
+  "default_shell_path": "",
+  "default_python_path": "",
   "powershell_arguments": "",
-  "console_background": "Black",
-  "console_foreground": "White",
+  "console_background": "#0C0C0C",
+  "console_foreground": "#E6E6E6",
   "console_ignore_color_tags": false,
   "clear_events_when_reload": true,
   "restrictions": {
@@ -35,127 +37,232 @@
   },
   "tabs": [
     {
-      "ID": "357f9827-f4f7-439f-b62c-792e880fd06c",
-      "Header": "Common actions",
+      "ID": "10000000-0000-4000-8000-000000000001",
+      "Header": "PowerShell",
       "Buttons": [
         {
-          "Id": "5e371407-140f-4fa2-abf3-2cec4bb174b2",
-          "Text": "test01",
-          "Description": "Some test script",
-          "Script": "scripts\\common\\test01.ps1",
+          "Id": "00000000-0000-4000-8000-000000000001",
+          "Text": "Hello",
+          "Description": "Output, colors, warning and error",
+          "Script": "scripts/powershell/hello.ps1",
           "ScriptPathType": "relative",
           "ScriptType": "powershell",
           "Arguments": []
         },
         {
-          "Id": "9159b485-39e5-42d6-adb4-275753db9027",
-          "Text": "test02",
-          "Description": "Some second test script",
-          "Script": "scripts\\test02.ps1",
+          "Id": "00000000-0000-4000-8000-000000000002",
+          "Text": "With arguments",
+          "Description": "Asks for a name and a count",
+          "Script": "scripts/powershell/args.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": [
+            {
+              "ArgumentQuestion": "Your name",
+              "ArgumentAnswer": ""
+            },
+            {
+              "ArgumentQuestion": "How many times?",
+              "ArgumentAnswer": ""
+            }
+          ]
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000003",
+          "Text": "Progress (8 s)",
+          "Description": "Run it several times in parallel",
+          "Script": "scripts/powershell/progress.ps1",
           "ScriptPathType": "relative",
           "ScriptType": "powershell",
           "Arguments": []
         },
         {
-          "Id": "eaaff0bf-2a9f-4037-bdd6-e8405830d90e",
-          "Text": "bat",
-          "Description": "Some second test script",
-          "Script": "scripts\\1.bat",
+          "Id": "00000000-0000-4000-8000-000000000004",
+          "Text": "Fails (exit 2)",
+          "Description": "Non-zero exit code and stderr",
+          "Script": "scripts/powershell/fail.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000005",
+          "Text": "Color tags + ANSI",
+          "Description": "EasyJob tags, bold, 256 and true color",
+          "Script": "scripts/powershell/colortags.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
+        }
+      ]
+    },
+    {
+      "ID": "10000000-0000-4000-8000-000000000002",
+      "Header": "Python",
+      "Buttons": [
+        {
+          "Id": "00000000-0000-4000-8000-000000000011",
+          "Text": "Hello",
+          "Description": "Version, ANSI colors and stderr",
+          "Script": "scripts/python/hello.py",
+          "ScriptPathType": "relative",
+          "ScriptType": "python",
+          "Arguments": []
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000012",
+          "Text": "With arguments",
+          "Description": "Asks for a name and a count",
+          "Script": "scripts/python/args.py",
+          "ScriptPathType": "relative",
+          "ScriptType": "python",
+          "Arguments": [
+            {
+              "ArgumentQuestion": "Your name",
+              "ArgumentAnswer": ""
+            },
+            {
+              "ArgumentQuestion": "How many times?",
+              "ArgumentAnswer": ""
+            }
+          ]
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000013",
+          "Text": "Progress bar",
+          "Description": "Rewrites one line with \\r",
+          "Script": "scripts/python/progress.py",
+          "ScriptPathType": "relative",
+          "ScriptType": "python",
+          "Arguments": []
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000014",
+          "Text": "Raises exception",
+          "Description": "Traceback on stderr, exit code 1",
+          "Script": "scripts/python/fail.py",
+          "ScriptPathType": "relative",
+          "ScriptType": "python",
+          "Arguments": []
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000015",
+          "Text": "20 000 lines",
+          "Description": "Output stress test",
+          "Script": "scripts/python/stress.py",
+          "ScriptPathType": "relative",
+          "ScriptType": "python",
+          "Arguments": []
+        }
+      ]
+    },
+    {
+      "ID": "10000000-0000-4000-8000-000000000003",
+      "Header": "Shell",
+      "Buttons": [
+        {
+          "Id": "00000000-0000-4000-8000-000000000021",
+          "Text": "Hello",
+          "Description": "Colors, color tags and stderr",
+          "Script": "scripts/shell/hello.sh",
+          "ScriptPathType": "relative",
+          "ScriptType": "shell",
+          "Arguments": []
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000022",
+          "Text": "With arguments",
+          "Description": "Asks for a name and a count",
+          "Script": "scripts/shell/args.sh",
+          "ScriptPathType": "relative",
+          "ScriptType": "shell",
+          "Arguments": [
+            {
+              "ArgumentQuestion": "Your name",
+              "ArgumentAnswer": ""
+            },
+            {
+              "ArgumentQuestion": "How many times?",
+              "ArgumentAnswer": ""
+            }
+          ]
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000023",
+          "Text": "Progress (8 s)",
+          "Description": "Run it several times in parallel",
+          "Script": "scripts/shell/progress.sh",
+          "ScriptPathType": "relative",
+          "ScriptType": "shell",
+          "Arguments": []
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000024",
+          "Text": "Fails (exit 3)",
+          "Description": "Non-zero exit code and stderr",
+          "Script": "scripts/shell/fail.sh",
+          "ScriptPathType": "relative",
+          "ScriptType": "shell",
+          "Arguments": []
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000025",
+          "Text": "5 000 lines",
+          "Description": "Output stress test",
+          "Script": "scripts/shell/stress.sh",
+          "ScriptPathType": "relative",
+          "ScriptType": "shell",
+          "Arguments": []
+        }
+      ]
+    },
+    {
+      "ID": "10000000-0000-4000-8000-000000000004",
+      "Header": "Batch (Windows)",
+      "Buttons": [
+        {
+          "Id": "00000000-0000-4000-8000-000000000031",
+          "Text": "Hello",
+          "Description": "Windows only",
+          "Script": "scripts/batch/hello.bat",
           "ScriptPathType": "relative",
           "ScriptType": "cmd",
           "Arguments": []
         },
         {
-          "Id": "5ec086d9-7987-43ef-84fb-1d8481b05aea",
-          "Text": "Absolute script",
-          "Description": "",
-          "Script": "C:\\scripts\\absolute_script.ps1",
-          "ScriptPathType": "absolute",
-          "ScriptType": "powershell",
-          "Arguments": []
-        },
-        {
-          "Id": "a7b94662-4d66-4a8a-af33-b326a99215cf",
-          "Text": "test03",
-          "Description": "Some test 03 script with arguments",
-          "Script": "scripts\\common\\test03.ps1",
+          "Id": "00000000-0000-4000-8000-000000000032",
+          "Text": "With arguments",
+          "Description": "Asks for a name and a count",
+          "Script": "scripts/batch/args.bat",
           "ScriptPathType": "relative",
-          "ScriptType": "powershell",
+          "ScriptType": "cmd",
           "Arguments": [
             {
-              "ArgumentQuestion": "Enter IP address or DNS name",
+              "ArgumentQuestion": "Your name",
+              "ArgumentAnswer": ""
+            },
+            {
+              "ArgumentQuestion": "How many times?",
               "ArgumentAnswer": ""
             }
           ]
         },
         {
-          "Id": "aabc2bf5-e26c-4a73-8e89-e702f14eaa8b",
-          "Text": "test04",
-          "Description": "Some test 04 script with arguments",
-          "Script": "scripts\\common\\test04.ps1",
+          "Id": "00000000-0000-4000-8000-000000000033",
+          "Text": "Progress (10 s)",
+          "Description": "Windows only",
+          "Script": "scripts/batch/progress.bat",
           "ScriptPathType": "relative",
-          "ScriptType": "powershell",
-          "Arguments": [
-            {
-              "ArgumentQuestion": "What is your name?",
-              "ArgumentAnswer": ""
-            },
-            {
-              "ArgumentQuestion": "What is your surname",
-              "ArgumentAnswer": ""
-            },
-            {
-              "ArgumentQuestion": "No, really what is your name?",
-              "ArgumentAnswer": ""
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "ID": "fa774e10-7772-4074-8d8e-c57b09e9377e",
-      "Header": "Second Tab",
-      "Buttons": [
-        {
-          "Id": "b3ebb860-7682-4613-8f82-0ca59226b0f9",
-          "Text": "Some button",
-          "Description": "no description",
-          "Script": "scripts\\some_button_script.ps1",
-          "ScriptPathType": "relative",
-          "ScriptType": "powershell",
+          "ScriptType": "cmd",
           "Arguments": []
         },
         {
-          "Id": "f9fc3c8f-fb36-432d-96c9-09c4169d540e",
-          "Text": "Test11",
-          "Description": "no description",
-          "Script": "scripts\\some_button_script2.ps1",
+          "Id": "00000000-0000-4000-8000-000000000034",
+          "Text": "Fails (exit 4)",
+          "Description": "Windows only",
+          "Script": "scripts/batch/fail.bat",
           "ScriptPathType": "relative",
-          "ScriptType": "powershell",
-          "Arguments": []
-        }
-      ]
-    },
-    {
-      "ID": "a744a5e3-4dc0-4f42-abac-ee67dd17c6a1",
-      "Header": "Third Tab",
-      "Buttons": [
-        {
-          "Id": "5839ed21-7c33-4aac-9b3c-663cc794e3f5",
-          "Text": "Some button 1",
-          "Description": "no description",
-          "Script": "scripts\\some_button_script.ps1",
-          "ScriptPathType": "relative",
-          "ScriptType": "powershell",
-          "Arguments": []
-        },
-        {
-          "Id": "7ecdea7a-8865-45d7-a037-0dd4dd1cb996",
-          "Text": "Button asd",
-          "Description": "",
-          "Script": "D:\\net50\\test04.ps1",
-          "ScriptPathType": "absolute",
-          "ScriptType": "powershell",
+          "ScriptType": "cmd",
           "Arguments": []
         }
       ]

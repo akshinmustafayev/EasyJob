@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Dialogs.AboutDialog"
+        Title="About EasyJob" Classes="dialog" Width="580" Height="580" SizeToContent="Manual" CanResize="True" MinHeight="420">
+  <c:DialogShell x:Name="Shell">
+    <Grid RowDefinitions="Auto,*">
+      <StackPanel Orientation="Horizontal" Spacing="16">
+        <Image Source="/Assets/icon.png" Width="56" Height="56"/>
+        <StackPanel VerticalAlignment="Center" Spacing="2">
+          <TextBlock x:Name="TitleText" Classes="h1"/>
+          <TextBlock Classes="muted" Text="Keep and run your PowerShell, Python, shell and batch scripts from one place."/>
+          <TextBlock Classes="muted" FontSize="12" Text="Author: Akshin Mustafayev, with contributions from the GitHub community."/>
+        </StackPanel>
+      </StackPanel>
+      <StackPanel Grid.Row="1" Margin="0,18,0,0" Spacing="6">
+        <TextBlock Text="LICENSE" Classes="section" Margin="2,0,0,2"/>
+        <Border Classes="card" Padding="2" Height="290">
+          <ScrollViewer>
+            <SelectableTextBlock x:Name="License" TextWrapping="Wrap" FontSize="11.5" Margin="12"
+                                 FontFamily="Menlo, Cascadia Mono, Consolas, monospace"/>
+          </ScrollViewer>
+        </Border>
+      </StackPanel>
+    </Grid>
+    <c:DialogShell.Footer>
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button Content="GitHub" Click="OnGitHub"/>
+        <Button Content="Releases" Click="OnReleases"/>
+        <Button Classes="primary" Content="Close" MinWidth="90" IsDefault="True" Click="OnClose"/>
+      </StackPanel>
+    </c:DialogShell.Footer>
+  </c:DialogShell>
+</Window>

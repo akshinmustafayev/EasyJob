@@ -1,0 +1,147 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:EasyJob.ViewModels"
+        xmlns:views="using:EasyJob.Views"
+        xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="EasyJob"
+        Icon="/Assets/icon.ico"
+        Width="1100" Height="720" MinWidth="720" MinHeight="460"
+        WindowStartupLocation="CenterScreen">
+
+  <DockPanel>
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="_File">
+        <MenuItem x:Name="MenuNewScript" Header="New script…" Command="{Binding NewScriptCommand}"/>
+        <MenuItem x:Name="MenuOpenFile" Header="Open file in editor…" Command="{Binding OpenFileInEditorCommand}"/>
+        <Separator/>
+        <MenuItem x:Name="MenuReload" Header="_Reload config" Command="{Binding ReloadConfigCommand}" IsVisible="{Binding ShowReloadConfig}"/>
+        <MenuItem Header="Open config _folder" Command="{Binding OpenAppFolderCommand}" IsVisible="{Binding ShowOpenAppFolder}"/>
+        <Separator/>
+        <MenuItem Header="E_xit" Command="{Binding ExitCommand}"/>
+      </MenuItem>
+
+      <MenuItem Header="_Tabs" IsVisible="{Binding ShowWorkflow}">
+        <MenuItem x:Name="MenuNewTab" Header="New tab…" Command="{Binding AddTabCommand}" IsVisible="{Binding ShowAddTab}"/>
+        <MenuItem Header="Rename current tab…" Command="{Binding RenameTabCommand}" IsVisible="{Binding ShowRenameTab}" IsEnabled="{Binding HasSelectedTab}"/>
+        <MenuItem Header="Remove current tab…" Command="{Binding RemoveTabCommand}" IsVisible="{Binding ShowRemoveTab}" IsEnabled="{Binding HasSelectedTab}"/>
+        <Separator IsVisible="{Binding ShowReorderTabs}"/>
+        <MenuItem Header="Reorder tabs…" Command="{Binding ReorderTabsCommand}" IsVisible="{Binding ShowReorderTabs}"/>
+      </MenuItem>
+
+      <MenuItem Header="_Scripts" IsVisible="{Binding ShowWorkflow}">
+        <MenuItem x:Name="MenuAddScript" Header="Add script button…" Command="{Binding AddButtonCommand}" IsVisible="{Binding ShowAddButton}" IsEnabled="{Binding HasSelectedTab}"/>
+        <MenuItem Header="Paste script button" Command="{Binding PasteButtonCommand}" IsEnabled="{Binding CanPasteButton}"/>
+        <Separator IsVisible="{Binding ShowReorderButtons}"/>
+        <MenuItem Header="Reorder script buttons…" Command="{Binding ReorderButtonsCommand}" IsVisible="{Binding ShowReorderButtons}" IsEnabled="{Binding HasSelectedTab}"/>
+        <Separator/>
+        <MenuItem Header="Stop all running in this tab" Command="{Binding StopAllCommand}"/>
+        <MenuItem Header="Clear finished runs in this tab" Command="{Binding ClearFinishedCommand}"/>
+      </MenuItem>
+
+      <MenuItem Header="T_ools">
+        <MenuItem x:Name="MenuEditor" Header="Script editor" Command="{Binding OpenEditorCommand}"/>
+        <MenuItem x:Name="MenuCommands" Header="PowerShell commands…" Command="{Binding ShowCommandsCommand}"/>
+        <Separator IsVisible="{Binding ShowConfigurationItem}"/>
+        <MenuItem Header="Configuration…" Command="{Binding ConfigurationCommand}" IsVisible="{Binding ShowConfigurationItem}"/>
+      </MenuItem>
+
+      <MenuItem Header="_View">
+        <MenuItem Header="Theme">
+          <MenuItem Header="Match system" ToggleType="Radio" GroupName="theme" IsChecked="{Binding IsThemeSystem, Mode=OneWay}" Command="{Binding SetThemeCommand}" CommandParameter="system"/>
+          <MenuItem Header="Light" ToggleType="Radio" GroupName="theme" IsChecked="{Binding IsThemeLight, Mode=OneWay}" Command="{Binding SetThemeCommand}" CommandParameter="light"/>
+          <MenuItem Header="Dark" ToggleType="Radio" GroupName="theme" IsChecked="{Binding IsThemeDark, Mode=OneWay}" Command="{Binding SetThemeCommand}" CommandParameter="dark"/>
+        </MenuItem>
+        <Separator/>
+        <MenuItem Header="Expand all outputs" Command="{Binding ExpandAllCommand}"/>
+        <MenuItem Header="Collapse all outputs" Command="{Binding CollapseAllCommand}"/>
+        <Separator/>
+        <MenuItem x:Name="MenuEvents" Header="Show or hide event log" Command="{Binding ToggleEventsCommand}"/>
+        <MenuItem Header="Clear event log" Command="{Binding ClearEventsCommand}" IsVisible="{Binding ShowClearEvents}"/>
+      </MenuItem>
+
+      <MenuItem Header="_Help" IsVisible="{Binding ShowHelp}">
+        <MenuItem Header="Troubleshooting" Command="{Binding TroubleshootingCommand}" IsVisible="{Binding ShowTroubleshooting}"/>
+        <MenuItem Header="Output color tags" Command="{Binding ColorTagsCommand}" IsVisible="{Binding ShowColorTags}"/>
+        <Separator/>
+        <MenuItem Header="Project on GitHub" Command="{Binding OpenGitHubCommand}"/>
+        <MenuItem Header="About EasyJob" Command="{Binding AboutCommand}" IsVisible="{Binding ShowAbout}"/>
+      </MenuItem>
+    </Menu>
+
+    <!-- status bar -->
+    <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="0,1,0,0" Padding="8,4">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <Button Classes="flat" Command="{Binding ToggleEventsCommand}" Padding="8,3" ToolTip.Tip="Show or hide the event log">
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <c:Icon Kind="list"/>
+            <TextBlock Text="Events" FontSize="12"/>
+            <c:Icon Kind="up" IsVisible="{Binding !IsEventsOpen}"/>
+            <c:Icon Kind="down" IsVisible="{Binding IsEventsOpen}"/>
+          </StackPanel>
+        </Button>
+        <TextBlock Grid.Column="1" Classes="muted" FontSize="12" Margin="10,0" VerticalAlignment="Center"
+                   Text="{Binding StatusText}" TextTrimming="CharacterEllipsis"/>
+        <TextBlock Grid.Column="2" Classes="muted" FontSize="12" VerticalAlignment="Center" Text="{Binding ConfigPath}"
+                   ToolTip.Tip="Configuration file" MaxWidth="420" TextTrimming="PrefixCharacterEllipsis"/>
+      </Grid>
+    </Border>
+
+    <!-- event log -->
+    <Border DockPanel.Dock="Bottom" Height="170" IsVisible="{Binding IsEventsOpen}"
+            BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="0,1,0,0">
+      <ListBox x:Name="EventsList" ItemsSource="{Binding Events}" Background="Transparent" Padding="4">
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="vm:EventEntry">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <TextBlock Text="{Binding TimeText}" Classes="muted" FontFamily="Menlo, Cascadia Mono, Consolas, monospace" FontSize="12"/>
+              <TextBlock Text="{Binding Text}" FontSize="12.5"/>
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Border>
+
+    <Grid>
+      <TabControl x:Name="Tabs" ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}" Padding="0"
+                  IsVisible="{Binding HasTabs}">
+        <TabControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:TabViewModel">
+            <StackPanel Orientation="Horizontal" Spacing="8" Background="Transparent" PointerReleased="OnTabHeaderReleased">
+              <TextBlock Text="{Binding Header}" VerticalAlignment="Center"/>
+              <Border Classes="chip" Background="{DynamicResource AccentBrush}" IsVisible="{Binding HasRunning}" VerticalAlignment="Center"
+                      ToolTip.Tip="Scripts running in this tab">
+                <TextBlock Text="{Binding RunningBadge}" FontSize="11" Foreground="White"/>
+              </Border>
+            </StackPanel>
+          </DataTemplate>
+        </TabControl.ItemTemplate>
+        <TabControl.ContentTemplate>
+          <DataTemplate x:DataType="vm:TabViewModel">
+            <views:TabView/>
+          </DataTemplate>
+        </TabControl.ContentTemplate>
+      </TabControl>
+
+      <!-- tab actions, always at hand at the right end of the tab strip -->
+      <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,3,14,0"
+                  IsVisible="{Binding HasTabs}">
+        <Button x:Name="NewTabButton" Classes="flat" Command="{Binding AddTabCommand}" ToolTip.Tip="New tab (Ctrl/Cmd+T)">
+          <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="plus"/><TextBlock Text="New tab" FontSize="12.5"/></StackPanel>
+        </Button>
+        <Button x:Name="TabMenuButton" Classes="flat" Click="OnTabMenuClick" ToolTip.Tip="Rename, remove or reorder tabs">
+          <c:Icon Kind="more" Width="16" Height="16"/>
+        </Button>
+      </StackPanel>
+
+      <StackPanel IsVisible="{Binding !HasTabs}" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="12">
+        <TextBlock Classes="h1" Text="No tabs yet" HorizontalAlignment="Center"/>
+        <TextBlock Classes="muted" Text="Create a tab to start adding script buttons." HorizontalAlignment="Center"/>
+        <Button Classes="primary" Command="{Binding AddTabCommand}" HorizontalAlignment="Center" IsEnabled="{Binding CanAddTab}">
+          <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="plus"/><TextBlock Text="Add tab"/></StackPanel>
+        </Button>
+      </StackPanel>
+    </Grid>
+  </DockPanel>
+</Window>

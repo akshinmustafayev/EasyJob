@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Dialogs.ColorTagsDialog"
+        Title="Output colors" Classes="dialog" Width="540" Height="620" SizeToContent="Manual" CanResize="True" MinHeight="380">
+  <c:DialogShell Heading="Coloring script output"
+                 Subheading="ANSI colors (Write-Host -ForegroundColor, git, dotnet, npm, Python rich, …) show up automatically. For scripts that can't emit ANSI, wrap text in a color tag: a backslash opens the color, a slash closes it.">
+    <Border Classes="card" ClipToBounds="True">
+      <ScrollViewer>
+        <StackPanel x:Name="Rows" Margin="16,12" Spacing="10"/>
+      </ScrollViewer>
+    </Border>
+    <c:DialogShell.Footer>
+      <Button Classes="primary" Content="Close" MinWidth="90" IsDefault="True" Click="OnClose"/>
+    </c:DialogShell.Footer>
+  </c:DialogShell>
+</Window>

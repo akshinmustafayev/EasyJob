@@ -1,0 +1,96 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="using:EasyJob.Controls"
+        xmlns:svc="using:EasyJob.Services"
+        x:Class="EasyJob.Views.CommandsWindow"
+        Title="PowerShell commands" Icon="/Assets/icon.ico"
+        Width="1080" Height="720" MinWidth="760" MinHeight="460"
+        WindowStartupLocation="CenterScreen">
+
+  <Grid ColumnDefinitions="360,Auto,*">
+
+    <!-- list -->
+    <DockPanel Margin="16,16,0,0">
+      <StackPanel DockPanel.Dock="Top" Spacing="8" Margin="0,0,16,10">
+        <TextBox x:Name="SearchBox" Watermark="Search commands and modules…"/>
+        <Grid ColumnDefinitions="*,Auto">
+          <ComboBox x:Name="TypeBox" HorizontalAlignment="Stretch" SelectedIndex="0">
+            <ComboBoxItem Tag="">All types</ComboBoxItem>
+            <ComboBoxItem Tag="Cmdlet">Cmdlets</ComboBoxItem>
+            <ComboBoxItem Tag="Function">Functions</ComboBoxItem>
+            <ComboBoxItem Tag="Alias">Aliases</ComboBoxItem>
+          </ComboBox>
+          <Button Grid.Column="1" Margin="8,0,0,0" Click="OnRefreshClick" ToolTip.Tip="Reload the command list from PowerShell">
+            <c:Icon Kind="refresh"/>
+          </Button>
+        </Grid>
+      </StackPanel>
+      <TextBlock x:Name="CountText" DockPanel.Dock="Bottom" Classes="muted" FontSize="12" Margin="2,8,0,10"/>
+      <Border Classes="card" ClipToBounds="True" Margin="0,0,16,0">
+        <ListBox x:Name="CommandList" Background="Transparent" Padding="4">
+          <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="svc:PsCommand">
+              <Grid ColumnDefinitions="*,Auto" Margin="2,2" DoubleTapped="OnItemDoubleTapped" Background="Transparent">
+                <StackPanel>
+                  <TextBlock Text="{Binding Name}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
+                  <TextBlock Text="{Binding Module}" Classes="muted" FontSize="11.5" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+                <Border Grid.Column="1" Classes="chip" VerticalAlignment="Center"><TextBlock Text="{Binding Type}" FontSize="10.5" Classes="muted"/></Border>
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Border>
+    </DockPanel>
+
+    <Border Grid.Column="1" Width="1" Background="{DynamicResource BorderBrushSoft}" Margin="0,16,0,0"/>
+
+    <!-- details -->
+    <Grid Grid.Column="2" RowDefinitions="*,Auto">
+      <ScrollViewer>
+        <StackPanel Margin="24,20,24,12" Spacing="4">
+          <TextBlock x:Name="Heading" Classes="h1" TextWrapping="Wrap"/>
+          <TextBlock x:Name="Meta" Classes="muted"/>
+
+          <StackPanel x:Name="Message" IsVisible="False" Spacing="6" Margin="0,40,0,0" HorizontalAlignment="Center">
+            <TextBlock x:Name="MessageTitle" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="MessageText" Classes="muted" TextWrapping="Wrap" TextAlignment="Center" MaxWidth="460"/>
+          </StackPanel>
+
+          <StackPanel x:Name="Details" IsVisible="False">
+            <TextBlock x:Name="Synopsis" TextWrapping="Wrap" Margin="0,8,0,0"/>
+
+            <TextBlock Classes="section" Text="SYNTAX"/>
+            <Border Classes="card" Padding="14,10">
+              <SelectableTextBlock x:Name="Syntax" TextWrapping="Wrap" FontFamily="Menlo, Cascadia Mono, Consolas, monospace" FontSize="12.5"/>
+            </Border>
+
+            <StackPanel x:Name="DescriptionBlock">
+              <TextBlock Classes="section" Text="DESCRIPTION"/>
+              <SelectableTextBlock x:Name="Description" TextWrapping="Wrap" LineHeight="20"/>
+            </StackPanel>
+
+            <StackPanel x:Name="ExamplesBlock">
+              <TextBlock Classes="section" Text="EXAMPLES"/>
+              <StackPanel x:Name="Examples" Spacing="8"/>
+            </StackPanel>
+          </StackPanel>
+        </StackPanel>
+      </ScrollViewer>
+
+      <Border Grid.Row="1" Padding="24,12" BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="0,1,0,0" Background="{DynamicResource FooterBrush}">
+        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+          <Button x:Name="CopyNameButton" Click="OnCopyNameClick" IsEnabled="False">
+            <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="copy"/><TextBlock Text="Copy name"/></StackPanel>
+          </Button>
+          <Button x:Name="CopySyntaxButton" Click="OnCopySyntaxClick" IsEnabled="False">
+            <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="copy"/><TextBlock Text="Copy syntax"/></StackPanel>
+          </Button>
+          <Button x:Name="InsertButton" Classes="primary" Click="OnInsertClick" IsEnabled="False">
+            <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="edit"/><TextBlock Text="Insert into editor"/></StackPanel>
+          </Button>
+        </StackPanel>
+      </Border>
+    </Grid>
+  </Grid>
+</Window>

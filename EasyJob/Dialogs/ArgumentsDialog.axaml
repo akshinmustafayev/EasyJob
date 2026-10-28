@@ -1,0 +1,17 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Dialogs.ArgumentsDialog"
+        Classes="dialog" Width="480">
+  <c:DialogShell x:Name="Shell" Subheading="This script needs some input before it runs.">
+    <ScrollViewer MaxHeight="420">
+      <StackPanel x:Name="Fields" Margin="0,0,10,0"/>
+    </ScrollViewer>
+    <c:DialogShell.Footer>
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button Content="Cancel" MinWidth="90" Click="OnCancel"/>
+        <Button Classes="primary" MinWidth="90" IsDefault="True" Click="OnOk">
+          <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="play" Width="11" Height="11"/><TextBlock Text="Run"/></StackPanel>
+        </Button>
+      </StackPanel>
+    </c:DialogShell.Footer>
+  </c:DialogShell>
+</Window>

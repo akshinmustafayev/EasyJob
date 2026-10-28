@@ -1,0 +1,14 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Dialogs.MessageDialog"
+        Classes="dialog" Width="460">
+  <c:DialogShell x:Name="Shell">
+    <TextBlock x:Name="MessageText" TextWrapping="Wrap"/>
+    <c:DialogShell.Footer>
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button x:Name="AltButton" IsVisible="False" MinWidth="90" Click="OnAlt"/>
+        <Button x:Name="CancelButton" Content="Cancel" MinWidth="90" Click="OnCancel"/>
+        <Button x:Name="OkButton" Classes="primary" Content="OK" MinWidth="90" IsDefault="True" Click="OnOk"/>
+      </StackPanel>
+    </c:DialogShell.Footer>
+  </c:DialogShell>
+</Window>

@@ -1,0 +1,87 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Dialogs.ConfigurationDialog"
+        Title="Configuration" Classes="dialog" Width="680" Height="720" SizeToContent="Manual" CanResize="True" MinHeight="480" MinWidth="560">
+  <c:DialogShell Heading="Configuration" Subheading="Changes are saved to your config.json.">
+    <TabControl Padding="0">
+      <TabItem Header="General">
+        <ScrollViewer>
+          <StackPanel Margin="0,14,12,8" Spacing="14">
+
+            <StackPanel>
+              <TextBlock Classes="section" Text="INTERPRETERS" Margin="2,0,0,8"/>
+              <Border Classes="card" Padding="18,4,18,18">
+                <StackPanel>
+                  <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="PowerShell"/><c:HelpButton Topic="HelpConfigurationDefaultPowershellPath"/></StackPanel>
+                  <TextBox x:Name="PowerShellPath"/>
+                  <TextBlock x:Name="PowerShellDetected" Classes="hint"/>
+
+                  <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="PowerShell arguments"/><c:HelpButton Topic="HelpConfigurationPowerShellArguments"/></StackPanel>
+                  <TextBox x:Name="PowerShellArgs" Watermark="-NoProfile -ExecutionPolicy Bypass"/>
+
+                  <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="Python"/></StackPanel>
+                  <TextBox x:Name="PythonPath"/>
+                  <TextBlock x:Name="PythonDetected" Classes="hint"/>
+
+                  <StackPanel x:Name="CmdRow" Classes="labelrow"><TextBlock Classes="label" Text="Command prompt (cmd.exe)"/><c:HelpButton Topic="HelpConfigurationDefaultCMDPath"/></StackPanel>
+                  <TextBox x:Name="CmdPath"/>
+
+                  <TextBlock x:Name="ShellLabel" Classes="label" Text="Shell for .sh scripts" Margin="0,14,0,5"/>
+                  <TextBox x:Name="ShellPath" Watermark="/bin/bash"/>
+                </StackPanel>
+              </Border>
+            </StackPanel>
+
+            <StackPanel>
+              <TextBlock Classes="section" Text="CONSOLE" Margin="2,0,0,8"/>
+              <Border Classes="card" Padding="18,4,18,18">
+                <StackPanel>
+                  <Grid ColumnDefinitions="*,16,*">
+                    <StackPanel>
+                      <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="Background"/><c:HelpButton Topic="HelpConfigurationConsoleBackground"/></StackPanel>
+                      <TextBox x:Name="ConsoleBackgroundBox" Watermark="#0C0C0C or Black"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                      <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="Text color"/><c:HelpButton Topic="HelpConfigurationConsoleForeground"/></StackPanel>
+                      <TextBox x:Name="ConsoleForegroundBox" Watermark="#E6E6E6 or White"/>
+                    </StackPanel>
+                  </Grid>
+                  <Border x:Name="Preview" CornerRadius="8" Padding="14,10" Margin="0,12,0,0">
+                    <StackPanel Spacing="2">
+                      <TextBlock x:Name="PreviewText" Text="$ ./deploy.sh production" FontFamily="Menlo, Cascadia Mono, Consolas, monospace"/>
+                      <TextBlock Text="Deployed 3 services" Foreground="#57AB5A" FontFamily="Menlo, Cascadia Mono, Consolas, monospace"/>
+                      <TextBlock Text="warning: cache is stale" Foreground="#C69026" FontFamily="Menlo, Cascadia Mono, Consolas, monospace"/>
+                    </StackPanel>
+                  </Border>
+                  <StackPanel Orientation="Horizontal" Margin="0,12,0,0"><CheckBox x:Name="IgnoreTags" Content="Ignore EasyJob color tags in output"/><c:HelpButton Topic="HelpConfigurationConsoleIgnoreColorTags"/></StackPanel>
+                </StackPanel>
+              </Border>
+            </StackPanel>
+
+            <StackPanel>
+              <TextBlock Classes="section" Text="BEHAVIOR" Margin="2,0,0,8"/>
+              <Border Classes="card" Padding="18,10">
+                <StackPanel Orientation="Horizontal"><CheckBox x:Name="ClearEvents" Content="Clear the event log when reloading the config"/><c:HelpButton Topic="HelpConfigurationClearEventsWhenReload"/></StackPanel>
+              </Border>
+            </StackPanel>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+
+      <TabItem Header="Restrictions">
+        <ScrollViewer>
+          <StackPanel Margin="0,14,12,8">
+            <TextBlock Classes="hint" Margin="2,0,0,0" Text="Lock down the interface for shared setups: block editing actions or hide menu items."/>
+            <StackPanel x:Name="RestrictionsPanel"/>
+          </StackPanel>
+        </ScrollViewer>
+      </TabItem>
+    </TabControl>
+
+    <c:DialogShell.Footer>
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button Content="Cancel" MinWidth="90" Click="OnCancel"/>
+        <Button Classes="primary" Content="Save" MinWidth="90" IsDefault="True" Click="OnSave"/>
+      </StackPanel>
+    </c:DialogShell.Footer>
+  </c:DialogShell>
+</Window>

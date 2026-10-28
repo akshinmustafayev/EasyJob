@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Dialogs.ReorderDialog"
+        Classes="dialog" Width="460" Height="520" SizeToContent="Manual" CanResize="True" MinHeight="360" MinWidth="360">
+  <c:DialogShell x:Name="Shell" Subheading="Drag items to reorder them, or select one and use the buttons or Alt + ↑ / ↓.">
+    <Grid ColumnDefinitions="*,Auto">
+      <Border Classes="card" ClipToBounds="True">
+        <ListBox x:Name="List" SelectionMode="Single" Background="Transparent" Padding="4">
+          <ListBox.ItemTemplate>
+            <DataTemplate x:CompileBindings="False">
+              <Grid ColumnDefinitions="28,*" Margin="2,3">
+                <TextBlock Text="{Binding Number}" Classes="muted" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="{Binding Label}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Border>
+      <StackPanel Grid.Column="1" Margin="12,0,0,0" Spacing="8" VerticalAlignment="Top">
+        <Button Click="OnUp" HorizontalContentAlignment="Left">
+          <StackPanel Orientation="Horizontal" Spacing="8"><c:Icon Kind="up"/><TextBlock Text="Move up"/></StackPanel>
+        </Button>
+        <Button Click="OnDown" HorizontalContentAlignment="Left">
+          <StackPanel Orientation="Horizontal" Spacing="8"><c:Icon Kind="down"/><TextBlock Text="Move down"/></StackPanel>
+        </Button>
+      </StackPanel>
+    </Grid>
+    <c:DialogShell.Footer>
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button Content="Cancel" MinWidth="90" Click="OnCancel"/>
+        <Button Classes="primary" Content="Save order" MinWidth="110" IsDefault="True" Click="OnOk"/>
+      </StackPanel>
+    </c:DialogShell.Footer>
+  </c:DialogShell>
+</Window>
