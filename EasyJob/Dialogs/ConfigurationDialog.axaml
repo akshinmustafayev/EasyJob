@@ -59,6 +59,7 @@
                     </StackPanel>
                   </Border>
                   <StackPanel Orientation="Horizontal" Margin="0,8,0,0"><CheckBox x:Name="NativeColors" Content="Use PowerShell's own colors in output"/><c:HelpButton Topic="HelpConfigurationPowerShellNativeColors"/></StackPanel>
+                  <StackPanel Orientation="Horizontal" Margin="0,8,0,0"><CheckBox x:Name="OpenCommandsPanel" Content="Open the PowerShell commands panel with the script editor"/><c:HelpButton Topic="HelpConfigurationOpenCommandsPanel"/></StackPanel>
                   <StackPanel Orientation="Horizontal" Margin="0,8,0,0"><CheckBox x:Name="CheckUpdates" Content="Check for updates when EasyJob starts"/><c:HelpButton Topic="HelpConfigurationCheckUpdates"/></StackPanel>
                 </StackPanel>
               </Border>

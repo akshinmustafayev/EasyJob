@@ -10,6 +10,8 @@ public class AppConfig
     public string powershell_arguments { get; set; } = "";
     /// <summary>Show PowerShell's own colors (errors, tables, Write-Host -ForegroundColor) in the output.</summary>
     public bool powershell_native_colors { get; set; } = true;
+    /// <summary>Open the PowerShell commands panel automatically when the script editor opens.</summary>
+    public bool editor_open_commands_panel { get; set; } = true;
     public string console_background { get; set; } = "#0C0C0C";
     public string console_foreground { get; set; } = "#E6E6E6";
     public bool clear_events_when_reload { get; set; } = true;
@@ -74,6 +76,8 @@ public class ConfigRestrictions
     public bool block_script_editor_run { get; set; }
     public bool block_script_editor_open_files { get; set; }
     public bool block_powershell_commands { get; set; }
+    /// <summary>No interactive terminal under the script editor.</summary>
+    public bool block_editor_terminal { get; set; }
     public bool block_open_script_externally { get; set; }
     public bool block_show_in_folder { get; set; }
     public bool block_updates { get; set; }

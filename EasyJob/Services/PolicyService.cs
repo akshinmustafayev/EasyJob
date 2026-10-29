@@ -105,13 +105,13 @@ public static class PolicyService
         }
         // With the editor window blocked, its own options (read-only mode, no Run, ...) have nothing to apply to.
         if (r.block_script_editor)
-            r.script_editor_readonly = r.block_script_editor_run = r.block_script_editor_open_files = r.block_powershell_commands = false;
+            r.script_editor_readonly = r.block_script_editor_run = r.block_script_editor_open_files = r.block_powershell_commands = r.block_editor_terminal = false;
         if (r.block_updates) config.check_updates_on_startup = false;
     }
 
     /// <summary>Restrictions that only make sense while the script editor window is allowed.</summary>
     public static readonly string[] EditorOptions =
-        { "script_editor_readonly", "block_script_editor_run", "block_script_editor_open_files", "block_powershell_commands" };
+        { "script_editor_readonly", "block_script_editor_run", "block_script_editor_open_files", "block_powershell_commands", "block_editor_terminal" };
 
     /// <summary>True when the policy (not just the user's config) switches this restriction on.</summary>
     public static bool IsForced(string property)
@@ -153,6 +153,14 @@ public static class PolicyService
     // ---------------------------------------------------------------- run checks
 
     /// <summary>Why this button may not run, or null when it may.</summary>
+    /// <summary>A shell can run anything, so it is only offered when no run-related rule would be bypassed.</summary>
+    public static bool TerminalAllowed(AppConfig config)
+    {
+        var r = config.restrictions;
+        return !r.block_script_editor && !r.block_editor_terminal && !r.block_script_editor_run && !r.confirm_before_run
+            && r.allowed_script_types.Count == 0 && r.allowed_script_folders.Count == 0;
+    }
+
     public static string? CheckRun(AppConfig config, ConfigButton button, string resolvedPath)
     {
         var r = config.restrictions;

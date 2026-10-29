@@ -1,6 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Documents;
+using Avalonia.Controls.Primitives;
+using AvaloniaEdit;
+using AvaloniaEdit.Document;
+using AvaloniaEdit.Rendering;
 using Avalonia.Media;
 using Avalonia.Threading;
 using EasyJob.Models;
@@ -14,8 +17,8 @@ namespace EasyJob.Controls;
 /// </summary>
 public class OutputView : Border
 {
-    public static readonly StyledProperty<RunViewModel?> RunProperty =
-        AvaloniaProperty.Register<OutputView, RunViewModel?>(nameof(Run));
+    public static readonly StyledProperty<IOutputSource?> RunProperty =
+        AvaloniaProperty.Register<OutputView, IOutputSource?>(nameof(Run));
 
     public static readonly StyledProperty<string?> ConsoleBackgroundProperty =
         AvaloniaProperty.Register<OutputView, string?>(nameof(ConsoleBackground));
@@ -26,10 +29,11 @@ public class OutputView : Border
     static readonly Color ErrorColor = Color.Parse("#FF7B72");
     static readonly Color MetaColor = Color.Parse("#7D8590");
 
-    readonly ScrollViewer _scroll;
-    readonly SelectableTextBlock _text;
+    readonly TextEditor _editor;
+    readonly LineColorizer _colorizer;
     readonly Dictionary<Color, IBrush> _brushes = new();
-    RunViewModel? _attached;
+    readonly List<OutputLine> _lines = new();
+    IOutputSource? _attached;
     IBrush _foreground = Brushes.White;
 
     static OutputView()
@@ -41,25 +45,31 @@ public class OutputView : Border
 
     public OutputView()
     {
-        _text = new SelectableTextBlock
+        // AvaloniaEdit only lays out and draws the visible lines, so 100k lines cost the same as 100.
+        _editor = new TextEditor
         {
             FontFamily = new FontFamily("Cascadia Mono, Menlo, Consolas, DejaVu Sans Mono, Liberation Mono, monospace"),
             FontSize = 12.5,
-            TextWrapping = TextWrapping.Wrap,
-            Margin = new Thickness(12, 10)
+            IsReadOnly = true,
+            WordWrap = true,
+            ShowLineNumbers = false,
+            Background = Brushes.Transparent,
+            Padding = new Thickness(12, 10),
+            HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
+            VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+            Document = new TextDocument()
         };
-        _scroll = new ScrollViewer
-        {
-            HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled,
-            VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Auto,
-            Content = _text
-        };
-        Child = _scroll;
+        _editor.Options.EnableHyperlinks = false;
+        _editor.Options.EnableEmailHyperlinks = false;
+        _editor.TextArea.Caret.CaretBrush = Brushes.Transparent;
+        _colorizer = new LineColorizer(this);
+        _editor.TextArea.TextView.LineTransformers.Add(_colorizer);
+        Child = _editor;
         CornerRadius = new CornerRadius(0, 0, 10, 10);
         ApplyColors();
     }
 
-    public RunViewModel? Run { get => GetValue(RunProperty); set => SetValue(RunProperty, value); }
+    public IOutputSource? Run { get => GetValue(RunProperty); set => SetValue(RunProperty, value); }
     public string? ConsoleBackground { get => GetValue(ConsoleBackgroundProperty); set => SetValue(ConsoleBackgroundProperty, value); }
     public string? ConsoleForeground { get => GetValue(ConsoleForegroundProperty); set => SetValue(ConsoleForegroundProperty, value); }
 
@@ -67,7 +77,8 @@ public class OutputView : Border
     {
         Background = Parse(ConsoleBackground, Color.Parse("#0C0C0C"));
         _foreground = Parse(ConsoleForeground, Color.Parse("#E6E6E6"));
-        _text.Foreground = _foreground;
+        _editor.Foreground = _foreground;
+        _editor.TextArea.TextView.Redraw();
     }
 
     static IBrush Parse(string? value, Color fallback) =>
@@ -97,7 +108,7 @@ public class OutputView : Border
     void Rebind()
     {
         Detach();
-        _text.Inlines?.Clear();
+        Reset();
         if (Run == null || VisualRoot == null) return;
 
         _attached = Run;
@@ -105,47 +116,52 @@ public class OutputView : Border
         _attached.LinesTrimmed += OnLinesTrimmed;
         _attached.Cleared += OnCleared;
 
-        foreach (var line in _attached.Lines) _text.Inlines!.Add(Build(line));
+        Append(_attached.Lines);
         ScrollToEndSoon();
+    }
+
+    void Reset()
+    {
+        _lines.Clear();
+        _editor.Document = new TextDocument();
+    }
+
+    // Every line is stored as its text plus "\n", so document line N is _lines[N-1] (the last document line is empty).
+    void Append(IReadOnlyList<OutputLine> lines)
+    {
+        if (lines.Count == 0) return;
+        var sb = new System.Text.StringBuilder();
+        foreach (var l in lines) sb.Append(l.PlainText).Append('\n');
+        _lines.AddRange(lines);
+        _editor.Document.Insert(_editor.Document.TextLength, sb.ToString());
     }
 
     void OnLinesAdded(IReadOnlyList<OutputLine> lines)
     {
         bool follow = IsNearBottom();
-        foreach (var line in lines) _text.Inlines!.Add(Build(line));
+        Append(lines);
         if (follow) ScrollToEndSoon();
     }
 
     void OnLinesTrimmed(int count)
     {
-        var inlines = _text.Inlines;
-        if (inlines == null) return;
-        for (int i = 0; i < count && inlines.Count > 0; i++) inlines.RemoveAt(0);
+        count = Math.Min(count, _lines.Count);
+        if (count <= 0) return;
+        var doc = _editor.Document;
+        int end = doc.GetLineByNumber(count).EndOffset + 1; // include the newline of the last dropped line
+        _lines.RemoveRange(0, count);
+        doc.Remove(0, Math.Min(end, doc.TextLength));
     }
 
-    void OnCleared() => _text.Inlines?.Clear();
+    void OnCleared() => Reset();
 
-    bool IsNearBottom() =>
-        _scroll.Offset.Y + _scroll.Viewport.Height >= _scroll.Extent.Height - 24;
-
-    void ScrollToEndSoon() => Dispatcher.UIThread.Post(() => _scroll.ScrollToEnd(), DispatcherPriority.Background);
-
-    Inline Build(OutputLine line)
+    bool IsNearBottom()
     {
-        var span = new Span();
-        foreach (var seg in line.Segments)
-        {
-            var run = new Run(seg.Text);
-            if (seg.Foreground is { } c) run.Foreground = Brush(c);
-            else if (line.Kind == LineKind.Error) run.Foreground = Brush(ErrorColor);
-            else if (line.Kind == LineKind.Meta) { run.Foreground = Brush(MetaColor); run.FontStyle = FontStyle.Italic; }
-            if (seg.Bold) run.FontWeight = FontWeight.Bold;
-            if (seg.Underline) run.TextDecorations = TextDecorations.Underline;
-            span.Inlines.Add(run);
-        }
-        span.Inlines.Add(new LineBreak());
-        return span;
+        var tv = _editor.TextArea.TextView;
+        return tv.VerticalOffset + tv.Bounds.Height >= tv.DocumentHeight - 24;
     }
+
+    void ScrollToEndSoon() => Dispatcher.UIThread.Post(ScrollToBottom, DispatcherPriority.Background);
 
     IBrush Brush(Color c)
     {
@@ -153,6 +169,52 @@ public class OutputView : Border
         return b;
     }
 
-    public void ScrollToTop() => _scroll.ScrollToHome();
-    public void ScrollToBottom() => _scroll.ScrollToEnd();
+    public void ScrollToTop() => _editor.ScrollToHome();
+
+    public void ScrollToBottom()
+    {
+        // The document ends with an empty line; scroll so the last real line sits at the bottom of the view.
+        int last = Math.Max(1, _editor.Document.LineCount - 1);
+        _editor.ScrollToLine(last);
+    }
+
+    sealed class LineColorizer : DocumentColorizingTransformer
+    {
+        readonly OutputView _owner;
+        public LineColorizer(OutputView owner) => _owner = owner;
+
+        protected override void ColorizeLine(DocumentLine docLine)
+        {
+            int idx = docLine.LineNumber - 1;
+            if (idx < 0 || idx >= _owner._lines.Count) return;
+            var line = _owner._lines[idx];
+
+            int offset = docLine.Offset;
+            foreach (var seg in line.Segments)
+            {
+                int len = seg.Text.Length;
+                if (len == 0) continue;
+                int from = offset, to = offset + len;
+                offset = to;
+
+                IBrush? fg = seg.Foreground is { } c ? _owner.Brush(c)
+                    : line.Kind == LineKind.Error ? _owner.Brush(ErrorColor)
+                    : line.Kind == LineKind.Meta ? _owner.Brush(MetaColor) : null;
+                bool italic = line.Kind == LineKind.Meta && seg.Foreground == null;
+
+                if (fg == null && !seg.Bold && !seg.Underline && !italic) continue;
+                ChangeLinePart(from, to, el =>
+                {
+                    if (fg != null) el.TextRunProperties.SetForegroundBrush(fg);
+                    if (seg.Bold || italic)
+                    {
+                        var tf = el.TextRunProperties.Typeface;
+                        el.TextRunProperties.SetTypeface(new Typeface(tf.FontFamily,
+                            italic ? FontStyle.Italic : tf.Style, seg.Bold ? FontWeight.Bold : tf.Weight));
+                    }
+                    if (seg.Underline) el.TextRunProperties.SetTextDecorations(TextDecorations.Underline);
+                });
+            }
+        }
+    }
 }

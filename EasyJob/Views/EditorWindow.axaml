@@ -9,6 +9,11 @@
         Title="Script editor" Icon="/Assets/icon.ico"
         Width="1180" Height="780" MinWidth="720" MinHeight="460"
         WindowStartupLocation="CenterScreen">
+  <Window.Styles>
+    <Style Selector="TextBox#TermInput /template/ Border#PART_BorderElement"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/></Style>
+    <Style Selector="TextBox#TermInput:focus /template/ Border#PART_BorderElement"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/></Style>
+    <Style Selector="TextBox#TermInput:pointerover /template/ Border#PART_BorderElement"><Setter Property="Background" Value="Transparent"/></Style>
+  </Window.Styles>
 
   <DockPanel>
     <!-- toolbar -->
@@ -41,6 +46,9 @@
           <ToggleButton x:Name="WrapToggle" Content="Wrap" ToolTip.Tip="Wrap long lines" MinHeight="34" Padding="12,0" CornerRadius="8"/>
           <ToggleButton x:Name="CommandsToggle" IsCheckedChanged="OnCommandsToggled" MinHeight="34" Padding="12,0" CornerRadius="8" ToolTip.Tip="Show or hide the PowerShell command browser (Ctrl/Cmd+Shift+P)">
             <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="list"/><TextBlock Text="Commands"/></StackPanel>
+          </ToggleButton>
+          <ToggleButton x:Name="TerminalToggle" IsCheckedChanged="OnTerminalToggled" MinHeight="34" Padding="12,0" CornerRadius="8" ToolTip.Tip="Show or hide the terminal (Ctrl/Cmd+`)">
+            <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="terminal"/><TextBlock Text="Terminal"/></StackPanel>
           </ToggleButton>
         </StackPanel>
       </Grid>
@@ -96,13 +104,28 @@
       <!-- output of runs started from the editor -->
       <Grid x:Name="OutputPanel" Grid.Row="3" RowDefinitions="Auto,*" IsVisible="False">
         <Grid ColumnDefinitions="*,Auto" Margin="14,6,10,4">
-          <TextBlock Text="OUTPUT" Classes="section" Margin="0" VerticalAlignment="Center"/>
+          <StackPanel Orientation="Horizontal" Spacing="4">
+            <ToggleButton x:Name="OutputTab" Classes="flat" Content="OUTPUT" FontSize="11" FontWeight="SemiBold" Click="OnOutputTabClick"/>
+            <ToggleButton x:Name="TerminalTab" Classes="flat" Content="TERMINAL" FontSize="11" FontWeight="SemiBold" Click="OnTerminalTabClick"/>
+          </StackPanel>
           <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+            <ComboBox x:Name="ShellBox" Width="140" MinHeight="28" FontSize="12" IsVisible="False" SelectionChanged="OnShellChanged"/>
+            <Button x:Name="TermRestartButton" Classes="flat" Click="OnTermRestartClick" IsVisible="False" ToolTip.Tip="Restart the shell"><c:Icon Kind="refresh"/></Button>
             <Button Classes="flat" Click="OnClearOutputClick"><StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="trash"/><TextBlock Text="Clear" FontSize="12"/></StackPanel></Button>
             <Button Classes="flat" Click="OnHideOutputClick" ToolTip.Tip="Hide the output panel"><c:Icon Kind="down"/></Button>
           </StackPanel>
         </Grid>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <Grid x:Name="TerminalView" Grid.Row="1" RowDefinitions="*,Auto" IsVisible="False" Margin="14,0,14,10">
+          <c:OutputView x:Name="TermOutput" CornerRadius="8,8,0,0"/>
+          <Border Grid.Row="1" Background="{Binding #TermOutput.Background}" CornerRadius="0,0,8,8" Padding="10,0,0,0">
+            <DockPanel>
+              <TextBlock x:Name="TermPrompt" DockPanel.Dock="Left" Text="&gt;" Foreground="#57AB5A" FontFamily="Cascadia Mono, Menlo, Consolas, DejaVu Sans Mono, monospace" VerticalAlignment="Center" Margin="0,0,6,0"/>
+              <TextBox x:Name="TermInput" BorderThickness="0" Background="Transparent"
+                       FontFamily="Cascadia Mono, Menlo, Consolas, DejaVu Sans Mono, monospace" FontSize="12.5"/>
+            </DockPanel>
+          </Border>
+        </Grid>
+        <ScrollViewer x:Name="RunsScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto">
           <ItemsControl x:Name="RunsList" Margin="14,0,14,10">
             <ItemsControl.ItemTemplate>
               <DataTemplate x:DataType="vm:RunViewModel"><views:RunCard/></DataTemplate>

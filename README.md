@@ -215,6 +215,7 @@ plus `policy.json` next to the program, and a file named in the `EASYJOB_POLICY`
 | `block_script_editor_run` | The editor has no Run button |
 | `block_script_editor_open_files` | The editor only opens scripts from script buttons, not arbitrary files |
 | `block_powershell_commands` | No PowerShell command browser |
+| `block_editor_terminal` | No Terminal tab under the editor. The terminal is also unavailable whenever `block_script_editor_run`, `confirm_before_run`, `allowed_script_types` or `allowed_script_folders` are in effect, since a shell would bypass them |
 | `block_open_script_externally`, `block_show_in_folder` | Removes "Open with default app" / "Show in folder" and Ctrl/Cmd+click |
 | `block_updates` | No update checks, no update button, no self-update |
 | `block_view_settings` | Theme and button size cannot be changed |

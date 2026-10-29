@@ -73,6 +73,12 @@
 		<used>Configuration</used>
 	</item>
 	<item>
+		<name>HelpConfigurationOpenCommandsPanel</name>
+		<heading>Commands panel in the script editor</heading>
+		<description>Open the PowerShell commands panel automatically when the script editor opens. You can still show or hide it with the button in the editor or Ctrl/Cmd+Shift+P. Once you toggle it, editor windows opened later in the same session keep that choice.&#10;&#10;Example: Yes</description>
+		<used>Configuration</used>
+	</item>
+	<item>
 		<name>HelpConfigurationCheckUpdates</name>
 		<heading>Check for updates</heading>
 		<description>Look for a newer EasyJob release on GitHub each time the app starts. When there is one, an Update button appears in the menu bar. You can also use Help -&gt; Check for updates at any time.&#10;&#10;Example: Yes</description>
@@ -118,6 +124,12 @@
 		<name>HelpConfigurationBlockPowershellCommands</name>
 		<heading>Block the PowerShell command browser</heading>
 		<description>Hides the Commands panel in the script editor and Tools -&gt; PowerShell commands.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockEditorTerminal</name>
+		<heading>Block the terminal in the script editor</heading>
+		<description>Removes the Terminal tab under the script editor. The terminal is also unavailable while running scripts from the editor is blocked, while the allowed script types or folders are restricted, or while every run needs confirmation, because a terminal could bypass those rules.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>

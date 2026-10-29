@@ -35,6 +35,7 @@ public partial class ConfigurationDialog : Window
         ConsoleForegroundBox.Text = config.console_foreground;
         NativeColors.IsChecked = config.powershell_native_colors;
         CheckUpdates.IsChecked = config.check_updates_on_startup;
+        OpenCommandsPanel.IsChecked = config.editor_open_commands_panel;
         ClearEvents.IsChecked = config.clear_events_when_reload;
 
         // cmd.exe only exists on Windows; the POSIX shell setting only matters elsewhere.
@@ -183,6 +184,7 @@ public partial class ConfigurationDialog : Window
         ["block_script_editor_run"] = "Block running scripts from the editor",
         ["block_script_editor_open_files"] = "Block opening other files in the editor",
         ["block_powershell_commands"] = "Block the PowerShell command browser",
+        ["block_editor_terminal"] = "Block the terminal in the script editor",
         ["block_open_script_externally"] = "Block \"Open with default app\"",
         ["block_show_in_folder"] = "Block \"Show in folder\"",
         ["block_updates"] = "Block update checks and updates",
@@ -260,6 +262,8 @@ public partial class ConfigurationDialog : Window
         _config.console_foreground = ConsoleForegroundBox.Text?.Trim() ?? "";
         _config.powershell_native_colors = NativeColors.IsChecked == true;
         _config.check_updates_on_startup = CheckUpdates.IsChecked == true;
+        _config.editor_open_commands_panel = OpenCommandsPanel.IsChecked == true;
+        EasyJob.Views.EditorWindow._sideOpenLast = null; // next editor starts from the setting again
         _config.clear_events_when_reload = ClearEvents.IsChecked == true;
         _config.UserRestrictions ??= _config.restrictions;
         bool editorBlocked = _restrictions.Any(r => r.Property.Name == "block_script_editor" && r.Box.IsChecked == true);

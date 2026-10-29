@@ -11,7 +11,7 @@ namespace EasyJob.ViewModels;
 public enum RunStatus { Starting, Running, Succeeded, Failed, Stopped }
 
 /// <summary>One execution of one script. Owns its process and its own output buffer, so runs never mix.</summary>
-public partial class RunViewModel : ObservableObject
+public partial class RunViewModel : ObservableObject, IOutputSource
 {
     const int MaxLines = 50_000;
     const int TrimLines = 10_000;

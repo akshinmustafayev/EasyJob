@@ -28,7 +28,8 @@ public partial class EditorWindow : Window
     readonly TabViewModel _runs = new(new ConfigTab { Header = "Editor" });
     readonly RegistryOptions _registry = new(ThemeName.DarkPlus);
     readonly TextMate.Installation _textMate;
-    static bool _sideOpen = true;
+    internal static bool? _sideOpenLast; // the panel state of the last editor window; null until one was used
+    bool _sideOpen;
     readonly List<string> _tempFiles = new();
     bool _switching;
     bool _closeConfirmed;
@@ -76,7 +77,11 @@ public partial class EditorWindow : Window
         LanguageBox.ItemsSource = EditorLanguage.All;
         DocList.ItemsSource = _docs;
         RunsList.ItemsSource = _runs.Runs;
-        _runs.Runs.CollectionChanged += (_, _) => { if (_runs.Runs.Count > 0) ShowOutput(true); UpdateRunButtons(); };
+        _runs.Runs.CollectionChanged += (_, e) =>
+        {
+            if (_runs.Runs.Count > 0 && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add) { ShowOutput(true); SelectOutputTab(false); }
+            UpdateRunButtons();
+        };
 
         DocList.SelectionChanged += (_, _) => SelectDocument(DocList.SelectedItem as EditorDocument);
         LanguageBox.SelectionChanged += (_, _) =>
@@ -97,6 +102,7 @@ public partial class EditorWindow : Window
         Key(Avalonia.Input.Key.W, mod, () => _ = CloseDocumentAsync(_current_doc));
         Key(Avalonia.Input.Key.N, mod, () => NewDocument(_current_doc?.Language.CanRun == true ? _current_doc.Language : EditorLanguage.PowerShell));
         Key(Avalonia.Input.Key.F5, KeyModifiers.None, () => _ = RunAsync());
+        Key(Avalonia.Input.Key.OemTilde, mod, () => { if (_canTerminal) TerminalToggle.IsChecked = TerminalToggle.IsChecked != true; });
         Key(Avalonia.Input.Key.P, mod | KeyModifiers.Shift, () => { if (_canUseCommands) CommandsToggle.IsChecked = CommandsToggle.IsChecked != true; });
 
         Commands.InsertRequested += name => InsertText(name);
@@ -106,13 +112,15 @@ public partial class EditorWindow : Window
         OpenButton.IsVisible = EmptyOpenButton.IsVisible = _canOpenFiles;
         RunBar.IsVisible = _canRun;
         CommandsToggle.IsVisible = _canUseCommands;
-        if (!_canUseCommands) _sideOpen = false;
+        _sideOpen = _canUseCommands && (_sideOpenLast ?? MainViewModel.Current?.Config.editor_open_commands_panel ?? true);
         CommandsToggle.IsChecked = _sideOpen;
         ShowCommandsPanel(_sideOpen);
 
         ApplyTheme();
+        InitTerminal();
         Closed += (_, _) =>
         {
+            _term?.Stop();
             if (_current == this) _current = null;
             foreach (var f in _tempFiles) try { File.Delete(f); } catch { }
         };
@@ -411,10 +419,127 @@ public partial class EditorWindow : Window
     void ShowCommandsPanel(bool show)
     {
         _sideOpen = show;
+        _sideOpenLast = show;
         SidePanel.IsVisible = show;
         SideSplitter.IsVisible = show;
         if (show) Commands.EnsureLoaded();
     }
+
+    // ------------------------------------------------------------ terminal
+
+    bool _canTerminal;
+    TerminalSession? _term;
+    readonly List<string> _termHistory = new();
+    int _termHistoryPos;
+    bool _termTabActive;
+
+    void InitTerminal()
+    {
+        _canTerminal = MainViewModel.Current is { } main && PolicyService.TerminalAllowed(main.Config);
+        TerminalToggle.IsVisible = TerminalTab.IsVisible = _canTerminal;
+        OutputTab.IsChecked = true;
+        if (!_canTerminal) return;
+
+        var main2 = MainViewModel.Current!;
+        TermOutput.ConsoleBackground = main2.ConsoleBackground;
+        TermOutput.ConsoleForeground = main2.ConsoleForeground;
+        if (Color.TryParse(main2.ConsoleForeground, out var fg)) TermInput.Foreground = new SolidColorBrush(fg);
+
+        foreach (var shell in new[] { TerminalShell.PowerShell, TerminalShell.System })
+            if (TerminalSession.IsAvailable(main2.Config, shell))
+                ShellBox.Items.Add(shell == TerminalShell.PowerShell ? "PowerShell" : (ShellResolver.IsWindows ? "Command Prompt" : "System shell"));
+        ShellBox.SelectedIndex = ShellBox.Items.Count > 0 ? 0 : -1;
+        TerminalShell Current() => ShellBox.SelectedItem as string == "PowerShell" ? TerminalShell.PowerShell : TerminalShell.System;
+
+        TermInput.KeyDown += (_, e) =>
+        {
+            if (e.Key == Avalonia.Input.Key.Enter)
+            {
+                var text = TermInput.Text ?? "";
+                TermInput.Text = "";
+                if (text.Length > 0 && (_termHistory.Count == 0 || _termHistory[^1] != text)) _termHistory.Add(text);
+                _termHistoryPos = _termHistory.Count;
+                StartTerminalIfNeeded(Current());
+                _term?.Send(text);
+                e.Handled = true;
+            }
+            else if (e.Key == Avalonia.Input.Key.Up && _termHistoryPos > 0)
+            {
+                TermInput.Text = _termHistory[--_termHistoryPos];
+                TermInput.CaretIndex = TermInput.Text.Length;
+                e.Handled = true;
+            }
+            else if (e.Key == Avalonia.Input.Key.Down && _termHistoryPos < _termHistory.Count)
+            {
+                TermInput.Text = ++_termHistoryPos < _termHistory.Count ? _termHistory[_termHistoryPos] : "";
+                TermInput.CaretIndex = TermInput.Text?.Length ?? 0;
+                e.Handled = true;
+            }
+            else if (e.Key == Avalonia.Input.Key.C && e.KeyModifiers == KeyModifiers.Control && string.IsNullOrEmpty(TermInput.SelectedText))
+            {
+                // No pseudo-terminal, so Ctrl+C cannot interrupt a single command: it restarts the shell instead.
+                if (_term?.IsRunning == true) { _term.Stop(); _term.Start(Current(), _term.WorkingDirectory); }
+                e.Handled = true;
+            }
+            else if (e.Key == Avalonia.Input.Key.L && e.KeyModifiers == KeyModifiers.Control)
+            {
+                _term?.Clear();
+                e.Handled = true;
+            }
+        };
+    }
+
+    void StartTerminalIfNeeded(TerminalShell shell)
+    {
+        if (_term == null)
+        {
+            _term = new TerminalSession(MainViewModel.Current!.Config);
+            TermOutput.Run = _term;
+        }
+        if (!_term.IsRunning) _term.Start(shell, _current_doc?.Path is { } p ? Path.GetDirectoryName(p) : null);
+    }
+
+    TerminalShell SelectedShell => ShellBox.SelectedItem as string == "PowerShell" ? TerminalShell.PowerShell : TerminalShell.System;
+
+    void SelectOutputTab(bool terminal)
+    {
+        _termTabActive = terminal && _canTerminal;
+        OutputTab.IsChecked = !_termTabActive;
+        TerminalTab.IsChecked = _termTabActive;
+        RunsScroll.IsVisible = !_termTabActive;
+        TerminalView.IsVisible = _termTabActive;
+        ShellBox.IsVisible = TermRestartButton.IsVisible = _termTabActive;
+        if (TerminalToggle.IsChecked != _termTabActive && OutputPanel.IsVisible) TerminalToggle.IsChecked = _termTabActive;
+        if (_termTabActive)
+        {
+            StartTerminalIfNeeded(SelectedShell);
+            Dispatcher.UIThread.Post(() => TermInput.Focus(), DispatcherPriority.Background);
+        }
+    }
+
+    void OnTerminalToggled(object? sender, RoutedEventArgs e)
+    {
+        if (TerminalToggle.IsChecked == true)
+        {
+            ShowOutput(true);
+            SelectOutputTab(true);
+        }
+        else if (_termTabActive)
+        {
+            if (_runs.Runs.Count > 0) SelectOutputTab(false); else ShowOutput(false);
+        }
+    }
+
+    void OnOutputTabClick(object? sender, RoutedEventArgs e) => SelectOutputTab(false);
+    void OnTerminalTabClick(object? sender, RoutedEventArgs e) => SelectOutputTab(true);
+
+    void OnShellChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (_term != null && _termTabActive && ShellBox.SelectedIndex >= 0) _term.Start(SelectedShell, _term.WorkingDirectory);
+    }
+
+    void OnTermRestartClick(object? sender, RoutedEventArgs e) =>
+        _term?.Start(SelectedShell, _current_doc?.Path is { } p ? Path.GetDirectoryName(p) : _term.WorkingDirectory);
 
     void ShowOutput(bool show)
     {
@@ -447,9 +572,14 @@ public partial class EditorWindow : Window
     void OnRunClick(object? sender, RoutedEventArgs e) => _ = RunAsync();
     void OnStopClick(object? sender, RoutedEventArgs e) { foreach (var r in _runs.Runs.Where(r => r.IsRunning)) r.Stop(); }
     void OnCommandsToggled(object? sender, RoutedEventArgs e) => ShowCommandsPanel(CommandsToggle.IsChecked == true);
-    void OnHideOutputClick(object? sender, RoutedEventArgs e) => ShowOutput(false);
+    void OnHideOutputClick(object? sender, RoutedEventArgs e)
+    {
+        ShowOutput(false);
+        TerminalToggle.IsChecked = false;
+    }
     void OnClearOutputClick(object? sender, RoutedEventArgs e)
     {
+        if (_termTabActive) { _term?.Clear(); return; }
         foreach (var r in _runs.Runs.Where(r => r.IsFinished).ToList()) _runs.Runs.Remove(r);
         if (_runs.Runs.Count == 0) ShowOutput(false);
     }
