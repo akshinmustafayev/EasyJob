@@ -7,6 +7,7 @@
   "console_background": "#0C0C0C",
   "console_foreground": "#E6E6E6",
   "console_ignore_color_tags": false,
+  "powershell_native_colors": true,
   "clear_events_when_reload": true,
   "restrictions": {
     "block_tabs_remove": false,

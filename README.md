@@ -174,6 +174,7 @@ Here is an example:
   "console_background": "Black",
   "console_foreground": "White",
   "console_ignore_color_tags": false,
+  "powershell_native_colors": true,
   "clear_events_when_reload": true,
   "restrictions": {
     "block_tabs_remove": false,

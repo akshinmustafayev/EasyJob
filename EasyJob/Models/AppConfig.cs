@@ -8,6 +8,8 @@ public class AppConfig
     public string default_shell_path { get; set; } = "";
     public string default_python_path { get; set; } = "";
     public string powershell_arguments { get; set; } = "";
+    /// <summary>Show PowerShell's own colors (errors, tables, Write-Host -ForegroundColor) in the output.</summary>
+    public bool powershell_native_colors { get; set; } = true;
     public string console_background { get; set; } = "#0C0C0C";
     public string console_foreground { get; set; } = "#E6E6E6";
     public bool console_ignore_color_tags { get; set; }

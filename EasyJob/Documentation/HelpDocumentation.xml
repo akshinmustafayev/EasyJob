@@ -73,6 +73,12 @@
 		<used>Configuration</used>
 	</item>
 	<item>
+		<name>HelpConfigurationPowerShellNativeColors</name>
+		<heading>PowerShell's own colors</heading>
+		<description>Show the colors PowerShell itself produces: red errors, table headers, and Write-Host -ForegroundColor / -BackgroundColor. Turn it off to run scripts with plain -File and no color handling.&#10;&#10;Example: Yes</description>
+		<used>Configuration</used>
+	</item>
+	<item>
 		<name>HelpConfigurationClearEventsWhenReload</name>
 		<heading>Clear events when reload</heading>
 		<description>Clear events on Events list after configuration reload from the File-> Reload config menu.&#10;&#10;Example: Yes</description>

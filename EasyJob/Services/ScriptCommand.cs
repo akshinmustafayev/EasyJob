@@ -45,6 +45,17 @@ public static class ScriptCommand
                     "PowerShell was not found. Install PowerShell (pwsh) or set 'default_powershell_path' in Settings → Configuration.");
             foreach (var a in Tokenize(config.powershell_arguments)) psi.ArgumentList.Add(a);
             if (!config.powershell_arguments.Contains("-NonInteractive", StringComparison.OrdinalIgnoreCase)) psi.ArgumentList.Add("-NonInteractive");
+            if (config.powershell_native_colors)
+            {
+                // Run through a small prelude so PowerShell colors its output even though stdout is redirected.
+                var rawArgs = string.Join(" ", answers.Where(a => !string.IsNullOrWhiteSpace(a)));
+                psi.ArgumentList.Add("-Command");
+                psi.ArgumentList.Add(ColorPrelude + "try { & '" + scriptPath.Replace("'", "''") + "' " + rawArgs +
+                    " } catch { Write-Error $_; $global:LASTEXITCODE = 1 }\nif ($LASTEXITCODE) { exit $LASTEXITCODE }");
+                displayCommand = psi.FileName + " " + string.Join(" ", psi.ArgumentList.Take(psi.ArgumentList.Count - 1).Select(QuoteForDisplay))
+                    + " " + QuoteForDisplay(scriptPath) + (rawArgs.Length > 0 ? " " + rawArgs : "");
+                return psi;
+            }
             psi.ArgumentList.Add("-File");
             psi.ArgumentList.Add(scriptPath);
             foreach (var a in scriptArgs) psi.ArgumentList.Add(a);
@@ -77,6 +88,19 @@ public static class ScriptCommand
             : psi.Arguments);
         return psi;
     }
+
+    // Forces ANSI output (errors, Format-Table, ...) and makes Write-Host -ForegroundColor/-BackgroundColor emit ANSI,
+    // because PowerShell drops host colors when its output is redirected.
+    const string ColorPrelude =
+        "if ($PSStyle) { $PSStyle.OutputRendering = 'Ansi' }\n" +
+        "$global:LASTEXITCODE = 0\n" +
+        "function global:Write-Host { param([Parameter(Position=0, ValueFromRemainingArguments)][object[]]$Object, [object]$Separator = ' ', [Nullable[ConsoleColor]]$ForegroundColor, [Nullable[ConsoleColor]]$BackgroundColor, [switch]$NoNewline)\n" +
+        "  $fg = @{Black=30;DarkBlue=34;DarkGreen=32;DarkCyan=36;DarkRed=31;DarkMagenta=35;DarkYellow=33;Gray=37;DarkGray=90;Blue=94;Green=92;Cyan=96;Red=91;Magenta=95;Yellow=93;White=97}\n" +
+        "  $t = (@($Object | ForEach-Object { \"$_\" }) -join [string]$Separator); $e = [char]27; $pre = ''\n" +
+        "  if ($null -ne $ForegroundColor) { $pre += \"$e[$($fg[[string]$ForegroundColor])m\" }\n" +
+        "  if ($null -ne $BackgroundColor) { $pre += \"$e[$($fg[[string]$BackgroundColor] + 10)m\" }\n" +
+        "  if ($pre) { $t = $pre + $t + \"$e[0m\" }\n" +
+        "  if ($NoNewline) { [Console]::Out.Write($t) } else { [Console]::Out.WriteLine($t) } }\n";
 
     static string WorkingDirectoryFor(string scriptPath)
     {
