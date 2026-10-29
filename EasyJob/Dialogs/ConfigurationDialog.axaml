@@ -52,7 +52,6 @@
                       <TextBlock Text="warning: cache is stale" Foreground="#C69026" FontFamily="Menlo, Cascadia Mono, Consolas, monospace"/>
                     </StackPanel>
                   </Border>
-                  <StackPanel Orientation="Horizontal" Margin="0,12,0,0"><CheckBox x:Name="IgnoreTags" Content="Ignore EasyJob color tags in output"/><c:HelpButton Topic="HelpConfigurationConsoleIgnoreColorTags"/></StackPanel>
                   <StackPanel Orientation="Horizontal" Margin="0,8,0,0"><CheckBox x:Name="NativeColors" Content="Use PowerShell's own colors in output"/><c:HelpButton Topic="HelpConfigurationPowerShellNativeColors"/></StackPanel>
                 </StackPanel>
               </Border>

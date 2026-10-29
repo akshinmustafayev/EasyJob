@@ -39,6 +39,11 @@
     <None Include="scripts\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <!-- EasyJobPSTools (dialogs for scripts) is pure PowerShell and ships beside the app. -->
+    <None Include="..\EasyJobPSTools\*.psm1;..\EasyJobPSTools\*.psd1">
+      <Link>EasyJobPSTools\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

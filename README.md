@@ -26,7 +26,7 @@ EasyJob - keep and execute your PowerShell, Python, shell and BAT scripts from o
 * Rebuilt on **.NET 10** and [Avalonia UI](https://avaloniaui.net), so the same app runs on Windows, macOS and Linux.
 * A new **run panel** replaces the old rich-text console. Every execution gets its own card with status, duration, PID, its own output, and *Stop* / *Run again* / *Copy* / *Collapse* actions. Running several scripts at once no longer mixes their output.
 * **Per-tab output**: each tab has its own list of runs. The same script can run several times at once, and *Run in tab* in the button's context menu sends a script's output to another tab.
-* Proper **ANSI color** support (PowerShell, git, dotnet, npm, ...) in addition to the EasyJob color tags.
+* Proper **ANSI color** support (PowerShell, git, dotnet, npm, ...).
 * **Python** scripts as a script type.
 * **Script editor** (Tools → Script editor, or Shift+click a script button): multi-file tabs, syntax coloring for PowerShell, Python, shell, batch, JSON, YAML, XML and Markdown (follows the light/dark theme), find (Ctrl/Cmd+F), save, and **Run (F5)** with live output in a panel under the editor. Run uses what is in the editor right now, so you don't have to save first (unsaved text runs from a temporary copy that is removed when the editor closes).
 * **PowerShell command browser** (docked on the right of the script editor; toggle it with the Commands button or Ctrl/Cmd+Shift+P, or open it from Tools → PowerShell commands): search every cmdlet, function and alias of your installed PowerShell, read syntax, description and examples, copy or insert a command into the editor.
@@ -50,7 +50,7 @@ Script types: `powershell` (`.ps1`), `python` (`.py`, run with `python3 -u`; set
 
 **Ctrl/Cmd + click** a script button to show the script in your file manager, **Shift + click** to open it. Right-click for more actions.
 
-> `EasyJobPSTools` (the `Show-EJInputBox` WPF helper module) is Windows-only and is not part of the cross-platform build.
+> `EasyJobPSTools` (dialogs for your scripts) is a PowerShell module that works on Windows, macOS and Linux; see below.
 
 
 ## :abacus: Features
@@ -79,86 +79,31 @@ Script types: `powershell` (`.ps1`), `python` (`.py`, run with `python3 -u`; set
 * Colored console support
 
 
-## :red_circle: Color tags support
-
-There are 14 available default tags which you may want to use
-1. <img src="ej/color_tags/tag01.png" style="height:18px;width:18px;"> __\c01EJ__ Some text __/c01EJ__
-```PowerShell
-Write-Host "\c01EJColor with tag 01/c01EJ"
-```
-2. <img src="ej/color_tags/tag02.png" style="height:18px;width:18px;"> __\c02EJ__ Some text __/c02EJ__
-```PowerShell
-Write-Host "\c02EJColor with tag 02/c02EJ"
-```
-3. <img src="ej/color_tags/tag03.png" style="height:18px;width:18px;"> __\c03EJ__ Some text __/c03EJ__
-```PowerShell
-Write-Host "\c03EJColor with tag 03/c03EJ"
-```
-4. <img src="ej/color_tags/tag04.png" style="height:18px;width:18px;"> __\c04EJ__ Some text __/c04EJ__
-```PowerShell
-Write-Host "\c04EJColor with tag 04/c04EJ"
-```
-5. <img src="ej/color_tags/tag05.png" style="height:18px;width:18px;"> __\c05EJ__ Some text __/c05EJ__
-```PowerShell
-Write-Host "\c05EJColor with tag 05/c05EJ"
-```
-6. <img src="ej/color_tags/tag06.png" style="height:18px;width:18px;"> __\c06EJ__ Some text __/c06EJ__
-```PowerShell
-Write-Host "\c06EJColor with tag 06/c06EJ"
-```
-7. <img src="ej/color_tags/tag07.png" style="height:18px;width:18px;"> __\c07EJ__ Some text __/c07EJ__
-```PowerShell
-Write-Host "\c07EJColor with tag 07/c07EJ"
-```
-8. <img src="ej/color_tags/tag08.png" style="height:18px;width:18px;"> __\c08EJ__ Some text __/c08EJ__
-```PowerShell
-Write-Host "\c08EJColor with tag 08/c08EJ"
-```
-9. <img src="ej/color_tags/tag09.png" style="height:18px;width:18px;"> __\c09EJ__ Some text __/c09EJ__
-```PowerShell
-Write-Host "\c09EJColor with tag 09/c09EJ"
-```
-10. <img src="ej/color_tags/tag10.png" style="height:18px;width:18px;"> __\c10EJ__ Some text __/c10EJ__
-```PowerShell
-Write-Host "\c10EJColor with tag 10/c10EJ"
-```
-11. <img src="ej/color_tags/tag11.png" style="height:18px;width:18px;"> __\c11EJ__ Some text __/c11EJ__
-```PowerShell
-Write-Host "\c11EJColor with tag 11/c11EJ"
-```
-12. <img src="ej/color_tags/tag12.png" style="height:18px;width:18px;"> __\c12EJ__ Some text __/c12EJ__
-```PowerShell
-Write-Host "\c12EJColor with tag 12/c12EJ"
-```
-13. <img src="ej/color_tags/tag13.png" style="height:18px;width:18px;"> __\c13EJ__ Some text __/c13EJ__
-```PowerShell
-Write-Host "\c13EJColor with tag 13/c13EJ"
-```
-13. <img src="ej/color_tags/tag14.png" style="height:18px;width:18px;"> __\c14EJ__ Some text __/c14EJ__
-```PowerShell
-Write-Host "\c14EJColor with tag 14/c14EJ"
-```
-
-You can use tags inside other tags as well. Examples:
-```PowerShell
-Write-Host "\c14EJColor with \c12EJsome inside tag/c12EJ tag 14/c14EJ"
-Write-Host "\c02EJColor with \c09EJsome inside tag/c09EJ tag 14/c02EJ"
-Write-Host "\c02EJAnother \c04EJexample/c04EJ with \c08EJsome/c08EJ other inner blocks/c02EJ"
-```
-
-If you dont want to use tags, you can use HTML code inside your Write-Host. Examples:
-```PowerShell
-Write-Host "<span style=`"color:red;`">Some error alert!</span>"
-Write-Host "<span style=`"color:#FF0008;`">Some other color!</span>"
-Write-Host "<span style=`"color:#4CFF00;`">Some other color!</span>"
-```
-
-
 ## :hammer: EasyJobPSTools
 
-EasyJobPSTools - is a PowerShell Module which enables Graphic features for your scripts.
+EasyJobPSTools is a PowerShell module that gives your scripts real windows. EasyJob closes a script's stdin, so `Read-Host` cannot work; use these instead. It works on **Windows, macOS and Linux**: Windows Forms (or the ModernWpf input box when the DLLs are present) on Windows, AppleScript on macOS (nothing to install), and `zenity` on Linux.
 
-You can read more about it [Here](https://github.com/akshinmustafayev/EasyJobPSTools)
+```PowerShell
+Import-Module (Join-Path $PSScriptRoot '../../EasyJobPSTools/EasyJobPSTools.psd1')
+
+$name  = Show-EJInputBox -Header 'Deploy' -Text 'Your name?' -AllowEmptyResult $false
+$env   = Show-EJSelectItem -Header 'Deploy' -Text 'Environment' -Items 'dev','staging','prod'
+if (Show-EJConfirm -Header 'Deploy' -Text "Deploy to $env?" -DefaultNo) { ... }
+```
+
+| Function | What it does |
+| --- | --- |
+| `Show-EJInputBox` | Text input. `-DefaultValue`, `-Password`, `-AsSecureString`, `-AllowEmptyResult` |
+| `Show-EJMessageBox` | Message with an Information / Warning / Error icon |
+| `Show-EJConfirm` | Yes/No question, returns `$true`/`$false` (`-DefaultNo`) |
+| `Show-EJSelectItem` | Pick one item, or several with `-MultiSelect` |
+| `Show-EJSelectFileWindow` | Open-file window: `-FileType`, `-InitialDirectory`, `-MultiSelect` |
+| `Show-EJSaveFileWindow` | Save-file window: `-DefaultName`, `-FileType` |
+| `Show-EJSelectFolderWindow` | Folder picker |
+| `Show-EJNotification` | Desktop notification |
+| `Get-EJDialogBackend` | Which backend is in use (`$null` means no dialogs possible) |
+
+Cancelling gives an empty result (`""`, an empty array, or `$false`); add `-ThrowOnCancel` to get an error instead. `-FileType` takes the Windows syntax (`"Text (*.txt)|*.txt|All files|*.*"`) or a plain list (`"*.txt;*.md"`). The build copies the module next to the app, so scripts in `scripts/powershell` can import `../../EasyJobPSTools/EasyJobPSTools.psd1` (see `dialogs.ps1`).
 
 ## :gear: Configuration
 
@@ -173,7 +118,6 @@ Here is an example:
   "powershell_arguments": "",
   "console_background": "Black",
   "console_foreground": "White",
-  "console_ignore_color_tags": false,
   "powershell_native_colors": true,
   "clear_events_when_reload": true,
   "restrictions": {
@@ -200,7 +144,6 @@ Here is an example:
     "hide_menu_item_settings_configuration": false,
     "hide_menu_item_help": false,
     "hide_menu_item_help_troubleshooting": false,
-    "hide_menu_item_help_colortags": false,
     "hide_menu_item_help_about": false
   },
   "tabs": [

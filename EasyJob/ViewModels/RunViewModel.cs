@@ -97,8 +97,8 @@ public partial class RunViewModel : ObservableObject
 
     public async Task StartAsync()
     {
-        var parserOut = new OutputParser(!_host.Config.console_ignore_color_tags);
-        var parserErr = new OutputParser(!_host.Config.console_ignore_color_tags);
+        var parserOut = new OutputParser();
+        var parserErr = new OutputParser();
 
         try
         {

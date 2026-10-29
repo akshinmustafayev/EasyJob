@@ -63,7 +63,6 @@
 
       <MenuItem Header="_Help" IsVisible="{Binding ShowHelp}">
         <MenuItem Header="Troubleshooting" Command="{Binding TroubleshootingCommand}" IsVisible="{Binding ShowTroubleshooting}"/>
-        <MenuItem Header="Output color tags" Command="{Binding ColorTagsCommand}" IsVisible="{Binding ShowColorTags}"/>
         <Separator/>
         <MenuItem Header="Project on GitHub" Command="{Binding OpenGitHubCommand}"/>
         <MenuItem Header="About EasyJob" Command="{Binding AboutCommand}" IsVisible="{Binding ShowAbout}"/>

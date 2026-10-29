@@ -12,7 +12,6 @@ public class AppConfig
     public bool powershell_native_colors { get; set; } = true;
     public string console_background { get; set; } = "#0C0C0C";
     public string console_foreground { get; set; } = "#E6E6E6";
-    public bool console_ignore_color_tags { get; set; }
     public bool clear_events_when_reload { get; set; } = true;
     /// <summary>"system", "light" or "dark".</summary>
     public string theme { get; set; } = "system";
@@ -45,7 +44,6 @@ public class ConfigRestrictions
     public bool hide_menu_item_settings_configuration { get; set; }
     public bool hide_menu_item_help { get; set; }
     public bool hide_menu_item_help_troubleshooting { get; set; }
-    public bool hide_menu_item_help_colortags { get; set; }
     public bool hide_menu_item_help_about { get; set; }
 }
 

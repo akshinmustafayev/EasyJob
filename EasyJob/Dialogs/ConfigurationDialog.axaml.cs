@@ -32,7 +32,6 @@ public partial class ConfigurationDialog : Window
         PowerShellArgs.Text = config.powershell_arguments;
         ConsoleBackgroundBox.Text = config.console_background;
         ConsoleForegroundBox.Text = config.console_foreground;
-        IgnoreTags.IsChecked = config.console_ignore_color_tags;
         NativeColors.IsChecked = config.powershell_native_colors;
         ClearEvents.IsChecked = config.clear_events_when_reload;
 
@@ -94,8 +93,7 @@ public partial class ConfigurationDialog : Window
         if (words[0] == "hide" && words.Length > 1)
         {
             var path = words.Skip(1).Select(Cap).ToList();
-            return "Hide " + string.Join(" → ", path.Count > 2 ? new[] { path[0], string.Join(" ", path.Skip(1)) } : path)
-                .Replace("Colortags", "Color tags");
+            return "Hide " + string.Join(" → ", path.Count > 2 ? new[] { path[0], string.Join(" ", path.Skip(1)) } : path);
         }
         var s = string.Join(" ", words);
         return char.ToUpperInvariant(s[0]) + s[1..];
@@ -108,7 +106,6 @@ public partial class ConfigurationDialog : Window
         var n = name.Replace("hide_menu_item_file_clear_events_list", "hide_clear_events_list")
                     .Replace("hide_menu_item_", "hide_")
                     .Replace("file_", "File_");
-        n = n.Replace("hide_help_colortags", "hide_help_color_tags");
         var sb = new StringBuilder("HelpConfiguration");
         foreach (var part in n.Split('_'))
         {
@@ -127,7 +124,6 @@ public partial class ConfigurationDialog : Window
         _config.powershell_arguments = PowerShellArgs.Text?.Trim() ?? "";
         _config.console_background = ConsoleBackgroundBox.Text?.Trim() ?? "";
         _config.console_foreground = ConsoleForegroundBox.Text?.Trim() ?? "";
-        _config.console_ignore_color_tags = IgnoreTags.IsChecked == true;
         _config.powershell_native_colors = NativeColors.IsChecked == true;
         _config.clear_events_when_reload = ClearEvents.IsChecked == true;
         foreach (var (p, box) in _restrictions) p.SetValue(_config.restrictions, box.IsChecked == true);

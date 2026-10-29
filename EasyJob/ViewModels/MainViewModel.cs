@@ -68,7 +68,6 @@ public partial class MainViewModel : ObservableObject
     public bool ShowConfiguration => !R.hide_menu_item_settings_configuration;
     public bool ShowHelp => !R.hide_menu_item_help;
     public bool ShowTroubleshooting => !R.hide_menu_item_help_troubleshooting;
-    public bool ShowColorTags => !R.hide_menu_item_help_colortags;
     public bool ShowAbout => !R.hide_menu_item_help_about;
     public bool ShowConfigurationItem => ShowSettings && ShowConfiguration;
 
@@ -518,6 +517,5 @@ public partial class MainViewModel : ObservableObject
 
     [RelayCommand] Task About() => DialogService.ShowAbout();
     [RelayCommand] Task Troubleshooting() => DialogService.ShowTroubleshooting(Config);
-    [RelayCommand] Task ColorTags() => DialogService.ShowColorTags();
     [RelayCommand] void OpenGitHub() => Launcher.Open("https://github.com/akshinmustafayev/EasyJob");
 }

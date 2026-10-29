@@ -6,19 +6,11 @@ namespace EasyJob.Services;
 
 /// <summary>
 /// Turns raw process output into styled lines. Understands ANSI SGR colour sequences (what pwsh, git, dotnet, npm
-/// and most CLI tools emit) and the legacy EasyJob colour tags (\c01EJ text /c01EJ). One instance per output stream
+/// and most CLI tools emit). One instance per output stream
 /// so that an ANSI style which spans several lines carries over correctly.
 /// </summary>
 public sealed class OutputParser
 {
-    public static readonly Color[] TagColors =
-    {
-        Color.Parse("#DFFF00"), Color.Parse("#FFBF00"), Color.Parse("#FF7F50"), Color.Parse("#DE3163"),
-        Color.Parse("#9FE2BF"), Color.Parse("#40E0D0"), Color.Parse("#6495ED"), Color.Parse("#CCCCFF"),
-        Color.Parse("#800080"), Color.Parse("#3D3D6B"), Color.Parse("#ADD45C"), Color.Parse("#57C785"),
-        Color.Parse("#00BAAD"), Color.Parse("#2A7B9B")
-    };
-
     static readonly Color[] Ansi16 =
     {
         Color.Parse("#1E1E1E"), Color.Parse("#E5534B"), Color.Parse("#57AB5A"), Color.Parse("#C69026"),
@@ -27,11 +19,8 @@ public sealed class OutputParser
         Color.Parse("#6CB6FF"), Color.Parse("#DCBDFB"), Color.Parse("#56D4DD"), Color.Parse("#F0F6FC")
     };
 
-    readonly bool _useTags;
     Color? _fg;
     bool _bold, _underline;
-
-    public OutputParser(bool interpretColorTags) => _useTags = interpretColorTags;
 
     public OutputLine Parse(string raw, LineKind kind)
     {
@@ -42,13 +31,11 @@ public sealed class OutputParser
 
         var segments = new List<Segment>();
         var sb = new StringBuilder();
-        Color? tagColor = null;
-        int tagCode = -1;
 
         void Flush()
         {
             if (sb.Length == 0) return;
-            segments.Add(new Segment(sb.ToString(), tagColor ?? _fg, _bold, _underline));
+            segments.Add(new Segment(sb.ToString(), _fg, _bold, _underline));
             sb.Clear();
         }
 
@@ -77,15 +64,6 @@ public sealed class OutputParser
                 continue; // stray escape (OSC titles etc.): drop it
             }
 
-            if (_useTags && (c == '\\' || c == '/') && TryReadTag(raw, i, out int code))
-            {
-                Flush();
-                if (c == '\\') { tagCode = code; tagColor = TagColors[code - 1]; }
-                else if (tagCode == code) { tagCode = -1; tagColor = null; }
-                i += 5;
-                continue;
-            }
-
             if (c == '\t') sb.Append("    ");
             else if (!char.IsControl(c)) sb.Append(c);
         }
@@ -93,17 +71,6 @@ public sealed class OutputParser
 
         if (segments.Count == 0) segments.Add(new Segment("", null, false, false));
         return new OutputLine(segments.ToArray(), kind);
-    }
-
-    /// <summary>Matches cNNEJ right after a '\' or '/' where NN is 01..14.</summary>
-    static bool TryReadTag(string s, int i, out int code)
-    {
-        code = 0;
-        if (i + 6 > s.Length) return false;
-        if (s[i + 1] != 'c' || s[i + 4] != 'E' || s[i + 5] != 'J') return false;
-        if (!char.IsDigit(s[i + 2]) || !char.IsDigit(s[i + 3])) return false;
-        code = (s[i + 2] - '0') * 10 + (s[i + 3] - '0');
-        return code is >= 1 and <= 14;
     }
 
     void ApplySgr(string parameters)

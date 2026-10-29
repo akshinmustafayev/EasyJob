@@ -54,5 +54,4 @@ public static class DialogService
 
     public static Task ShowAbout() => Show<bool>(new AboutDialog());
     public static Task ShowTroubleshooting(AppConfig config) => Show<bool>(new TroubleshootingDialog(config));
-    public static Task ShowColorTags() => Show<bool>(new ColorTagsDialog());
 }

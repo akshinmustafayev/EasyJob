@@ -6,7 +6,6 @@
   "powershell_arguments": "",
   "console_background": "#0C0C0C",
   "console_foreground": "#E6E6E6",
-  "console_ignore_color_tags": false,
   "powershell_native_colors": true,
   "clear_events_when_reload": true,
   "restrictions": {
@@ -33,7 +32,6 @@
     "hide_menu_item_settings_configuration": false,
     "hide_menu_item_help": false,
     "hide_menu_item_help_troubleshooting": false,
-    "hide_menu_item_help_colortags": false,
     "hide_menu_item_help_about": false
   },
   "tabs": [
@@ -88,9 +86,18 @@
         },
         {
           "Id": "00000000-0000-4000-8000-000000000005",
-          "Text": "Color tags + ANSI",
-          "Description": "EasyJob tags, bold, 256 and true color",
-          "Script": "scripts/powershell/colortags.ps1",
+          "Text": "ANSI colors",
+          "Description": "Bold, underline, 256 and true color",
+          "Script": "scripts/powershell/ansi.ps1",
+          "ScriptPathType": "relative",
+          "ScriptType": "powershell",
+          "Arguments": []
+        },
+        {
+          "Id": "00000000-0000-4000-8000-000000000006",
+          "Text": "Dialogs (EasyJobPSTools)",
+          "Description": "Input box, list, confirm, notification",
+          "Script": "scripts/powershell/dialogs.ps1",
           "ScriptPathType": "relative",
           "ScriptType": "powershell",
           "Arguments": []
@@ -164,7 +171,7 @@
         {
           "Id": "00000000-0000-4000-8000-000000000021",
           "Text": "Hello",
-          "Description": "Colors, color tags and stderr",
+          "Description": "Colors and stderr",
           "Script": "scripts/shell/hello.sh",
           "ScriptPathType": "relative",
           "ScriptType": "shell",
