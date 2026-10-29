@@ -40,10 +40,36 @@ public partial class ConfigurationDialog : Window
         CmdRow.IsVisible = CmdPath.IsVisible = ShellResolver.IsWindows;
         ShellLabel.IsVisible = ShellPath.IsVisible = !ShellResolver.IsWindows;
 
-        ConsoleBackgroundBox.TextChanged += (_, _) => UpdatePreview();
-        ConsoleForegroundBox.TextChanged += (_, _) => UpdatePreview();
+        LinkPicker(ConsoleBackgroundBox, ConsoleBackgroundPicker, Colors.Black);
+        LinkPicker(ConsoleForegroundBox, ConsoleForegroundPicker, Colors.White);
         UpdatePreview();
         BuildRestrictions();
+    }
+
+    /// <summary>Keeps a hex/name text box and a color picker showing the same color, whichever one is edited.</summary>
+    void LinkPicker(TextBox box, ColorPicker picker, Color fallback)
+    {
+        bool syncing = false;
+        void FromText()
+        {
+            if (syncing) return;
+            syncing = true;
+            picker.Color = !string.IsNullOrWhiteSpace(box.Text) && Color.TryParse(box.Text.Trim(), out var c) ? c : fallback;
+            syncing = false;
+            UpdatePreview();
+        }
+        box.TextChanged += (_, _) => FromText();
+        picker.ColorChanged += (_, e) =>
+        {
+            if (syncing) return;
+            syncing = true;
+            // Opaque colors as #RRGGBB, like the defaults; keep the alpha only when it is used.
+            var c = e.NewColor;
+            box.Text = c.A == 255 ? $"#{c.R:X2}{c.G:X2}{c.B:X2}" : $"#{c.A:X2}{c.R:X2}{c.G:X2}{c.B:X2}";
+            syncing = false;
+            UpdatePreview();
+        };
+        FromText();
     }
 
     void UpdatePreview()
@@ -57,9 +83,98 @@ public partial class ConfigurationDialog : Window
 
     void BuildRestrictions()
     {
+        if (PolicyService.IsManaged)
+        {
+            var note = new TextBlock { Text = "Settings marked with a lock are set by your administrator and cannot be changed here.", TextWrapping = TextWrapping.Wrap };
+            note.Classes.Add("hint");
+            RestrictionsPanel.Children.Add(note);
+        }
+        AddGroup("ADMINISTRATION", Props().Where(p => !p.Name.StartsWith("block_") && !p.Name.StartsWith("hide_")));
         AddGroup("BLOCK ACTIONS", Props().Where(p => p.Name.StartsWith("block_")));
         AddGroup("HIDE MENU ITEMS", Props().Where(p => p.Name.StartsWith("hide_")));
+        LinkEditorOptions();
     }
+
+    // What the editor options were set to before "Block the script editor" switched them off, so unblocking restores them.
+    readonly Dictionary<string, bool> _editorOptionValues = new();
+
+    /// <summary>"Block the script editor" makes the editor's own options meaningless (read-only mode cannot apply to a window that never opens), so they are switched off and locked while it is on.</summary>
+    void LinkEditorOptions()
+    {
+        var block = _restrictions.FirstOrDefault(r => r.Property.Name == "block_script_editor");
+        if (block.Box == null) return;
+        var own = _config.UserRestrictions ?? _config.restrictions;
+        foreach (var name in PolicyService.EditorOptions)
+            _editorOptionValues[name] = (bool)typeof(ConfigRestrictions).GetProperty(name)!.GetValue(own)!;
+
+        void Apply()
+        {
+            bool blocked = block.Box.IsChecked == true;
+            foreach (var (p, box) in _restrictions)
+            {
+                if (!PolicyService.EditorOptions.Contains(p.Name)) continue;
+                if (blocked)
+                {
+                    if (box.IsEnabled) _editorOptionValues[p.Name] = box.IsChecked == true;
+                    box.IsChecked = false;
+                    box.IsEnabled = false;
+                    ToolTip.SetTip(box, "Not used while the script editor is blocked");
+                }
+                else
+                {
+                    bool forced = PolicyService.IsForced(p.Name);
+                    box.IsEnabled = !forced;
+                    box.IsChecked = forced || _editorOptionValues[p.Name];
+                    ToolTip.SetTip(box, forced ? "Set by your administrator" : null);
+                }
+            }
+        }
+        block.Box.IsCheckedChanged += (_, _) => Apply();
+        if (block.Box.IsChecked == true) Apply();
+    }
+
+    static readonly Dictionary<string, string> Labels = new()
+    {
+        ["block_tabs_remove"] = "Block removing tabs",
+        ["block_buttons_remove"] = "Block removing script buttons",
+        ["block_tabs_add"] = "Block adding tabs",
+        ["block_buttons_add"] = "Block adding script buttons",
+        ["block_buttons_reorder"] = "Block reordering script buttons",
+        ["block_buttons_edit"] = "Block editing script buttons",
+        ["block_tabs_rename"] = "Block renaming tabs",
+        ["block_buttons_paste"] = "Block pasting script buttons",
+        ["block_buttons_copy"] = "Block copying script buttons",
+        ["hide_menu_item_file_reload_config"] = "Hide File → Reload config",
+        ["hide_menu_item_file_open_app_folder"] = "Hide File → Open config folder",
+        ["hide_menu_item_file_clear_events_list"] = "Hide View → Clear event log",
+        ["hide_menu_item_settings"] = "Hide the settings group (Tools → Configuration)",
+        ["hide_menu_item_settings_workflow"] = "Hide the Tabs and Scripts menus",
+        ["hide_menu_item_settings_workflow_reorder_tabs"] = "Hide Tabs → Reorder tabs",
+        ["hide_menu_item_settings_workflow_add_tab"] = "Hide Tabs → New tab",
+        ["hide_menu_item_settings_workflow_remove_current_tab"] = "Hide Tabs → Remove current tab",
+        ["hide_menu_item_settings_workflow_rename_current_tab"] = "Hide Tabs → Rename current tab",
+        ["hide_menu_item_settings_workflow_add_button_to_current_tab"] = "Hide Scripts → Add script button",
+        ["hide_menu_item_settings_workflow_reorder_buttons_in_current_tab"] = "Hide Scripts → Reorder script buttons",
+        ["hide_menu_item_settings_configuration"] = "Hide Tools → Configuration",
+        ["hide_menu_item_help"] = "Hide the Help menu",
+        ["hide_menu_item_help_troubleshooting"] = "Hide Help → Troubleshooting",
+        ["hide_menu_item_help_about"] = "Hide Help → About EasyJob",
+        ["hide_menu_item_tools"] = "Hide the Tools menu",
+        ["hide_menu_item_view_event_log"] = "Hide the event log",
+        ["config_readonly"] = "Read-only configuration (nothing can be changed or saved)",
+        ["script_editor_readonly"] = "Script editor opens files read-only",
+        ["confirm_before_run"] = "Ask for confirmation before every run",
+        ["block_script_editor"] = "Block the script editor",
+        ["block_script_editor_run"] = "Block running scripts from the editor",
+        ["block_script_editor_open_files"] = "Block opening other files in the editor",
+        ["block_powershell_commands"] = "Block the PowerShell command browser",
+        ["block_open_script_externally"] = "Block \"Open with default app\"",
+        ["block_show_in_folder"] = "Block \"Show in folder\"",
+        ["block_updates"] = "Block update checks and updates",
+        ["block_view_settings"] = "Block theme and button size changes",
+        ["hide_menu_item_tools"] = "Hide the Tools menu",
+        ["hide_menu_item_view_event_log"] = "Hide the event log"
+    };
 
     void AddGroup(string heading, IEnumerable<PropertyInfo> props)
     {
@@ -79,7 +194,10 @@ public partial class ConfigurationDialog : Window
 
     Control CreateRestriction(PropertyInfo p)
     {
-        var box = new CheckBox { Content = Describe(p.Name), IsChecked = (bool)p.GetValue(_config.restrictions)! };
+        bool forced = PolicyService.IsForced(p.Name);
+        var own = _config.UserRestrictions ?? _config.restrictions; // the user's own value, without what the policy adds
+        var box = new CheckBox { Content = Labels.GetValueOrDefault(p.Name) ?? Describe(p.Name), IsChecked = forced || (bool)p.GetValue(own)!, IsEnabled = !forced };
+        if (forced) ToolTip.SetTip(box, "Set by your administrator");
         var row = new StackPanel { Orientation = Avalonia.Layout.Orientation.Horizontal };
         row.Children.Add(box);
         row.Children.Add(new HelpButton { Topic = HelpTopic(p.Name) });
@@ -128,7 +246,16 @@ public partial class ConfigurationDialog : Window
         _config.powershell_native_colors = NativeColors.IsChecked == true;
         _config.check_updates_on_startup = CheckUpdates.IsChecked == true;
         _config.clear_events_when_reload = ClearEvents.IsChecked == true;
-        foreach (var (p, box) in _restrictions) p.SetValue(_config.restrictions, box.IsChecked == true);
+        _config.UserRestrictions ??= _config.restrictions;
+        bool editorBlocked = _restrictions.Any(r => r.Property.Name == "block_script_editor" && r.Box.IsChecked == true);
+        foreach (var (p, box) in _restrictions)
+        {
+            if (PolicyService.IsForced(p.Name)) continue;
+            // While the editor is blocked its options are shown off; keep what the user had chosen for when it is unblocked.
+            bool value = editorBlocked && PolicyService.EditorOptions.Contains(p.Name) ? _editorOptionValues[p.Name] : box.IsChecked == true;
+            p.SetValue(_config.UserRestrictions, value);
+        }
+        PolicyService.Recompute(_config);
         Close(true);
     }
 

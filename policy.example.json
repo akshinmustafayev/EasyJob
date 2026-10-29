@@ -1,0 +1,15 @@
+{
+  "restrictions": {
+    "config_readonly": true,
+    "block_script_editor": true,
+    "block_updates": true,
+    "confirm_before_run": false,
+    "block_open_script_externally": true,
+    "block_show_in_folder": true,
+    "block_view_settings": false,
+    "hide_menu_item_help_troubleshooting": false,
+    "allowed_script_types": ["powershell", "python"],
+    "allowed_script_folders": ["{config}/scripts", "/opt/company/scripts"],
+    "max_concurrent_runs": 3
+  }
+}

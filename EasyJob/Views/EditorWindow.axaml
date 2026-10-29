@@ -18,7 +18,7 @@
           <Button x:Name="NewButton" Classes="flat" Click="OnNewClick" ToolTip.Tip="New script">
             <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="plus"/><TextBlock Text="New"/><c:Icon Kind="down" Width="10" Height="10"/></StackPanel>
           </Button>
-          <Button Classes="flat" Click="OnOpenClick" ToolTip.Tip="Open file (Ctrl/Cmd+O)">
+          <Button x:Name="OpenButton" Classes="flat" Click="OnOpenClick" ToolTip.Tip="Open file (Ctrl/Cmd+O)">
             <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="folder"/><TextBlock Text="Open"/></StackPanel>
           </Button>
           <Button x:Name="SaveButton" Classes="flat" Click="OnSaveClick" ToolTip.Tip="Save (Ctrl/Cmd+S)">
@@ -26,7 +26,7 @@
           </Button>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="18,0,0,0">
+        <StackPanel x:Name="RunBar" Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="18,0,0,0">
           <Button x:Name="RunButton" Classes="primary" Click="OnRunClick" ToolTip.Tip="Run what is in the editor, without saving (F5)">
             <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="play" Width="11" Height="11"/><TextBlock Text="Run"/></StackPanel>
           </Button>
@@ -85,8 +85,8 @@
           <TextBlock Text="No file open" Classes="h1" HorizontalAlignment="Center"/>
           <TextBlock Classes="muted" Text="Open a script or start a new one." HorizontalAlignment="Center"/>
           <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
-            <Button Content="Open file…" Click="OnOpenClick"/>
-            <Button Classes="primary" Content="New script" Click="OnNewClick"/>
+            <Button x:Name="EmptyOpenButton" Content="Open file…" Click="OnOpenClick"/>
+            <Button x:Name="EmptyNewButton" Classes="primary" Content="New script" Click="OnNewClick"/>
           </StackPanel>
         </StackPanel>
       </Panel>

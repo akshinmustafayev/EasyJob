@@ -20,6 +20,18 @@ public class AppConfig
     public bool check_updates_on_startup { get; set; } = true;
     public string button_density { get; set; } = "auto";
     public ConfigRestrictions restrictions { get; set; } = new();
+
+    /// <summary>The restrictions as the user's own config.json has them (without the administrator's policy), so saving keeps them apart.</summary>
+    [System.Text.Json.Serialization.JsonIgnore] public ConfigRestrictions? UserRestrictions { get; set; }
+
+    /// <summary>A copy for writing to disk: the user's own restrictions, not the policy's.</summary>
+    public AppConfig ForSave()
+    {
+        var copy = (AppConfig)MemberwiseClone();
+        copy.restrictions = UserRestrictions ?? restrictions;
+        return copy;
+    }
+
     public List<ConfigTab> tabs { get; set; } = new();
 }
 
@@ -49,6 +61,32 @@ public class ConfigRestrictions
     public bool hide_menu_item_help { get; set; }
     public bool hide_menu_item_help_troubleshooting { get; set; }
     public bool hide_menu_item_help_about { get; set; }
+
+    // ---- administration (see PolicyService; set them in policy.json to keep users from changing them) ----
+
+    /// <summary>Nothing can be changed or saved: tabs, buttons and settings stay as shipped.</summary>
+    public bool config_readonly { get; set; }
+    /// <summary>The script editor opens files for reading and running only.</summary>
+    public bool script_editor_readonly { get; set; }
+    /// <summary>Ask "Run this script?" before every run.</summary>
+    public bool confirm_before_run { get; set; }
+    public bool block_script_editor { get; set; }
+    public bool block_script_editor_run { get; set; }
+    public bool block_script_editor_open_files { get; set; }
+    public bool block_powershell_commands { get; set; }
+    public bool block_open_script_externally { get; set; }
+    public bool block_show_in_folder { get; set; }
+    public bool block_updates { get; set; }
+    public bool block_view_settings { get; set; }
+    public bool hide_menu_item_tools { get; set; }
+    public bool hide_menu_item_view_event_log { get; set; }
+
+    /// <summary>When not empty, only these script types may run: powershell, python, shell, cmd.</summary>
+    public List<string> allowed_script_types { get; set; } = new();
+    /// <summary>When not empty, scripts may only be run, added or edited inside these folders. {config} and {home} are replaced.</summary>
+    public List<string> allowed_script_folders { get; set; } = new();
+    /// <summary>0 = no limit.</summary>
+    public int max_concurrent_runs { get; set; }
 }
 
 public class ConfigTab

@@ -14,9 +14,9 @@
     <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
     <Menu>
       <MenuItem Header="_File">
-        <MenuItem x:Name="MenuNewScript" Header="New script…" Command="{Binding NewScriptCommand}"/>
-        <MenuItem x:Name="MenuOpenFile" Header="Open file in editor…" Command="{Binding OpenFileInEditorCommand}"/>
-        <Separator/>
+        <MenuItem x:Name="MenuNewScript" Header="New script…" Command="{Binding NewScriptCommand}" IsVisible="{Binding CanCreateScripts}"/>
+        <MenuItem x:Name="MenuOpenFile" Header="Open file in editor…" Command="{Binding OpenFileInEditorCommand}" IsVisible="{Binding CanOpenFilesInEditor}"/>
+        <Separator IsVisible="{Binding CanUseEditor}"/>
         <MenuItem x:Name="MenuReload" Header="_Reload config" Command="{Binding ReloadConfigCommand}" IsVisible="{Binding ShowReloadConfig}"/>
         <MenuItem Header="Open config _folder" Command="{Binding OpenAppFolderCommand}" IsVisible="{Binding ShowOpenAppFolder}"/>
         <Separator/>
@@ -41,20 +41,20 @@
         <MenuItem Header="Clear finished runs in this tab" Command="{Binding ClearFinishedCommand}"/>
       </MenuItem>
 
-      <MenuItem Header="T_ools">
-        <MenuItem x:Name="MenuEditor" Header="Script editor" Command="{Binding OpenEditorCommand}"/>
-        <MenuItem x:Name="MenuCommands" Header="PowerShell commands…" Command="{Binding ShowCommandsCommand}"/>
+      <MenuItem Header="T_ools" IsVisible="{Binding ShowTools}">
+        <MenuItem x:Name="MenuEditor" Header="Script editor" Command="{Binding OpenEditorCommand}" IsVisible="{Binding CanUseEditor}"/>
+        <MenuItem x:Name="MenuCommands" Header="PowerShell commands…" Command="{Binding ShowCommandsCommand}" IsVisible="{Binding CanUseCommands}"/>
         <Separator IsVisible="{Binding ShowConfigurationItem}"/>
         <MenuItem Header="Configuration…" Command="{Binding ConfigurationCommand}" IsVisible="{Binding ShowConfigurationItem}"/>
       </MenuItem>
 
       <MenuItem Header="_View">
-        <MenuItem Header="Theme">
+        <MenuItem Header="Theme" IsVisible="{Binding ShowViewSettings}">
           <MenuItem Header="Match system" ToggleType="Radio" GroupName="theme" IsChecked="{Binding IsThemeSystem, Mode=OneWay}" Command="{Binding SetThemeCommand}" CommandParameter="system"/>
           <MenuItem Header="Light" ToggleType="Radio" GroupName="theme" IsChecked="{Binding IsThemeLight, Mode=OneWay}" Command="{Binding SetThemeCommand}" CommandParameter="light"/>
           <MenuItem Header="Dark" ToggleType="Radio" GroupName="theme" IsChecked="{Binding IsThemeDark, Mode=OneWay}" Command="{Binding SetThemeCommand}" CommandParameter="dark"/>
         </MenuItem>
-        <MenuItem Header="Button size">
+        <MenuItem Header="Button size" IsVisible="{Binding ShowViewSettings}">
           <MenuItem Header="Automatic" ToggleType="Radio" GroupName="density" IsChecked="{Binding IsDensityAuto, Mode=OneWay}" Command="{Binding SetDensityCommand}" CommandParameter="auto"/>
           <MenuItem Header="Comfortable cards" ToggleType="Radio" GroupName="density" IsChecked="{Binding IsDensityCards, Mode=OneWay}" Command="{Binding SetDensityCommand}" CommandParameter="cards"/>
           <MenuItem Header="Compact" ToggleType="Radio" GroupName="density" IsChecked="{Binding IsDensityCompact, Mode=OneWay}" Command="{Binding SetDensityCommand}" CommandParameter="compact"/>
@@ -64,7 +64,7 @@
         <MenuItem Header="Expand all outputs" Command="{Binding ExpandAllCommand}"/>
         <MenuItem Header="Collapse all outputs" Command="{Binding CollapseAllCommand}"/>
         <Separator/>
-        <MenuItem x:Name="MenuEvents" Header="Show or hide event log" Command="{Binding ToggleEventsCommand}"/>
+        <MenuItem x:Name="MenuEvents" Header="Show or hide event log" Command="{Binding ToggleEventsCommand}" IsVisible="{Binding ShowEventLog}"/>
         <MenuItem Header="Clear event log" Command="{Binding ClearEventsCommand}" IsVisible="{Binding ShowClearEvents}"/>
       </MenuItem>
 
@@ -72,7 +72,7 @@
         <MenuItem Header="Troubleshooting" Command="{Binding TroubleshootingCommand}" IsVisible="{Binding ShowTroubleshooting}"/>
         <Separator/>
         <MenuItem Header="{Binding UpdateText}" Command="{Binding InstallUpdateCommand}" IsVisible="{Binding IsUpdateAvailable}"/>
-        <MenuItem Header="Check for updates…" Command="{Binding CheckForUpdatesCommand}"/>
+        <MenuItem Header="Check for updates…" Command="{Binding CheckForUpdatesCommand}" IsVisible="{Binding ShowUpdates}"/>
         <Separator/>
         <MenuItem Header="Project on GitHub" Command="{Binding OpenGitHubCommand}"/>
         <MenuItem Header="About EasyJob" Command="{Binding AboutCommand}" IsVisible="{Binding ShowAbout}"/>
@@ -87,7 +87,7 @@
     <!-- status bar -->
     <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="0,1,0,0" Padding="8,4">
       <Grid ColumnDefinitions="Auto,*,Auto">
-        <Button Classes="flat" Command="{Binding ToggleEventsCommand}" Padding="8,3" ToolTip.Tip="Show or hide the event log">
+        <Button Classes="flat" Command="{Binding ToggleEventsCommand}" IsVisible="{Binding ShowEventLog}" Padding="8,3" ToolTip.Tip="Show or hide the event log">
           <StackPanel Orientation="Horizontal" Spacing="6">
             <c:Icon Kind="list"/>
             <TextBlock Text="Events" FontSize="12"/>
@@ -97,8 +97,13 @@
         </Button>
         <TextBlock Grid.Column="1" Classes="muted" FontSize="12" Margin="10,0" VerticalAlignment="Center"
                    Text="{Binding StatusText}" TextTrimming="CharacterEllipsis"/>
-        <TextBlock Grid.Column="2" Classes="muted" FontSize="12" VerticalAlignment="Center" Text="{Binding ConfigPath}"
-                   ToolTip.Tip="Configuration file" MaxWidth="420" TextTrimming="PrefixCharacterEllipsis"/>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12">
+          <Border Classes="chip" IsVisible="{Binding IsManaged}" VerticalAlignment="Center" ToolTip.Tip="{Binding ManagedTip}">
+            <StackPanel Orientation="Horizontal" Spacing="5"><c:Icon Kind="lock" Width="11" Height="11"/><TextBlock Text="{Binding ManagedText}" FontSize="11"/></StackPanel>
+          </Border>
+          <TextBlock Classes="muted" FontSize="12" VerticalAlignment="Center" Text="{Binding ConfigPath}"
+                     ToolTip.Tip="Configuration file" MaxWidth="420" TextTrimming="PrefixCharacterEllipsis"/>
+        </StackPanel>
       </Grid>
     </Border>
 

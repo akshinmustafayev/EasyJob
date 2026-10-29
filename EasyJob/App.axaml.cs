@@ -17,6 +17,7 @@ public partial class App : Application
             desktop.MainWindow = new MainWindow();
         }
 
+        EasyJob.Services.MacDockIcon.Apply();
         base.OnFrameworkInitializationCompleted();
     }
 

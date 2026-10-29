@@ -83,6 +83,25 @@ public partial class MainViewModel : ObservableObject
     public bool AnyTabMenu => CanAddTab || CanRemoveTab || CanRenameTab;
     public bool AnyPanelMenu => CanAddButton || CanReorderButtons || !R.block_buttons_paste;
 
+    // ---- administration ----
+    public bool CanUseEditor => !R.block_script_editor;
+    public bool CanOpenFilesInEditor => CanUseEditor && !R.block_script_editor_open_files;
+    public bool CanCreateScripts => CanUseEditor && !R.script_editor_readonly;
+    public bool CanUseCommands => CanUseEditor && !R.block_powershell_commands;
+    public bool CanOpenExternally => !R.block_open_script_externally;
+    public bool CanShowInFolder => !R.block_show_in_folder;
+    public bool ShowTools => !R.hide_menu_item_tools && (CanUseEditor || ShowConfigurationItem);
+    public bool ShowUpdates => !R.block_updates;
+    public bool ShowViewSettings => !R.block_view_settings;
+    public bool ShowEventLog => !R.hide_menu_item_view_event_log;
+    public bool IsManaged => PolicyService.IsManaged;
+    public bool IsReadOnlyConfig => R.config_readonly;
+    public string ManagedText => IsReadOnlyConfig ? "Managed · configuration locked" : "Managed by your administrator";
+    public string ManagedTip => "Some settings are set by your administrator" + (PolicyService.Sources.Count > 0
+        ? ":\n" + string.Join("\n", PolicyService.Sources.Select(s => s.Path)) : ".");
+
+    string? EditorBlockedReason => !CanUseEditor ? "The script editor is turned off by your administrator." : null;
+
     public string ConsoleBackground => Config.console_background;
     public string ConsoleForeground => Config.console_foreground;
 
@@ -93,7 +112,7 @@ public partial class MainViewModel : ObservableObject
         try
         {
             LoadConfig(keepSelection: false);
-            if (Config.check_updates_on_startup) _ = CheckUpdatesQuietlyAsync();
+            if (Config.check_updates_on_startup && ShowUpdates) _ = CheckUpdatesQuietlyAsync();
         }
         catch (Exception ex)
         {
@@ -131,6 +150,7 @@ public partial class MainViewModel : ObservableObject
 
     bool Save()
     {
+        if (R.config_readonly) return true; // nothing is written; view choices (theme, size) last for this session only
         try
         {
             Config.tabs = Tabs.Select(t => t.ToModel()).ToList();
@@ -161,6 +181,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     void ReloadConfig()
     {
+        if (!ShowReloadConfig) return;
         try
         {
             if (Config.clear_events_when_reload) Events.Clear();
@@ -176,12 +197,13 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     void OpenAppFolder()
     {
+        if (!ShowOpenAppFolder) return;
         try { Launcher.Open(ConfigService.BaseDirectory); }
         catch (Exception ex) { Log("Could not open folder: " + ex.Message); }
     }
 
     [RelayCommand] void ClearEvents() => Events.Clear();
-    [RelayCommand] void ToggleEvents() => IsEventsOpen = !IsEventsOpen;
+    [RelayCommand] void ToggleEvents() { if (ShowEventLog) IsEventsOpen = !IsEventsOpen; }
 
     [RelayCommand]
     async Task Exit()
@@ -207,6 +229,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task AddTab()
     {
+        if (!CanAddTab) return;
         var name = await DialogService.PromptText("New tab", "Tab name", "", "Create");
         if (string.IsNullOrWhiteSpace(name)) return;
         var tab = new TabViewModel(new ConfigTab { Header = name.Trim() });
@@ -218,6 +241,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task RenameTab(TabViewModel? tab)
     {
+        if (!CanRenameTab) return;
         tab ??= SelectedTab;
         if (tab == null) return;
         var name = await DialogService.PromptText("Rename tab", "Tab name", tab.Header, "Rename");
@@ -229,6 +253,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task RemoveTab(TabViewModel? tab)
     {
+        if (!CanRemoveTab) return;
         tab ??= SelectedTab;
         if (tab == null) return;
 
@@ -247,6 +272,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task ReorderTabs()
     {
+        if (!ShowReorderTabs) return;
         var order = await DialogService.Reorder("Reorder tabs", Tabs.ToList(), t => t.Header);
         if (order == null) return;
         var selected = SelectedTab;
@@ -259,6 +285,7 @@ public partial class MainViewModel : ObservableObject
     /// <summary>Drag-and-drop: puts <paramref name="source"/> where <paramref name="target"/> is.</summary>
     public void MoveTab(TabViewModel source, TabViewModel target)
     {
+        if (!ShowReorderTabs) return;
         int from = Tabs.IndexOf(source), to = Tabs.IndexOf(target);
         if (from < 0 || to < 0 || from == to) return;
         var selected = SelectedTab;
@@ -269,6 +296,7 @@ public partial class MainViewModel : ObservableObject
 
     public void MoveButton(ButtonViewModel source, ButtonViewModel target)
     {
+        if (!CanReorderButtons) return;
         var tab = Tabs.FirstOrDefault(t => t.Buttons.Contains(source) && t.Buttons.Contains(target));
         if (tab == null) return;
         int from = tab.Buttons.IndexOf(source), to = tab.Buttons.IndexOf(target);
@@ -282,20 +310,29 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task AddButton()
     {
-        if (SelectedTab == null) return;
+        if (SelectedTab == null || !CanAddButton) return;
         var model = await DialogService.EditButton(null);
-        if (model == null) return;
+        if (model == null || !await ValidateButtonAsync(model)) return;
         SelectedTab.Buttons.Add(new ButtonViewModel(model));
         SelectedTab.RefreshButtons();
         if (Save()) Log($"Button '{model.Text}' added");
     }
 
+    /// <summary>Administrator limits on what a button may point to (script type and folder).</summary>
+    async Task<bool> ValidateButtonAsync(ConfigButton model)
+    {
+        var reason = PolicyService.CheckRun(Config, model, ScriptCommand.ResolveScriptPath(model));
+        if (reason == null) return true;
+        await DialogService.ShowMessage("Not allowed", reason);
+        return false;
+    }
+
     [RelayCommand]
     async Task EditButton(ButtonViewModel? button)
     {
-        if (button == null) return;
+        if (button == null || !CanEditButton) return;
         var model = await DialogService.EditButton(button.Model);
-        if (model == null) return;
+        if (model == null || !await ValidateButtonAsync(model)) return;
         model.Id = button.Model.Id;
         button.Replace(model);
         Tabs.FirstOrDefault(t => t.Buttons.Contains(button))?.RefreshButtons();
@@ -305,7 +342,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task RemoveButton(ButtonViewModel? button)
     {
-        if (button == null) return;
+        if (button == null || !CanRemoveButton) return;
         var tab = Tabs.FirstOrDefault(t => t.Buttons.Contains(button));
         if (tab == null) return;
         if (!await DialogService.Confirm("Remove button", $"Remove button '{button.Text}'?", "Remove")) return;
@@ -317,7 +354,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     void CopyButton(ButtonViewModel? button)
     {
-        if (button == null) return;
+        if (button == null || !CanCopyButton) return;
         _clipboardButton = button.Model;
         OnPropertyChanged(nameof(CanPasteButton));
         Log($"Button '{button.Text}' copied");
@@ -326,7 +363,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     void PasteButton()
     {
-        if (_clipboardButton == null || SelectedTab == null) return;
+        if (_clipboardButton == null || SelectedTab == null || R.block_buttons_paste) return;
         SelectedTab.Buttons.Add(new ButtonViewModel(_clipboardButton.Clone()));
         SelectedTab.RefreshButtons();
         Save();
@@ -336,7 +373,7 @@ public partial class MainViewModel : ObservableObject
     async Task ReorderButtons()
     {
         var tab = SelectedTab;
-        if (tab == null) return;
+        if (tab == null || !CanReorderButtons) return;
         var order = await DialogService.Reorder($"Reorder buttons in '{tab.Header}'", tab.Buttons.ToList(), b => b.Text);
         if (order == null) return;
         tab.Buttons.Clear();
@@ -347,7 +384,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     void OpenScript(ButtonViewModel? button)
     {
-        if (button == null) return;
+        if (button == null || !CanOpenExternally) return;
         var path = ScriptCommand.ResolveScriptPath(button.Model);
         try { Launcher.Open(path); Log("Opened script " + path); }
         catch (Exception ex) { Log("Could not open script: " + ex.Message); _ = DialogService.ShowMessage("Could not open script", ex.Message); }
@@ -356,7 +393,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     void RevealScript(ButtonViewModel? button)
     {
-        if (button == null) return;
+        if (button == null || !CanShowInFolder) return;
         var path = ScriptCommand.ResolveScriptPath(button.Model);
         try { Launcher.Reveal(path); Log("Revealed script " + path); }
         catch (Exception ex) { Log("Could not open folder: " + ex.Message); _ = DialogService.ShowMessage("Could not open folder", ex.Message); }
@@ -370,6 +407,8 @@ public partial class MainViewModel : ObservableObject
         target ??= SelectedTab;
         if (target == null) return;
 
+        if (!await ConfirmRunAsync(button.Model)) return;
+
         var answers = new List<string>();
         if (button.Model.Arguments.Count > 0)
         {
@@ -378,6 +417,13 @@ public partial class MainViewModel : ObservableObject
             answers = result;
         }
         StartRun(target, button.Model, answers);
+    }
+
+    /// <summary>Asks "Run this script?" when the administrator requires it.</summary>
+    public async Task<bool> ConfirmRunAsync(ConfigButton model)
+    {
+        if (!R.confirm_before_run) return true;
+        return await DialogService.Confirm("Run script", $"Run '{model.Text}'?\n\n{ScriptCommand.ResolveScriptPath(model)}", "Run");
     }
 
     void StartRun(TabViewModel target, ConfigButton model, IReadOnlyList<string> answers)
@@ -400,9 +446,9 @@ public partial class MainViewModel : ObservableObject
     void StopRun(RunViewModel? run) => run?.Stop();
 
     [RelayCommand]
-    void Rerun(RunViewModel? run)
+    async Task Rerun(RunViewModel? run)
     {
-        if (run == null || run.IsRunning) return;
+        if (run == null || run.IsRunning || !await ConfirmRunAsync(run.Button)) return;
         StartRun(run.Tab, run.Button, run.Answers);
     }
 
@@ -451,6 +497,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task Configuration()
     {
+        if (!ShowConfigurationItem) return;
         var changed = await DialogService.EditConfiguration(Config);
         if (!changed) return;
         Save();
@@ -461,14 +508,14 @@ public partial class MainViewModel : ObservableObject
     // ---------------------------------------------------------------- editor & tools
 
     [RelayCommand] void OpenEditor() => EditorWindow.ShowEditor();
-    [RelayCommand] void NewScript() => EditorWindow.ShowEditor(null, EditorLanguage.PowerShell);
-    [RelayCommand] void ShowCommands() => EditorWindow.ShowEditor(showCommands: true);
+    [RelayCommand] void NewScript() { if (CanCreateScripts) EditorWindow.ShowEditor(null, EditorLanguage.PowerShell); }
+    [RelayCommand] void ShowCommands() { if (CanUseCommands) EditorWindow.ShowEditor(showCommands: true); }
 
     [RelayCommand]
     async Task OpenFileInEditor()
     {
         var owner = App.ActiveWindow;
-        if (owner == null) return;
+        if (owner == null || !CanOpenFilesInEditor) return;
         var files = await owner.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
             Title = "Open file in the script editor",
@@ -483,6 +530,7 @@ public partial class MainViewModel : ObservableObject
     async Task EditScript(ButtonViewModel? button)
     {
         if (button == null) return;
+        if (EditorBlockedReason is { } blocked) { await DialogService.ShowMessage("Script editor", blocked); return; }
         var path = ScriptCommand.ResolveScriptPath(button.Model);
         if (!File.Exists(path))
         {
@@ -508,6 +556,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     void SetTheme(string? theme)
     {
+        if (!ShowViewSettings) return;
         Config.theme = theme ?? "system";
         ApplyTheme();
         OnPropertyChanged(nameof(IsThemeSystem));
@@ -526,6 +575,7 @@ public partial class MainViewModel : ObservableObject
 
     async Task CheckUpdatesQuietlyAsync()
     {
+        if (!ShowUpdates) return;
         try
         {
             if (await UpdateService.CheckAsync() is { } found)
@@ -540,6 +590,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task CheckForUpdates()
     {
+        if (!ShowUpdates) return;
         try
         {
             StatusText = "Checking for updates…";
@@ -564,7 +615,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task InstallUpdate()
     {
-        if (Update is not { } update) return;
+        if (Update is not { } update || !ShowUpdates) return;
         if (EditorWindow.Current is { HasUnsaved: true })
         {
             await DialogService.ShowMessage("Unsaved changes", "Save or close the files in the script editor first, then update.");
@@ -605,6 +656,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     void SetDensity(string? density)
     {
+        if (!ShowViewSettings) return;
         Config.button_density = density ?? "auto";
         foreach (var t in Tabs) t.RefreshDensity();
         OnPropertyChanged(nameof(IsDensityAuto));

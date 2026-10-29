@@ -71,6 +71,14 @@ public partial class TroubleshootingDialog : Window
         Add("Button size", config.button_density);
         Add("Active restrictions", RestrictionSummary(config.restrictions));
 
+        Section("ADMINISTRATOR POLICY");
+        if (PolicyService.Sources.Count == 0)
+            Add("Policy", "none: only the restrictions in config.json apply (users can change those)");
+        foreach (var src in PolicyService.Sources)
+            Add("Policy file", src.Error == null ? src.Path : $"{src.Path}\nCould not be read, so EasyJob is locked down: {src.Error}", src.Error != null);
+        if (PolicyService.Sources.Count == 0)
+            Add("Looked in", string.Join("\n", PolicyService.Candidates()));
+
         Section("INTERPRETERS");
         var ps = ShellResolver.ResolvePowerShell(config);
         var psRow = Add("PowerShell", ps ?? "not found — install PowerShell 7 (pwsh) or set its path in Tools → Configuration", ps == null);
@@ -117,10 +125,13 @@ public partial class TroubleshootingDialog : Window
 
     static string RestrictionSummary(ConfigRestrictions r)
     {
-        var on = typeof(ConfigRestrictions).GetProperties()
-            .Where(p => p.PropertyType == typeof(bool) && (bool)p.GetValue(r)!)
-            .Select(p => p.Name).ToList();
-        return on.Count == 0 ? "none" : $"{on.Count}: " + string.Join(", ", on);
+        var props = typeof(ConfigRestrictions).GetProperties();
+        var on = props.Where(p => p.PropertyType == typeof(bool) && (bool)p.GetValue(r)!)
+            .Select(p => p.Name + (PolicyService.IsForced(p.Name) ? " (policy)" : "")).ToList();
+        if (r.allowed_script_types.Count > 0) on.Add("allowed_script_types=" + string.Join("/", r.allowed_script_types));
+        if (r.allowed_script_folders.Count > 0) on.Add("allowed_script_folders=" + string.Join("; ", r.allowed_script_folders));
+        if (r.max_concurrent_runs > 0) on.Add("max_concurrent_runs=" + r.max_concurrent_runs);
+        return on.Count == 0 ? "none" : $"{on.Count}:\n" + string.Join("\n", on);
     }
 
     void Section(string text)

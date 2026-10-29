@@ -100,8 +100,13 @@ public partial class RunViewModel : ObservableObject
         var parserOut = new OutputParser();
         var parserErr = new OutputParser();
 
+        bool slot = PolicyService.TryEnterRun(_host.Config);
+
         try
         {
+            if (!slot)
+                throw new InvalidOperationException($"Your administrator allows {_host.Config.restrictions.max_concurrent_runs} script(s) at a time. Wait for one to finish.");
+
             var psi = ScriptCommand.Build(_host.Config, _button, _answers, out var display);
             CommandLine = display;
             Enqueue(OutputParser.Meta("$ " + display));
@@ -127,6 +132,7 @@ public partial class RunViewModel : ObservableObject
         }
         finally
         {
+            if (slot) PolicyService.LeaveRun();
             _finished = DateTime.Now;
             Tick();
             Enqueue(OutputParser.Meta(Status switch

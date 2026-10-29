@@ -188,11 +188,63 @@ Everything is saved in `config.json` (see [Config location](#computer-requiremen
 * `ID`/`Id` can be any GUID, or left out; EasyJob generates one.
 
 
+## :lock: Administration: restricting what users can do
+
+For a managed rollout you can ship a ready `config.json` and limit what people may do with EasyJob. There are two layers:
+
+1. **`restrictions` in `config.json`**: convenient, and the Tools → Configuration → Restrictions tab edits them, but a user who can edit the file can switch them off again.
+2. **An administrator policy (`policy.json`)**: a file only an administrator can write. It is merged over the user's restrictions every time the config loads, so users cannot turn anything off (not in the UI, not in `config.json`). A restriction switched on by any layer stays on. The footer then shows a **Managed** badge, and the Configuration dialog shows policy-set options locked.
+
+EasyJob reads every policy file it finds, in these places:
+
+| Platform | Machine-wide file |
+| --- | --- |
+| Windows | `%ProgramData%\EasyJob\policy.json` |
+| macOS | `/Library/Application Support/EasyJob/policy.json` |
+| Linux | `/etc/easyjob/policy.json` |
+
+plus `policy.json` next to the program, and a file named in the `EASYJOB_POLICY` environment variable. Put the machine-wide file where only administrators can write. A policy file that cannot be parsed locks EasyJob down (read-only config, no editor, no updates) instead of being ignored. See [`policy.example.json`](policy.example.json). The file has the same shape as `config.json`; only its `restrictions` block is used.
+
+**Settings** (all `false`/empty by default):
+
+| Setting | Effect |
+| --- | --- |
+| `config_readonly` | Nothing can be changed or saved; all tab and button editing is blocked and EasyJob never writes `config.json` (theme and button size last for the session only) |
+| `block_script_editor` | No script editor window at all (menus, Shift+click, "Edit in script editor"), and with it no command browser. It overrides the other editor settings below: while it is on, `script_editor_readonly`, `block_script_editor_run`, `block_script_editor_open_files` and `block_powershell_commands` have nothing to apply to, so they are ignored (and shown off and locked in the Restrictions tab) |
+| `script_editor_readonly` | The editor opens files for reading and running only (no typing, saving or new files) |
+| `block_script_editor_run` | The editor has no Run button |
+| `block_script_editor_open_files` | The editor only opens scripts from script buttons, not arbitrary files |
+| `block_powershell_commands` | No PowerShell command browser |
+| `block_open_script_externally`, `block_show_in_folder` | Removes "Open with default app" / "Show in folder" and Ctrl/Cmd+click |
+| `block_updates` | No update checks, no update button, no self-update |
+| `block_view_settings` | Theme and button size cannot be changed |
+| `confirm_before_run` | Asks "Run this script?" before every run (buttons, editor, Run again) |
+| `allowed_script_types` | e.g. `["powershell","python"]`: other script types cannot run or be added |
+| `allowed_script_folders` | Scripts may only run, be added or be edited inside these folders (`{config}` = the config folder, `{home}` = the user's home; symbolic links are followed) |
+| `max_concurrent_runs` | At most this many scripts run at once (0 = no limit) |
+| `block_tabs_*`, `block_buttons_*` | Block adding, removing, renaming, reordering, editing, copying, pasting tabs and buttons |
+| `hide_menu_item_*` | Hide menus and menu items (Tools, Configuration, Reload config, Open config folder, event log, Help items, ...) |
+
+Limits are enforced where the action happens, not only by hiding menu items: a blocked script is refused when it starts whatever way it was launched (button, editor, Run again), the editor checks the folder rules on open and save, and keyboard shortcuts of hidden items do nothing.
+
+**Typical locked-down setup:** a read-only `config.json` with your tabs and buttons, a machine-wide `policy.json` with `config_readonly`, `block_script_editor`, `block_updates` and `allowed_script_folders` pointing at your script share. Users can only click the buttons you give them.
+
+_What this is not:_ EasyJob runs scripts with the user's own permissions, so these restrictions keep users inside the app's workflows; they are not an operating-system security boundary. Use file permissions on the script folders for that.
+
+
 ## :electric_plug: Compilation
 
 1. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download).
 2. `dotnet build EasyJob.sln`, or `dotnet run --project EasyJob`.
 3. Publish a release for your platform: `dotnet publish EasyJob -c Release -r win-x64` (or `osx-arm64`, `linux-x64`, ...), then zip the output folder as the release asset.
+
+**macOS app icon.** macOS takes the Dock and Finder icon from an `.app` bundle, not from the `.ico` used on Windows. EasyJob sets its Dock icon at start-up even when run unbundled (`dotnet run`, a publish folder), and `tools/make-macos-app.sh` wraps a publish folder into a proper `EasyJob.app` (with `Info.plist` and `icon.icns`):
+
+```
+dotnet publish EasyJob -c Release -r osx-arm64 --self-contained -o publish/osx-arm64
+tools/make-macos-app.sh publish/osx-arm64 EasyJob.app 2.0.0
+ditto -c -k --keepParent EasyJob.app EasyJob-osx-arm64.zip   # the release asset
+```
 
 `EasyJobPSTools` is plain PowerShell and is copied next to the app by the build; its optional ModernWpf input box (`EasyJobPSTools/EasyJobPSTools.sln`, Windows, Visual Studio) is not required.
 

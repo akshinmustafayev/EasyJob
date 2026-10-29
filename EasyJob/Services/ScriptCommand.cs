@@ -22,6 +22,7 @@ public static class ScriptCommand
     public static ProcessStartInfo Build(AppConfig config, ConfigButton button, IReadOnlyList<string> answers, out string displayCommand)
     {
         var scriptPath = ResolveScriptPath(button);
+        if (PolicyService.CheckRun(config, button, scriptPath) is { } denied) throw new InvalidOperationException(denied);
         var scriptArgs = Tokenize(string.Join(" ", answers.Where(a => !string.IsNullOrWhiteSpace(a))));
 
         var psi = new ProcessStartInfo

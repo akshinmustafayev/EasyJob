@@ -128,10 +128,10 @@ public partial class TabView : UserControl
             menu.Items.Add(sub);
         }
 
-        menu.Items.Add(new Separator());
-        menu.Items.Add(Item("Edit in script editor", () => main.EditScriptCommand.Execute(button)));
-        menu.Items.Add(Item("Open with default app", () => main.OpenScriptCommand.Execute(button)));
-        menu.Items.Add(Item("Show in folder", () => main.RevealScriptCommand.Execute(button)));
+        if (main.CanUseEditor || main.CanOpenExternally || main.CanShowInFolder) menu.Items.Add(new Separator());
+        if (main.CanUseEditor) menu.Items.Add(Item("Edit in script editor", () => main.EditScriptCommand.Execute(button)));
+        if (main.CanOpenExternally) menu.Items.Add(Item("Open with default app", () => main.OpenScriptCommand.Execute(button)));
+        if (main.CanShowInFolder) menu.Items.Add(Item("Show in folder", () => main.RevealScriptCommand.Execute(button)));
 
         if (main.CanEditButton || main.CanCopyButton || main.CanRemoveButton) menu.Items.Add(new Separator());
         if (main.CanEditButton) menu.Items.Add(Item("Edit…", () => main.EditButtonCommand.Execute(button)));

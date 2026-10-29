@@ -34,11 +34,23 @@ public partial class EditorWindow : Window
     bool _closeConfirmed;
     EditorDocument? _current_doc;
 
+    // Administrator limits (see PolicyService); read once when the window opens.
+    static ConfigRestrictions Limits => MainViewModel.Current?.Config.restrictions ?? new ConfigRestrictions();
+    readonly bool _readOnly = Limits.script_editor_readonly;
+    readonly bool _canRun = !Limits.block_script_editor_run;
+    readonly bool _canOpenFiles = !Limits.block_script_editor_open_files;
+    readonly bool _canUseCommands = !Limits.block_powershell_commands;
+
     public bool HasUnsaved => _docs.Any(d => d.IsDirty);
 
     /// <summary>Opens the editor (or brings it to the front) and shows <paramref name="path"/>, or a new script if null.</summary>
-    public static EditorWindow ShowEditor(string? path = null, EditorLanguage? newLanguage = null, bool showCommands = false)
+    public static EditorWindow? ShowEditor(string? path = null, EditorLanguage? newLanguage = null, bool showCommands = false)
     {
+        if (MainViewModel.Current is { CanUseEditor: false })
+        {
+            _ = DialogService.ShowMessage("Script editor", "The script editor is turned off by your administrator.");
+            return null;
+        }
         var window = _current ?? new EditorWindow();
         if (!window.IsVisible) window.Show();
         window.Activate();
@@ -85,9 +97,16 @@ public partial class EditorWindow : Window
         Key(Avalonia.Input.Key.W, mod, () => _ = CloseDocumentAsync(_current_doc));
         Key(Avalonia.Input.Key.N, mod, () => NewDocument(_current_doc?.Language.CanRun == true ? _current_doc.Language : EditorLanguage.PowerShell));
         Key(Avalonia.Input.Key.F5, KeyModifiers.None, () => _ = RunAsync());
-        Key(Avalonia.Input.Key.P, mod | KeyModifiers.Shift, () => CommandsToggle.IsChecked = CommandsToggle.IsChecked != true);
+        Key(Avalonia.Input.Key.P, mod | KeyModifiers.Shift, () => { if (_canUseCommands) CommandsToggle.IsChecked = CommandsToggle.IsChecked != true; });
 
         Commands.InsertRequested += name => InsertText(name);
+        Editor.IsReadOnly = _readOnly;
+        LanguageBox.IsEnabled = !_readOnly;
+        NewButton.IsVisible = SaveButton.IsVisible = EmptyNewButton.IsVisible = !_readOnly;
+        OpenButton.IsVisible = EmptyOpenButton.IsVisible = _canOpenFiles;
+        RunBar.IsVisible = _canRun;
+        CommandsToggle.IsVisible = _canUseCommands;
+        if (!_canUseCommands) _sideOpen = false;
         CommandsToggle.IsChecked = _sideOpen;
         ShowCommandsPanel(_sideOpen);
 
@@ -113,6 +132,7 @@ public partial class EditorWindow : Window
 
     public void NewDocument(EditorLanguage language)
     {
+        if (_readOnly) return;
         var doc = new EditorDocument(null, language.Template, language);
         _docs.Add(doc);
         DocList.SelectedItem = doc;
@@ -122,6 +142,11 @@ public partial class EditorWindow : Window
     public void OpenFile(string path)
     {
         path = Path.GetFullPath(path);
+        if (MainViewModel.Current is { } main && !PolicyService.IsPathAllowed(main.Config, path))
+        {
+            _ = DialogService.ShowMessage("Not allowed", "This file is outside the folders your administrator allows.");
+            return;
+        }
         var existing = _docs.FirstOrDefault(d => d.Path == path);
         if (existing != null) { DocList.SelectedItem = existing; return; }
 
@@ -144,6 +169,7 @@ public partial class EditorWindow : Window
     /// <summary>Inserts text at the caret (used by the PowerShell command browser).</summary>
     public void InsertText(string text)
     {
+        if (_readOnly) return;
         if (_current_doc == null) NewDocument(EditorLanguage.PowerShell);
         Editor.Document.Insert(Editor.CaretOffset, text);
         Editor.Focus();
@@ -167,7 +193,7 @@ public partial class EditorWindow : Window
             Editor.Document = doc.Document;
             LanguageBox.SelectedItem = doc.Language;
             ApplyLanguage(doc.Language);
-            Title = doc.Title + " — Script editor";
+            Title = doc.Title + (_readOnly ? " (read-only)" : "") + " — Script editor";
             doc.PropertyChanged -= OnDocChanged;
             doc.PropertyChanged += OnDocChanged;
             UpdateStatus();
@@ -221,8 +247,8 @@ public partial class EditorWindow : Window
     {
         PathText.Text = _current_doc?.Path ?? (_current_doc == null ? "" : "Not saved yet");
         LanguageText.Text = _current_doc?.Language.Name ?? "";
-        EncodingText.Text = _current_doc == null ? "" : _current_doc.HasBom ? "UTF-8 with BOM" : "UTF-8";
-        SaveButton.IsEnabled = _current_doc != null;
+        EncodingText.Text = _current_doc == null ? "" : (_current_doc.HasBom ? "UTF-8 with BOM" : "UTF-8") + (_readOnly ? " · read-only" : "");
+        SaveButton.IsEnabled = _current_doc != null && !_readOnly;
     }
 
     void UpdateRunButtons()
@@ -238,6 +264,7 @@ public partial class EditorWindow : Window
     async Task<bool> SaveAsync(EditorDocument? doc, bool saveAs = false)
     {
         if (doc == null) return true;
+        if (_readOnly) return false;
 
         var path = doc.Path;
         if (path == null || saveAs)
@@ -251,6 +278,11 @@ public partial class EditorWindow : Window
             });
             path = file?.TryGetLocalPath();
             if (path == null) return false;
+        }
+        if (MainViewModel.Current is { } main && !PolicyService.IsPathAllowed(main.Config, path))
+        {
+            await DialogService.ShowMessage("Not allowed", "Your administrator only allows saving scripts in certain folders. Pick a file inside them.");
+            return false;
         }
 
         try
@@ -272,6 +304,7 @@ public partial class EditorWindow : Window
 
     async Task OpenDialogAsync()
     {
+        if (!_canOpenFiles) return;
         var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
             Title = "Open file",
@@ -321,7 +354,7 @@ public partial class EditorWindow : Window
     async Task RunAsync()
     {
         var doc = _current_doc;
-        if (doc == null || !doc.Language.CanRun || _runs.Runs.Any(r => r.IsRunning) || MainViewModel.Current is not { } main) return;
+        if (!_canRun || doc == null || !doc.Language.CanRun || _runs.Runs.Any(r => r.IsRunning) || MainViewModel.Current is not { } main) return;
 
         // Run exactly what is in the editor. A file that is saved and unchanged runs in place; otherwise the
         // text goes to a temporary copy (beside the file when possible, so relative paths keep working).
@@ -340,6 +373,7 @@ public partial class EditorWindow : Window
             ScriptPathType = "absolute",
             ScriptType = doc.Language.ScriptType!
         };
+        if (!await main.ConfirmRunAsync(button)) return;
         foreach (var other in _runs.Runs.Where(r => r.IsFinished)) other.IsExpanded = false;
         var args = string.IsNullOrWhiteSpace(ArgsBox.Text) ? Array.Empty<string>() : new[] { ArgsBox.Text! };
         var run = new RunViewModel(main, _runs, button, args)

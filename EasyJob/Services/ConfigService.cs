@@ -46,15 +46,17 @@ public static class ConfigService
         }
 
         Normalize(config);
+        PolicyService.Apply(config);
         return config;
     }
 
     public static void Save(AppConfig config)
     {
+        if (config.restrictions.config_readonly) return; // administrator: the configuration is fixed
         Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
         // Write to a temp file first so a crash never leaves a half-written config behind.
         var tmp = ConfigPath + ".tmp";
-        File.WriteAllText(tmp, JsonSerializer.Serialize(config, Options));
+        File.WriteAllText(tmp, JsonSerializer.Serialize(config.ForSave(), Options));
         File.Move(tmp, ConfigPath, overwrite: true);
     }
 

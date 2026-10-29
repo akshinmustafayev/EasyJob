@@ -79,6 +79,84 @@
 		<used>Configuration</used>
 	</item>
 	<item>
+		<name>HelpConfigurationConfigReadonly</name>
+		<heading>Read-only configuration</heading>
+		<description>Nothing can be changed or saved: tabs, buttons and settings stay exactly as they are in config.json. Theme and button size changes last only for the session. Combine it with a read-only config.json and a policy.json (see the README) for a fully managed setup.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationScriptEditorReadonly</name>
+		<heading>Script editor read-only</heading>
+		<description>The script editor opens scripts for reading and running only: no typing, saving or new files.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationConfirmBeforeRun</name>
+		<heading>Confirm before every run</heading>
+		<description>Ask "Run this script?" every time a script is started, from a button, the editor or Run again.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockScriptEditor</name>
+		<heading>Block the script editor</heading>
+		<description>Turns the script editor off completely: menus, Shift+click and "Edit in script editor" are gone, and the PowerShell command browser with it.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockScriptEditorRun</name>
+		<heading>Block running from the editor</heading>
+		<description>The editor can still show and edit scripts, but has no Run button and F5 does nothing.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockScriptEditorOpenFiles</name>
+		<heading>Block opening other files in the editor</heading>
+		<description>The editor only opens scripts from the script buttons (Shift+click / Edit in script editor). The Open buttons and File -&gt; Open file are gone.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockPowershellCommands</name>
+		<heading>Block the PowerShell command browser</heading>
+		<description>Hides the Commands panel in the script editor and Tools -&gt; PowerShell commands.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockOpenScriptExternally</name>
+		<heading>Block Open with default app</heading>
+		<description>Removes "Open with default app" from the script menu.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockShowInFolder</name>
+		<heading>Block Show in folder</heading>
+		<description>Removes "Show in folder" and Ctrl/Cmd+click on a script button.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockUpdates</name>
+		<heading>Block updates</heading>
+		<description>EasyJob never checks GitHub for new versions and never updates itself. Use this when you roll out updates yourself.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationBlockViewSettings</name>
+		<heading>Block theme and button size changes</heading>
+		<description>Removes Theme and Button size from the View menu and the size toggle in the tab strip.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationHideTools</name>
+		<heading>Hide the Tools menu</heading>
+		<description>Hides the whole Tools menu (Script editor, PowerShell commands and Configuration).&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationHideViewEventLog</name>
+		<heading>Hide the event log</heading>
+		<description>Hides the Events button in the footer and View → Show or hide event log.&#10;&#10;Example: No</description>
+		<used>Configuration</used>
+	</item>
+	<item>
 		<name>HelpConfigurationClearEventsWhenReload</name>
 		<heading>Clear events when reload</heading>
 		<description>Clear events on Events list after configuration reload from the File-> Reload config menu.&#10;&#10;Example: Yes</description>
@@ -86,146 +164,146 @@
 	</item>
 	<item>
 		<name>HelpConfigurationBlockTabsRemove</name>
-		<heading>Block tabs remove</heading>
-		<description>Hides "Remove Tab" context menu item from when Right click on the Tab.&#10;&#10;Example: No</description>
+		<heading>Block removing tabs</heading>
+		<description>Users cannot remove tabs: Tabs → Remove current tab and the tab right-click menu entry are gone.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationBlockButtonsRemove</name>
-		<heading>Block buttons remove</heading>
-		<description>Hides "Remove button" context menu item when Right click on the buttons bar.&#10;&#10;Example: No</description>
+		<heading>Block removing script buttons</heading>
+		<description>Users cannot remove script buttons: "Remove…" is gone from the script button menu.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationBlockTabsAdd</name>
-		<heading>Block tabs add</heading>
-		<description>Hides "Add tab" context menu item when Right Click on the Tab.&#10;&#10;Example: No</description>
+		<heading>Block adding tabs</heading>
+		<description>Users cannot add tabs (New tab in the tab strip and the Tabs menu). This also stops reordering tabs.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationBlockButtonsAdd</name>
-		<heading>Block buttons add</heading>
-		<description>Hides "Add button" context menu item when Right click on the buttons bar.&#10;&#10;Example: No</description>
+		<heading>Block adding script buttons</heading>
+		<description>Users cannot add script buttons: Add script (tab strip), Scripts → Add script button and the panel right-click entry are gone.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationBlockButtonsReorder</name>
-		<heading>Block buttons reorder</heading>
-		<description>Hides "Reorder buttons" context menu item when Right click on the buttons bar.&#10;&#10;Example: No</description>
+		<heading>Block reordering script buttons</heading>
+		<description>Reorder in the tab strip, Scripts → Reorder script buttons and dragging buttons to reorder them are disabled.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationBlockButtonsEdit</name>
-		<heading>Block buttons edit</heading>
-		<description>Hides "Edit button" context menu item when Right click on the button.&#10;&#10;Example: No</description>
+		<heading>Block editing script buttons</heading>
+		<description>"Edit…" is gone from the script button menu, so buttons cannot be changed.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationBlockTabsRename</name>
-		<heading>Block tabs rename</heading>
-		<description>Hides "Rename tab" context menu item when Right click on the tab.&#10;&#10;Example: No</description>
+		<heading>Block renaming tabs</heading>
+		<description>Tabs → Rename current tab and the tab right-click entry are gone.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationBlockButtonsPaste</name>
-		<heading>Block buttons paste</heading>
-		<description>Hides "Paste button" context menu item when Right click on the tab.&#10;&#10;Example: No</description>
+		<heading>Block pasting script buttons</heading>
+		<description>Paste (tab strip, Scripts menu and the panel right-click menu) is gone.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationBlockButtonsCopy</name>
-		<heading>Block buttons copy</heading>
-		<description>Hides "Copy button" context menu item when Right click on the tab.&#10;&#10;Example: No</description>
+		<heading>Block copying script buttons</heading>
+		<description>"Copy" is gone from the script button menu.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideFileReloadConfig</name>
-		<heading>Hide File->Reload config</heading>
-		<description>Hides "File->Reload config" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide File → Reload config</heading>
+		<description>Hides File → Reload config (and its F5 shortcut).&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideFileOpenAppFolder</name>
 		<heading>Hide File → Open config folder</heading>
-		<description>Hides the "File -> Open config folder" menu item.&#10;&#10;Example: No</description>
+		<description>Hides File → Open config folder.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideClearEventsList</name>
-		<heading>Hide File->Clear events list</heading>
-		<description>Hides "Hide File->Clear events list" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide View → Clear event log</heading>
+		<description>Hides View → Clear event log.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideSettings</name>
-		<heading>Hide Settings</heading>
-		<description>Hides "Hide Settings" main menu item.&#10;&#10;Example: No&#10;&#10;Note: In order to bring back Settings menu, you have to manually find "hide_menu_item_settings" parameter in config.json and change its value to "false"</description>
+		<heading>Hide the settings group (Tools → Configuration)</heading>
+		<description>Hides the settings entry of the Tools menu, which is Configuration. To bring it back you have to edit config.json by hand.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideSettingsWorkflow</name>
-		<heading>Hide Settings->Workflow</heading>
-		<description>Hides "Hide Settings->Workflow" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide the Tabs and Scripts menus</heading>
+		<description>Hides the Tabs menu and the Scripts menu. The tab strip buttons follow the individual settings below.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideSettingsWorkflowReorderTabs</name>
-		<heading>Hide Settings->Workflow->Reorder tabs</heading>
-		<description>Hides "Hide Settings->Workflow->Reorder tabs" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide Tabs → Reorder tabs</heading>
+		<description>Hides Tabs → Reorder tabs.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideSettingsWorkflowAddTab</name>
-		<heading>Hide Settings->Workflow->Add tab</heading>
-		<description>Hides "Hide Settings->Workflow->Add tab" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide Tabs → New tab</heading>
+		<description>Hides Tabs → New tab and the New tab button in the tab strip.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideSettingsWorkflowRemoveCurrentTab</name>
-		<heading>Hide Settings->Workflow->Remove current tab</heading>
-		<description>Hides "Hide Settings->Workflow->Remove current tab" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide Tabs → Remove current tab</heading>
+		<description>Hides Tabs → Remove current tab.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideSettingsWorkflowRenameCurrentTab</name>
-		<heading>Hide Settings->Workflow->Rename current tab</heading>
-		<description>Hides "Hide Settings->Workflow->Rename current tab" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide Tabs → Rename current tab</heading>
+		<description>Hides Tabs → Rename current tab.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideSettingsWorkflowAddButtonToCurrentTab</name>
-		<heading>Hide Settings->Workflow->Add button to current tab" main menu item.&#10;&#10;Example: No</heading>
-		<description>Hides "Hide Settings->Workflow->Add button to current tab</description>
+		<heading>Hide Scripts → Add script button</heading>
+		<description>Hides Scripts → Add script button and the Add script button in the tab strip.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideSettingsWorkflowReorderButtonsInCurrentTab</name>
-		<heading>Hide Settings->Workflow->Reorder buttons in current tab</heading>
-		<description>Hides "Hide Settings->Workflow->Reorder buttons in current tab" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide Scripts → Reorder script buttons</heading>
+		<description>Hides Scripts → Reorder script buttons and the Reorder button in the tab strip.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideSettingsConfiguration</name>
-		<heading>Hide Settings->Configuration</heading>
-		<description>Hides "Hide Settings->Configuration" main menu item.&#10;&#10;Example: No&#10;&#10;Note: In order to bring back Configuration menu, you have to manually find "hide_menu_item_settings_configuration" parameter in config.json and change its value to "false"</description>
+		<heading>Hide Tools → Configuration</heading>
+		<description>Hides Tools → Configuration. To bring it back you have to edit config.json by hand.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideHelp</name>
-		<heading>Hide Help</heading>
-		<description>Hides "Hide Help" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide the Help menu</heading>
+		<description>Hides the whole Help menu.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideTroubleshooting</name>
-		<heading>Hide Help->Troubleshooting</heading>
-		<description>Hides "Hide Help->Troubleshooting" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide Help → Troubleshooting</heading>
+		<description>Hides Help → Troubleshooting.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 	<item>
 		<name>HelpConfigurationHideAbout</name>
-		<heading>Hide Help->About</heading>
-		<description>Hides "Hide Help->About" main menu item.&#10;&#10;Example: No</description>
+		<heading>Hide Help → About EasyJob</heading>
+		<description>Hides Help → About EasyJob.&#10;&#10;Example: No</description>
 		<used>Configuration</used>
 	</item>
 </items>

@@ -57,7 +57,7 @@ public partial class MainWindow : Window
             AddScriptButton.IsVisible = _vm.ShowAddButton && _vm.HasSelectedTab;
             ReorderButton.IsVisible = _vm.ShowReorderButtons && _vm.SelectedTab?.CanReorder == true;
             PasteButton.IsVisible = _vm.CanPasteButton && _vm.HasSelectedTab;
-            DensityButton.IsVisible = _vm.SelectedTab?.HasButtons == true;
+            DensityButton.IsVisible = _vm.SelectedTab?.HasButtons == true && _vm.ShowViewSettings;
         }
         _vm.PropertyChanged += (_, e) =>
         {
