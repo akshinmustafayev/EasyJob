@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using EasyJob.Controls;
@@ -46,26 +47,40 @@ public partial class ConfigurationDialog : Window
         BuildRestrictions();
     }
 
-    /// <summary>Keeps a hex/name text box and a color picker showing the same color, whichever one is edited.</summary>
-    void LinkPicker(TextBox box, ColorPicker picker, Color fallback)
+    /// <summary>
+    /// Keeps a hex/name text box and a color swatch button showing the same color, whichever one is edited.
+    /// The button opens the spectrum / palette / sliders picker in a flyout (no dropdown arrow).
+    /// </summary>
+    void LinkPicker(TextBox box, Button swatchButton, Color fallback)
     {
+        var swatch = new Border { CornerRadius = new Avalonia.CornerRadius(4), BorderThickness = new Avalonia.Thickness(1) };
+        swatch.Bind(Border.BorderBrushProperty, this.GetResourceObservable("BorderBrushSoft"));
+        swatchButton.HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Stretch;
+        swatchButton.VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Stretch;
+        swatchButton.Content = swatch;
+
+        var view = new ColorView { IsAlphaVisible = false, IsAlphaEnabled = false, IsColorModelVisible = false, Width = 320 };
+        swatchButton.Flyout = new Flyout { Content = view, Placement = PlacementMode.BottomEdgeAlignedRight };
+
         bool syncing = false;
         void FromText()
         {
             if (syncing) return;
             syncing = true;
-            picker.Color = !string.IsNullOrWhiteSpace(box.Text) && Color.TryParse(box.Text.Trim(), out var c) ? c : fallback;
+            var color = !string.IsNullOrWhiteSpace(box.Text) && Color.TryParse(box.Text.Trim(), out var c) ? c : fallback;
+            view.Color = color;
+            swatch.Background = new SolidColorBrush(color);
             syncing = false;
             UpdatePreview();
         }
         box.TextChanged += (_, _) => FromText();
-        picker.ColorChanged += (_, e) =>
+        view.ColorChanged += (_, e) =>
         {
             if (syncing) return;
             syncing = true;
-            // Opaque colors as #RRGGBB, like the defaults; keep the alpha only when it is used.
             var c = e.NewColor;
-            box.Text = c.A == 255 ? $"#{c.R:X2}{c.G:X2}{c.B:X2}" : $"#{c.A:X2}{c.R:X2}{c.G:X2}{c.B:X2}";
+            box.Text = $"#{c.R:X2}{c.G:X2}{c.B:X2}";
+            swatch.Background = new SolidColorBrush(Color.FromRgb(c.R, c.G, c.B));
             syncing = false;
             UpdatePreview();
         };

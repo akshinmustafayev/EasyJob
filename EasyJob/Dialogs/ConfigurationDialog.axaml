@@ -40,14 +40,14 @@
                       <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="Background"/><c:HelpButton Topic="HelpConfigurationConsoleBackground"/></StackPanel>
                       <Grid ColumnDefinitions="*,8,Auto">
                         <TextBox x:Name="ConsoleBackgroundBox" Watermark="#0C0C0C or Black"/>
-                        <ColorPicker x:Name="ConsoleBackgroundPicker" Grid.Column="2" Width="44" Height="36" ToolTip.Tip="Pick a color"/>
+                        <Button x:Name="ConsoleBackgroundPicker" Grid.Column="2" Width="44" Height="36" Padding="5" ToolTip.Tip="Pick a color"/>
                       </Grid>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
                       <StackPanel Classes="labelrow"><TextBlock Classes="label" Text="Text color"/><c:HelpButton Topic="HelpConfigurationConsoleForeground"/></StackPanel>
                       <Grid ColumnDefinitions="*,8,Auto">
                         <TextBox x:Name="ConsoleForegroundBox" Watermark="#E6E6E6 or White"/>
-                        <ColorPicker x:Name="ConsoleForegroundPicker" Grid.Column="2" Width="44" Height="36" ToolTip.Tip="Pick a color"/>
+                        <Button x:Name="ConsoleForegroundPicker" Grid.Column="2" Width="44" Height="36" Padding="5" ToolTip.Tip="Pick a color"/>
                       </Grid>
                     </StackPanel>
                   </Grid>
