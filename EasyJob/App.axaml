@@ -2,7 +2,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:c="using:EasyJob.Controls"
              x:Class="EasyJob.App"
+             Name="EasyJob"
              RequestedThemeVariant="Default">
+
+  <NativeMenu.Menu>
+    <NativeMenu>
+      <NativeMenuItem Header="About EasyJob" Click="OnAboutClick"/>
+    </NativeMenu>
+  </NativeMenu.Menu>
 
   <Application.Resources>
     <ResourceDictionary>

@@ -1,4 +1,8 @@
+using Avalonia;
+using Avalonia.Reactive;
+using Avalonia.Threading;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using EasyJob.Controls;
@@ -24,7 +28,8 @@ public partial class MainWindow : Window
         void Shortcut(MenuItem item, Key key, KeyModifiers m)
         {
             var gesture = new KeyGesture(key, m);
-            item.HotKey = gesture;
+            // On macOS the native menu bar owns the shortcuts (a second HotKey would run the command twice).
+            if (!OperatingSystem.IsMacOS()) item.HotKey = gesture;
             item.InputGesture = gesture;
         }
         Shortcut(MenuReload, Key.F5, KeyModifiers.None);
@@ -47,7 +52,13 @@ public partial class MainWindow : Window
             (source, target) => _vm.MoveTab(source, target),
             () => _vm.ShowReorderTabs && _vm.Tabs.Count > 1);
 
-        Opened += async (_, _) => await _vm.InitializeAsync();
+        Opened += async (_, _) =>
+        {
+            await _vm.InitializeAsync();
+            // Export the menu once the config is loaded and the menu items have settled: building it earlier made the
+            // native menu bar flicker through "everything hidden" states, and macOS once kept showing only the app menu.
+            if (OperatingSystem.IsMacOS()) Dispatcher.UIThread.Post(UseNativeMenu, DispatcherPriority.Loaded);
+        };
         // Hide the direct tab controls when the config forbids them.
         TabViewModel? watched = null;
         void UpdateTabActions()
@@ -146,4 +157,76 @@ public partial class MainWindow : Window
 
     static MenuItem Item(string header, System.Windows.Input.ICommand command, object? parameter) =>
         new() { Header = header, Command = command, CommandParameter = parameter };
+
+    // ------------------------------------------------------------ macOS menu bar
+
+    /// <summary>
+    /// Shows the window's menu in the macOS menu bar. The in-window Menu stays the single source of truth (headers,
+    /// commands, visibility, enabled and checked state); the native items mirror it.
+    /// </summary>
+    NativeMenu? _nativeRoot;
+
+    void UseNativeMenu()
+    {
+        var root = new NativeMenu();
+        foreach (var top in MainMenu.Items.OfType<MenuItem>())
+            if (Mirror(top) is { } item) root.Items.Add(item);
+        _nativeRoot = root;
+        NativeMenu.SetMenu(this, root);
+        MainMenu.IsVisible = false;
+
+        // macOS occasionally drops the first export and keeps showing only the application menu. Exporting the same
+        // menu again a moment later (and whenever the app is re-activated) puts it back; it is cheap and idempotent.
+        foreach (var delay in new[] { 400, 1500, 4000 })
+            DispatcherTimer.RunOnce(ReexportNativeMenu, TimeSpan.FromMilliseconds(delay));
+    }
+
+    void ReexportNativeMenu()
+    {
+        if (_nativeRoot == null) return;
+        NativeMenu.SetMenu(this, null);
+        NativeMenu.SetMenu(this, _nativeRoot);
+    }
+
+    static void Watch<T>(IObservable<T> source, Action<T> action) => source.Subscribe(new AnonymousObserver<T>(action));
+
+    static string PlainHeader(object? header) => (header?.ToString() ?? "").Replace("_", "");
+
+    static NativeMenuItem? Mirror(MenuItem source)
+    {
+        if (source.Header?.ToString() == "E_xit") return null; // Quit is in the application menu (Cmd+Q)
+
+        var native = new NativeMenuItem();
+        Watch(source.GetObservable(HeaderedSelectingItemsControl.HeaderProperty), h => native.Header = PlainHeader(h));
+        Watch(source.GetObservable(IsVisibleProperty), v => native.IsVisible = v);
+        Watch(source.GetObservable(IsEnabledProperty), v => native.IsEnabled = v);
+        Watch(source.GetObservable(MenuItem.InputGestureProperty), g => native.Gesture = g);
+
+        var children = source.Items.Cast<object?>().ToList();
+        if (children.Count > 0)
+        {
+            native.Menu = new NativeMenu();
+            foreach (var child in children)
+            {
+                if (child is MenuItem mi && Mirror(mi) is { } item) native.Menu.Items.Add(item);
+                else if (child is Separator) native.Menu.Items.Add(new NativeMenuItemSeparator());
+            }
+            return native;
+        }
+
+        if (source.ToggleType != MenuItemToggleType.None)
+        {
+            native.ToggleType = (NativeMenuItemToggleType)(int)source.ToggleType;
+            Watch(source.GetObservable(MenuItem.IsCheckedProperty), v => native.IsChecked = v);
+        }
+        native.Click += (_, _) =>
+        {
+            if (source.Command is { } cmd)
+            {
+                if (cmd.CanExecute(source.CommandParameter)) cmd.Execute(source.CommandParameter);
+            }
+            else source.RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent));
+        };
+        return native;
+    }
 }

@@ -12,7 +12,7 @@
 
   <DockPanel>
     <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
-    <Menu>
+    <Menu x:Name="MainMenu">
       <MenuItem Header="_File">
         <MenuItem x:Name="MenuNewScript" Header="New script…" Command="{Binding NewScriptCommand}" IsVisible="{Binding CanCreateScripts}"/>
         <MenuItem x:Name="MenuOpenFile" Header="Open file in editor…" Command="{Binding OpenFileInEditorCommand}" IsVisible="{Binding CanOpenFilesInEditor}"/>

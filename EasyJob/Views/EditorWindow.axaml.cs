@@ -55,7 +55,7 @@ public partial class EditorWindow : Window
         var window = _current ?? new EditorWindow();
         if (!window.IsVisible) window.Show();
         window.Activate();
-        if (showCommands) window.CommandsToggle.IsChecked = true;
+        if (showCommands) window.ShowCommandBrowser();
         if (path != null) window.OpenFile(path);
         else if (newLanguage != null) window.NewDocument(newLanguage);
         return window;
@@ -176,6 +176,15 @@ public partial class EditorWindow : Window
         {
             _ = DialogService.ShowMessage("Could not open file", $"{path}\n\n{ex.Message}");
         }
+    }
+
+    /// <summary>The command browser belongs to PowerShell files: switch to one (a new script if needed) and open the panel.</summary>
+    void ShowCommandBrowser()
+    {
+        if (!_canUseCommands) return;
+        if (_current_doc?.Language != EditorLanguage.PowerShell && !_readOnly)
+            NewDocument(EditorLanguage.PowerShell);
+        ShowCommandsPanel(true);
     }
 
     /// <summary>Inserts text at the caret (used by the PowerShell command browser).</summary>

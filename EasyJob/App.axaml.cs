@@ -21,6 +21,8 @@ public partial class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
+    void OnAboutClick(object? sender, EventArgs e) => EasyJob.ViewModels.MainViewModel.Current?.AboutCommand.Execute(null);
+
     public static void Shutdown() =>
         (Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.Shutdown();
 
