@@ -49,12 +49,49 @@ public partial class MainWindow : Window
 
         Opened += async (_, _) => await _vm.InitializeAsync();
         // Hide the direct tab controls when the config forbids them.
-        _vm.PropertyChanged += (_, _) =>
+        TabViewModel? watched = null;
+        void UpdateTabActions()
         {
             NewTabButton.IsVisible = _vm.ShowAddTab;
             TabMenuButton.IsVisible = _vm.ShowRenameTab || _vm.ShowRemoveTab || _vm.ShowReorderTabs;
+            AddScriptButton.IsVisible = _vm.ShowAddButton && _vm.HasSelectedTab;
+            ReorderButton.IsVisible = _vm.ShowReorderButtons && _vm.SelectedTab?.CanReorder == true;
+            PasteButton.IsVisible = _vm.CanPasteButton && _vm.HasSelectedTab;
+            DensityButton.IsVisible = _vm.SelectedTab?.HasButtons == true;
+        }
+        _vm.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(MainViewModel.SelectedTab))
+            {
+                if (watched != null) watched.PropertyChanged -= OnTabChanged;
+                watched = _vm.SelectedTab;
+                if (watched != null) watched.PropertyChanged += OnTabChanged;
+                FilterToggle.IsChecked = !string.IsNullOrEmpty(watched?.Filter);
+            }
+            UpdateTabActions();
+        };
+        void OnTabChanged(object? s, System.ComponentModel.PropertyChangedEventArgs e) => UpdateTabActions();
+
+        FilterToggle.IsCheckedChanged += (_, _) =>
+        {
+            bool on = FilterToggle.IsChecked == true;
+            FilterBox.IsVisible = on;
+            if (on) FilterBox.Focus();
+            else if (_vm.SelectedTab != null) _vm.SelectedTab.Filter = "";
+        };
+        FilterBox.KeyDown += (_, e) => { if (e.Key == Key.Escape) FilterToggle.IsChecked = false; };
+        KeyDown += (_, e) =>
+        {
+            if (e.Key == Key.F && e.KeyModifiers == mod) { OpenFilter(); e.Handled = true; }
         };
     }
+
+    void OpenFilter()
+    {
+        if (_vm.SelectedTab is { ShowFilter: true }) { FilterToggle.IsChecked = true; FilterBox.Focus(); FilterBox.SelectAll(); }
+    }
+
+    void OnFilterMenuClick(object? sender, RoutedEventArgs e) => OpenFilter();
 
     protected override async void OnClosing(WindowClosingEventArgs e)
     {

@@ -31,6 +31,8 @@ public class Icon : Avalonia.Controls.Shapes.Path
         ["reorder"] = ("M8,5 V19 M8,5 L5,8 M8,5 L11,8 M16,19 V5 M16,19 L13,16 M16,19 L19,16", false),
         ["paste"] = ("M8,5 H6 V21 H18 V5 H16 M9,3 H15 V7 H9 Z", false),
         ["save"] = ("M5,4 H16 L20,8 V20 H5 Z M8,4 V9 H15 V4 M8,20 V14 H17 V20", false),
+        ["search"] = ("M4,11 A7,7 0 1 0 18,11 A7,7 0 1 0 4,11 Z M16,16 L21,21", false),
+        ["density"] = ("M4,5 H9 V10 H4 Z M15,5 H20 V10 H15 Z M4,14 H9 V19 H4 Z M15,14 H20 V19 H15 Z", false),
         ["help"] = ("M9,9 A3,3 0 1 1 13,11.8 C12.2,12.4 12,13 12,14 M12,17.5 V18", false),
     };
 

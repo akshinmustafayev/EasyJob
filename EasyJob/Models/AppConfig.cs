@@ -15,6 +15,8 @@ public class AppConfig
     public bool clear_events_when_reload { get; set; } = true;
     /// <summary>"system", "light" or "dark".</summary>
     public string theme { get; set; } = "system";
+    /// <summary>Script button size: auto (compact once a tab has many buttons), cards or compact.</summary>
+    public string button_density { get; set; } = "auto";
     public ConfigRestrictions restrictions { get; set; } = new();
     public List<ConfigTab> tabs { get; set; } = new();
 }

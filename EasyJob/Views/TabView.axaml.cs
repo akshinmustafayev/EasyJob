@@ -18,6 +18,10 @@ public partial class TabView : UserControl
             (source, target) => Main?.MoveButton(source, target),
             () => Main?.ShowReorderButtons == true);
 
+        WireGrip();
+        ButtonScroll.Resources["CardWidth"] = 270.0;
+        ButtonScroll.SizeChanged += (_, e) => { if (e.WidthChanged) FitCards(); };
+
         AttachedToVisualTree += (_, _) =>
         {
             if (Main is { } m) m.PropertyChanged += OnStateChanged;
@@ -33,17 +37,47 @@ public partial class TabView : UserControl
 
     void OnStateChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) => UpdateToolbar();
 
-    /// <summary>Shows the toolbar actions the config allows, and only when they make sense.</summary>
+    const double DefaultPanelHeight = 260;
+    static double _panelHeight = DefaultPanelHeight; // shared by all tabs, for this session
+    double _dragStartHeight;
+    Avalonia.Point _dragStart;
+
     void UpdateToolbar()
     {
-        if (Main is not { } m) return;
-        AddScriptButton.IsVisible = m.ShowAddButton;
-        ReorderButton.IsVisible = m.ShowReorderButtons && Tab?.CanReorder == true;
-        PasteButton.IsVisible = m.CanPasteButton;
+        ButtonScroll.Classes.Set("compact", Tab?.IsCompact == true);
+        ButtonScroll.MaxHeight = _panelHeight;
+        FitCards();
     }
 
-    void OnPasteScript(object? sender, RoutedEventArgs e) => Main?.PasteButtonCommand.Execute(null);
-    void OnReorderScripts(object? sender, RoutedEventArgs e) => Main?.ReorderButtonsCommand.Execute(null);
+    /// <summary>Stretches the cards so every row is filled edge to edge, with as many columns as fit.</summary>
+    void FitCards()
+    {
+        bool compact = Tab?.IsCompact == true;
+        double min = compact ? 215 : 270, gap = compact ? 8 : 10;
+        double avail = ButtonScroll.Bounds.Width - 16; // room for the scrollbar
+        if (avail <= 0) { ButtonScroll.Resources["CardWidth"] = min; return; }
+        int columns = Math.Max(1, (int)(avail / (min + gap)));
+        ButtonScroll.Resources["CardWidth"] = Math.Floor(avail / columns - gap);
+    }
+
+    void WireGrip()
+    {
+        PanelGrip.PointerPressed += (_, e) =>
+        {
+            _dragStart = e.GetPosition(this);
+            _dragStartHeight = ButtonScroll.Bounds.Height;
+            e.Pointer.Capture(PanelGrip);
+        };
+        PanelGrip.PointerMoved += (_, e) =>
+        {
+            if (e.Pointer.Captured != PanelGrip) return;
+            var max = Math.Max(120, Bounds.Height - 160); // always leave room for the output
+            _panelHeight = Math.Clamp(_dragStartHeight + e.GetPosition(this).Y - _dragStart.Y, 70, max);
+            ButtonScroll.MaxHeight = _panelHeight;
+        };
+        PanelGrip.PointerReleased += (_, e) => { if (e.Pointer.Captured == PanelGrip) e.Pointer.Capture(null); };
+        PanelGrip.DoubleTapped += (_, _) => { _panelHeight = DefaultPanelHeight; ButtonScroll.MaxHeight = _panelHeight; };
+    }
 
     MainViewModel? Main => this.FindAncestorOfType<Window>()?.DataContext as MainViewModel;
     TabViewModel? Tab => DataContext as TabViewModel;
@@ -74,8 +108,6 @@ public partial class TabView : UserControl
         if (sender is Button { DataContext: ButtonViewModel button } source && BuildButtonMenu(button) is { } menu)
             menu.Open(source);
     }
-
-    void OnAddScript(object? sender, RoutedEventArgs e) => Main?.AddButtonCommand.Execute(null);
 
     ContextMenu? BuildButtonMenu(ButtonViewModel button)
     {

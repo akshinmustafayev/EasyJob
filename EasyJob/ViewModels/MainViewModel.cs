@@ -515,6 +515,27 @@ public partial class MainViewModel : ObservableObject
         Save();
     }
 
+    // ---------------------------------------------------------------- button size
+
+    string DensityName => (Config.button_density ?? "auto").ToLowerInvariant();
+    public bool IsDensityAuto => DensityName is not ("cards" or "compact");
+    public bool IsDensityCards => DensityName == "cards";
+    public bool IsDensityCompact => DensityName == "compact";
+
+    [RelayCommand]
+    void SetDensity(string? density)
+    {
+        Config.button_density = density ?? "auto";
+        foreach (var t in Tabs) t.RefreshDensity();
+        OnPropertyChanged(nameof(IsDensityAuto));
+        OnPropertyChanged(nameof(IsDensityCards));
+        OnPropertyChanged(nameof(IsDensityCompact));
+        Save();
+    }
+
+    /// <summary>Flips the current tab between compact and comfortable buttons.</summary>
+    [RelayCommand] void ToggleCompact() => SetDensity(SelectedTab?.IsCompact == true ? "cards" : "compact");
+
     [RelayCommand] Task About() => DialogService.ShowAbout();
     [RelayCommand] Task Troubleshooting() => DialogService.ShowTroubleshooting(Config);
     [RelayCommand] void OpenGitHub() => Launcher.Open("https://github.com/akshinmustafayev/EasyJob");

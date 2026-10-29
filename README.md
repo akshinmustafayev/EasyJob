@@ -77,6 +77,7 @@ Script types: `powershell` (`.ps1`), `python` (`.py`, run with `python3 -u`; set
 * Reorder buttons from the _Settings->Workflow->Reorder buttons in current_ tab window
 * Change application settings from the _Settings->Configuration_ window
 * Colored console support
+* Lots of scripts? The **Add script**, **Reorder**, **Paste**, **Filter** (Ctrl/Cmd+F) and **compact view** controls live at the right end of the tab strip, so the whole panel is for buttons. Buttons fill the row width; **View → Button size** picks Comfortable cards, Compact (about twice as many on screen) or Automatic (compact once a tab has more than 12 buttons, saved as `button_density`). Drag the grip under the script area to make it taller or shorter (double-click resets it), or use the filter.
 
 
 ## :hammer: EasyJobPSTools
@@ -119,6 +120,7 @@ Here is an example:
   "console_background": "Black",
   "console_foreground": "White",
   "powershell_native_colors": true,
+  "button_density": "auto",
   "clear_events_when_reload": true,
   "restrictions": {
     "block_tabs_remove": false,

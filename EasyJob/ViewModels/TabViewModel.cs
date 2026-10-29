@@ -35,6 +35,15 @@ public partial class TabViewModel : ObservableObject
     public ObservableCollection<ButtonViewModel> FilteredButtons { get; } = new();
 
     public bool ShowFilter => Buttons.Count > 5;
+
+    /// <summary>Compact buttons: chosen in View → Button size, or automatic once the tab has many buttons.</summary>
+    public bool IsCompact => (MainViewModel.Current?.Config.button_density ?? "auto").ToLowerInvariant() switch
+    {
+        "compact" => true,
+        "cards" => false,
+        _ => Buttons.Count > 12
+    };
+    public void RefreshDensity() => OnPropertyChanged(nameof(IsCompact));
     public bool CanReorder => Buttons.Count > 1;
     public bool NoMatches => HasButtons && FilteredButtons.Count == 0;
 
@@ -68,6 +77,7 @@ public partial class TabViewModel : ObservableObject
     {
         OnPropertyChanged(nameof(HasButtons));
         OnPropertyChanged(nameof(ShowFilter));
+        OnPropertyChanged(nameof(IsCompact));
         OnPropertyChanged(nameof(CanReorder));
         RebuildFiltered();
     }

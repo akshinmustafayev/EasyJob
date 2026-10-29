@@ -53,6 +53,12 @@
           <MenuItem Header="Light" ToggleType="Radio" GroupName="theme" IsChecked="{Binding IsThemeLight, Mode=OneWay}" Command="{Binding SetThemeCommand}" CommandParameter="light"/>
           <MenuItem Header="Dark" ToggleType="Radio" GroupName="theme" IsChecked="{Binding IsThemeDark, Mode=OneWay}" Command="{Binding SetThemeCommand}" CommandParameter="dark"/>
         </MenuItem>
+        <MenuItem Header="Button size">
+          <MenuItem Header="Automatic" ToggleType="Radio" GroupName="density" IsChecked="{Binding IsDensityAuto, Mode=OneWay}" Command="{Binding SetDensityCommand}" CommandParameter="auto"/>
+          <MenuItem Header="Comfortable cards" ToggleType="Radio" GroupName="density" IsChecked="{Binding IsDensityCards, Mode=OneWay}" Command="{Binding SetDensityCommand}" CommandParameter="cards"/>
+          <MenuItem Header="Compact" ToggleType="Radio" GroupName="density" IsChecked="{Binding IsDensityCompact, Mode=OneWay}" Command="{Binding SetDensityCommand}" CommandParameter="compact"/>
+        </MenuItem>
+        <MenuItem x:Name="MenuFilter" Header="Filter scripts" Click="OnFilterMenuClick"/>
         <Separator/>
         <MenuItem Header="Expand all outputs" Command="{Binding ExpandAllCommand}"/>
         <MenuItem Header="Collapse all outputs" Command="{Binding CollapseAllCommand}"/>
@@ -126,6 +132,23 @@
       <!-- tab actions, always at hand at the right end of the tab strip -->
       <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,3,14,0"
                   IsVisible="{Binding HasTabs}">
+        <TextBox x:Name="FilterBox" Width="200" Watermark="Filter scripts…" Text="{Binding SelectedTab.Filter}" IsVisible="False" VerticalAlignment="Center" Margin="0,0,4,0"/>
+        <ToggleButton x:Name="FilterToggle" Classes="flat" IsVisible="{Binding SelectedTab.ShowFilter}" ToolTip.Tip="Filter the scripts of this tab (Ctrl/Cmd+F)">
+          <c:Icon Kind="search" Width="15" Height="15"/>
+        </ToggleButton>
+        <Button x:Name="DensityButton" Classes="flat" Command="{Binding ToggleCompactCommand}" ToolTip.Tip="Compact or comfortable script buttons (View → Button size)">
+          <c:Icon Kind="density" Width="15" Height="15"/>
+        </Button>
+        <Button x:Name="PasteButton" Classes="flat" Command="{Binding PasteButtonCommand}" IsVisible="False" ToolTip.Tip="Paste the copied script button">
+          <c:Icon Kind="paste" Width="15" Height="15"/>
+        </Button>
+        <Button x:Name="ReorderButton" Classes="flat" Command="{Binding ReorderButtonsCommand}" IsVisible="False" ToolTip.Tip="Change the order of the buttons in this tab">
+          <c:Icon Kind="reorder" Width="15" Height="15"/>
+        </Button>
+        <Button x:Name="AddScriptButton" Classes="flat" Command="{Binding AddButtonCommand}" ToolTip.Tip="Add a script button (Ctrl/Cmd+N)">
+          <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="plus"/><TextBlock Text="Add script" FontSize="12.5"/></StackPanel>
+        </Button>
+        <Border Width="1" Margin="4,6" Background="{DynamicResource BorderBrushSoft}"/>
         <Button x:Name="NewTabButton" Classes="flat" Command="{Binding AddTabCommand}" ToolTip.Tip="New tab (Ctrl/Cmd+T)">
           <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="plus"/><TextBlock Text="New tab" FontSize="12.5"/></StackPanel>
         </Button>

@@ -16,6 +16,19 @@
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
       <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
+    <Style Selector="Border.circle">
+      <Setter Property="Width" Value="32"/><Setter Property="Height" Value="32"/><Setter Property="CornerRadius" Value="16"/>
+      <Setter Property="Margin" Value="0,0,11,0"/>
+    </Style>
+        <!-- compact: many small buttons instead of few large cards -->
+    <Style Selector="ScrollViewer.compact Panel.scriptcard"><Setter Property="Margin" Value="0,0,8,8"/></Style>
+    <Style Selector="ScrollViewer.compact Button.script"><Setter Property="Padding" Value="8,6,30,6"/><Setter Property="CornerRadius" Value="8"/></Style>
+    <Style Selector="ScrollViewer.compact Border.circle">
+      <Setter Property="Width" Value="22"/><Setter Property="Height" Value="22"/><Setter Property="CornerRadius" Value="11"/><Setter Property="Margin" Value="0,0,8,0"/>
+    </Style>
+    <Style Selector="ScrollViewer.compact TextBlock.cardtitle"><Setter Property="FontSize" Value="13"/></Style>
+    <Style Selector="ScrollViewer.compact TextBlock.desc"><Setter Property="MaxHeight" Value="0"/></Style>
+    <Style Selector="ScrollViewer.compact Button.more"><Setter Property="Margin" Value="0,3,4,0"/></Style>
     <Style Selector="Button.script:pointerover /template/ ContentPresenter#PART_ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource CardHoverBrush}"/>
       <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
@@ -31,46 +44,31 @@
     <Style Selector="Panel.scriptcard > Button.more:focus"><Setter Property="Opacity" Value="1"/></Style>
   </UserControl.Styles>
 
-  <Grid RowDefinitions="Auto,Auto,*" Margin="20,16,20,12">
-
-    <!-- toolbar -->
-    <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,14">
-      <TextBox x:Name="FilterBox" Width="260" Watermark="Filter scripts…" Text="{Binding Filter}" IsVisible="{Binding ShowFilter}"/>
-      <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
-        <Button x:Name="PasteButton" Click="OnPasteScript" ToolTip.Tip="Paste the copied script button" IsVisible="False">
-          <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="paste"/><TextBlock Text="Paste"/></StackPanel>
-        </Button>
-        <Button x:Name="ReorderButton" Click="OnReorderScripts" ToolTip.Tip="Change the order of the buttons in this tab">
-          <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="reorder"/><TextBlock Text="Reorder"/></StackPanel>
-        </Button>
-        <Button x:Name="AddScriptButton" Classes="primary" Click="OnAddScript" ToolTip.Tip="Add a script button (Ctrl/Cmd+N)">
-          <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="plus" Width="13" Height="13"/><TextBlock Text="Add script"/></StackPanel>
-        </Button>
-      </StackPanel>
-    </Grid>
+  <Grid RowDefinitions="Auto,*" Margin="20,12,20,12">
 
     <!-- scripts -->
-    <Border Grid.Row="1" x:Name="PanelArea" Background="Transparent" PointerReleased="OnPanelReleased">
+    <StackPanel>
+    <Border x:Name="PanelArea" Background="Transparent" PointerReleased="OnPanelReleased">
       <Grid>
-        <ScrollViewer MaxHeight="260" VerticalScrollBarVisibility="Auto" IsVisible="{Binding HasButtons}">
+        <ScrollViewer x:Name="ButtonScroll" MaxHeight="260" VerticalScrollBarVisibility="Auto" IsVisible="{Binding HasButtons}">
           <ItemsControl ItemsSource="{Binding FilteredButtons}">
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
               <DataTemplate x:DataType="vm:ButtonViewModel">
-                <Panel Classes="scriptcard" Width="270" Margin="0,0,10,10">
+                <Panel Classes="scriptcard" Width="{DynamicResource CardWidth}" Margin="0,0,10,10">
                   <Button Classes="script" Click="OnRunClick" PointerReleased="OnButtonReleased" ToolTip.Tip="{Binding Tooltip}">
                     <Grid ColumnDefinitions="Auto,*">
-                      <Border Width="32" Height="32" CornerRadius="16" Background="{DynamicResource AccentBrush}" Margin="0,0,11,0" VerticalAlignment="Center">
+                      <Border Classes="circle" Background="{DynamicResource AccentBrush}" VerticalAlignment="Center">
                         <c:Icon Kind="play" Foreground="White" Width="12" Height="12" Margin="2,0,0,0"/>
                       </Border>
                       <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
-                        <StackPanel Orientation="Horizontal" Spacing="7">
-                          <TextBlock Text="{Binding Text}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" MaxWidth="150"/>
-                          <Border Classes="chip" VerticalAlignment="Center"><TextBlock Text="{Binding TypeBadge}" FontSize="10" FontWeight="SemiBold" Classes="muted"/></Border>
-                        </StackPanel>
-                        <TextBlock Text="{Binding Description}" Classes="muted" FontSize="12" TextTrimming="CharacterEllipsis"
+                        <Grid ColumnDefinitions="*,Auto">
+                          <TextBlock Classes="cardtitle" Text="{Binding Text}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                          <Border Grid.Column="1" Classes="chip" Margin="7,0,0,0" VerticalAlignment="Center"><TextBlock Text="{Binding TypeBadge}" FontSize="10" FontWeight="SemiBold" Classes="muted"/></Border>
+                        </Grid>
+                        <TextBlock Text="{Binding Description}" Classes="muted desc" FontSize="12" TextTrimming="CharacterEllipsis"
                                    IsVisible="{Binding HasDescription}"/>
                       </StackPanel>
                     </Grid>
@@ -95,9 +93,15 @@
         </Border>
       </Grid>
     </Border>
+    <!-- drag to make the script area taller or shorter; double-click resets it -->
+    <Border x:Name="PanelGrip" Height="12" Background="Transparent" Cursor="SizeNorthSouth" IsVisible="{Binding HasButtons}"
+            ToolTip.Tip="Drag to resize the script area (double-click to reset)">
+      <Border Height="3" Width="40" CornerRadius="2" Background="{DynamicResource BorderBrushSoft}" VerticalAlignment="Center"/>
+    </Border>
+    </StackPanel>
 
     <!-- runs -->
-    <Grid Grid.Row="2" RowDefinitions="Auto,*" Margin="0,8,0,0">
+    <Grid Grid.Row="1" RowDefinitions="Auto,*" Margin="0,8,0,0">
       <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,8">
         <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
           <TextBlock Text="OUTPUT" Classes="section" Margin="2,0,0,0" VerticalAlignment="Center"/>
