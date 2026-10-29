@@ -178,10 +178,13 @@ Everything is saved in `config.json` (see [Config location](#computer-requiremen
   "default_powershell_path": "",
   "default_python_path": "",
   "default_shell_path": "",
+  "default_cmd_path": "",
   "powershell_arguments": "",
   "console_background": "#0C0C0C",
   "console_foreground": "#E6E6E6",
   "powershell_native_colors": true,
+  "editor_open_commands_panel": true,
+  "editor_open_terminal": true,
   "theme": "system",
   "button_density": "auto",
   "check_updates_on_startup": true,
@@ -215,10 +218,13 @@ Everything is saved in `config.json` (see [Config location](#computer-requiremen
 }
 ```
 
-* Interpreter paths can be left empty; EasyJob looks for `pwsh`/`powershell`, `python3`/`python` and `/bin/sh` itself.
+* Interpreter paths (`default_powershell_path`, `default_python_path`, `default_shell_path`, `default_cmd_path`) can be left empty; EasyJob looks for `pwsh`/`powershell`, `python3`/`python` and `/bin/sh` itself. `powershell_arguments` are extra arguments passed to PowerShell.
 * `ScriptType` is `powershell`, `python`, `shell` or `cmd`; `ScriptPathType` is `relative` (to the config folder) or `absolute`.
 * `ArgumentQuestion` is the prompt text shown for an argument. Keys written by older versions (`argument_question`, lower-case names) still load.
-* `restrictions` lock down or hide parts of the UI (useful when you hand a prepared config to a team). The full list is in `EasyJob/config.json`.
+* `theme` is `system`, `light` or `dark`; `button_density` is `auto` (compact once a tab has many buttons), `cards` or `compact`.
+* `powershell_native_colors` shows PowerShell's own colors in the output; `console_background` / `console_foreground` take a color name or hex value.
+* `editor_open_commands_panel` and `editor_open_terminal` (both default `true`) decide whether the script editor opens with the side panel and the terminal showing; `check_updates_on_startup` looks for a newer release when EasyJob starts.
+* `restrictions` lock down or hide parts of the UI (useful when you hand a prepared config to a team). The complete list is in [Administration](#lock-administration-restricting-what-users-can-do); `EasyJob/config.json` only lists the first ones.
 * `ID`/`Id` can be any GUID, or left out; EasyJob generates one.
 
 
