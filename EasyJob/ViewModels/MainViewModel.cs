@@ -462,7 +462,7 @@ public partial class MainViewModel : ObservableObject
 
     [RelayCommand] void OpenEditor() => EditorWindow.ShowEditor();
     [RelayCommand] void NewScript() => EditorWindow.ShowEditor(null, EditorLanguage.PowerShell);
-    [RelayCommand] void ShowCommands() => CommandsWindow.ShowCommands();
+    [RelayCommand] void ShowCommands() => EditorWindow.ShowEditor(showCommands: true);
 
     [RelayCommand]
     async Task OpenFileInEditor()

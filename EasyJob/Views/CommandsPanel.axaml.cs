@@ -9,11 +9,9 @@ using EasyJob.ViewModels;
 
 namespace EasyJob.Views;
 
-/// <summary>Browse every cmdlet, function and alias PowerShell knows about, with syntax, description and examples.</summary>
-public partial class CommandsWindow : Window
+/// <summary>Browse every cmdlet, function and alias PowerShell knows about, with syntax, description and examples. Hosted in the script editor.</summary>
+public partial class CommandsPanel : UserControl
 {
-    static CommandsWindow? _instance;
-
     // The command list takes a few seconds to build, so keep it for the whole session.
     static List<PsCommand>? _cache;
 
@@ -21,24 +19,26 @@ public partial class CommandsWindow : Window
     string? _pwsh;
     CancellationTokenSource? _helpCts;
     PsCommandHelp? _help;
+    bool _loaded;
 
-    public static CommandsWindow ShowCommands()
-    {
-        _instance ??= new CommandsWindow();
-        if (!_instance.IsVisible) _instance.Show();
-        _instance.Activate();
-        return _instance;
-    }
+    /// <summary>Raised when the user wants a command name placed in the editor.</summary>
+    public event Action<string>? InsertRequested;
 
-    public CommandsWindow()
+    public CommandsPanel()
     {
         InitializeComponent();
         SearchBox.TextChanged += (_, _) => ApplyFilter();
         TypeBox.SelectionChanged += (_, _) => ApplyFilter();
         CommandList.SelectionChanged += (_, _) => _ = ShowSelectedAsync();
-        Opened += async (_, _) => await LoadAsync(forceReload: false);
-        Closed += (_, _) => { _instance = null; _helpCts?.Cancel(); };
-        KeyDown += (_, e) => { if (e.Key == Key.Escape) Close(); };
+        DetachedFromVisualTree += (_, _) => _helpCts?.Cancel();
+    }
+
+    /// <summary>Loads the command list the first time the panel is shown.</summary>
+    public void EnsureLoaded()
+    {
+        if (_loaded) return;
+        _loaded = true;
+        _ = LoadAsync(forceReload: false);
     }
 
     async Task LoadAsync(bool forceReload)
@@ -168,19 +168,17 @@ public partial class CommandsWindow : Window
 
     async void OnCopyNameClick(object? s, RoutedEventArgs e)
     {
-        if (CommandList.SelectedItem is PsCommand c && Clipboard != null) await Clipboard.SetTextAsync(c.Name);
+        if (CommandList.SelectedItem is PsCommand c && TopLevel.GetTopLevel(this)?.Clipboard is { } cb) await cb.SetTextAsync(c.Name);
     }
 
     async void OnCopySyntaxClick(object? s, RoutedEventArgs e)
     {
-        if (_help?.Syntax is { Length: > 0 } syntax && Clipboard != null) await Clipboard.SetTextAsync(syntax);
+        if (_help?.Syntax is { Length: > 0 } syntax && TopLevel.GetTopLevel(this)?.Clipboard is { } cb) await cb.SetTextAsync(syntax);
     }
 
     void OnInsertClick(object? s, RoutedEventArgs e)
     {
-        if (CommandList.SelectedItem is not PsCommand c) return;
-        EditorWindow.ShowEditor();
-        EditorWindow.Current?.InsertText(c.Name);
+        if (CommandList.SelectedItem is PsCommand c) InsertRequested?.Invoke(c.Name);
     }
 
     void OnItemDoubleTapped(object? s, TappedEventArgs e) => OnInsertClick(s, e);

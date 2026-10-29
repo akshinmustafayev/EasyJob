@@ -27,7 +27,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="18,0,0,0">
-          <Button x:Name="RunButton" Classes="primary" Click="OnRunClick" ToolTip.Tip="Save and run (F5)">
+          <Button x:Name="RunButton" Classes="primary" Click="OnRunClick" ToolTip.Tip="Run what is in the editor, without saving (F5)">
             <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="play" Width="11" Height="11"/><TextBlock Text="Run"/></StackPanel>
           </Button>
           <Button x:Name="StopButton" Click="OnStopClick" IsVisible="False" ToolTip.Tip="Stop the running script">
@@ -39,9 +39,9 @@
         <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="8">
           <ComboBox x:Name="LanguageBox" Width="150" ToolTip.Tip="Language used for syntax coloring and running"/>
           <ToggleButton x:Name="WrapToggle" Content="Wrap" ToolTip.Tip="Wrap long lines" MinHeight="34" Padding="12,0" CornerRadius="8"/>
-          <Button Click="OnCommandsClick" ToolTip.Tip="Browse PowerShell commands (Ctrl/Cmd+Shift+P)">
+          <ToggleButton x:Name="CommandsToggle" IsCheckedChanged="OnCommandsToggled" MinHeight="34" Padding="12,0" CornerRadius="8" ToolTip.Tip="Show or hide the PowerShell command browser (Ctrl/Cmd+Shift+P)">
             <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="list"/><TextBlock Text="Commands"/></StackPanel>
-          </Button>
+          </ToggleButton>
         </StackPanel>
       </Grid>
     </Border>
@@ -56,6 +56,7 @@
       </Grid>
     </Border>
 
+    <Grid ColumnDefinitions="*,Auto,Auto">
     <Grid x:Name="Body" RowDefinitions="Auto,*,Auto,0">
       <!-- open documents -->
       <ListBox x:Name="DocList" Grid.Row="0" Background="Transparent" Padding="6,4,6,0"
@@ -109,6 +110,14 @@
           </ItemsControl>
         </ScrollViewer>
       </Grid>
+    </Grid>
+
+    <!-- PowerShell command browser -->
+    <GridSplitter x:Name="SideSplitter" Grid.Column="1" Width="5" VerticalAlignment="Stretch" Background="Transparent" IsVisible="False" ResizeDirection="Columns"/>
+    <Border x:Name="SidePanel" Grid.Column="2" Width="380" MinWidth="260" IsVisible="False"
+            BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="1,0,0,0">
+      <views:CommandsPanel x:Name="Commands"/>
+    </Border>
     </Grid>
   </DockPanel>
 </Window>

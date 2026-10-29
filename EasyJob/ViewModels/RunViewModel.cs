@@ -38,7 +38,7 @@ public partial class RunViewModel : ObservableObject
 
     public TabViewModel Tab { get; }
     public string Title { get; }
-    public string ScriptName { get; }
+    public string ScriptName { get; set; }
     public string ScriptType { get; }
     public DateTime Started { get; }
     public ConfigButton Button => _button;

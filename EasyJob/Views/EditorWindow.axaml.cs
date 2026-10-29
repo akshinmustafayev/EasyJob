@@ -28,6 +28,8 @@ public partial class EditorWindow : Window
     readonly TabViewModel _runs = new(new ConfigTab { Header = "Editor" });
     readonly RegistryOptions _registry = new(ThemeName.DarkPlus);
     readonly TextMate.Installation _textMate;
+    static bool _sideOpen = true;
+    readonly List<string> _tempFiles = new();
     bool _switching;
     bool _closeConfirmed;
     EditorDocument? _current_doc;
@@ -35,11 +37,12 @@ public partial class EditorWindow : Window
     public bool HasUnsaved => _docs.Any(d => d.IsDirty);
 
     /// <summary>Opens the editor (or brings it to the front) and shows <paramref name="path"/>, or a new script if null.</summary>
-    public static EditorWindow ShowEditor(string? path = null, EditorLanguage? newLanguage = null)
+    public static EditorWindow ShowEditor(string? path = null, EditorLanguage? newLanguage = null, bool showCommands = false)
     {
         var window = _current ?? new EditorWindow();
         if (!window.IsVisible) window.Show();
         window.Activate();
+        if (showCommands) window.CommandsToggle.IsChecked = true;
         if (path != null) window.OpenFile(path);
         else if (newLanguage != null) window.NewDocument(newLanguage);
         return window;
@@ -82,10 +85,18 @@ public partial class EditorWindow : Window
         Key(Avalonia.Input.Key.W, mod, () => _ = CloseDocumentAsync(_current_doc));
         Key(Avalonia.Input.Key.N, mod, () => NewDocument(_current_doc?.Language.CanRun == true ? _current_doc.Language : EditorLanguage.PowerShell));
         Key(Avalonia.Input.Key.F5, KeyModifiers.None, () => _ = RunAsync());
-        Key(Avalonia.Input.Key.P, mod | KeyModifiers.Shift, OpenCommands);
+        Key(Avalonia.Input.Key.P, mod | KeyModifiers.Shift, () => CommandsToggle.IsChecked = CommandsToggle.IsChecked != true);
+
+        Commands.InsertRequested += name => InsertText(name);
+        CommandsToggle.IsChecked = _sideOpen;
+        ShowCommandsPanel(_sideOpen);
 
         ApplyTheme();
-        Closed += (_, _) => { if (_current == this) _current = null; };
+        Closed += (_, _) =>
+        {
+            if (_current == this) _current = null;
+            foreach (var f in _tempFiles) try { File.Delete(f); } catch { }
+        };
         SelectDocument(null);
     }
 
@@ -312,23 +323,63 @@ public partial class EditorWindow : Window
         var doc = _current_doc;
         if (doc == null || !doc.Language.CanRun || _runs.Runs.Any(r => r.IsRunning) || MainViewModel.Current is not { } main) return;
 
-        if (doc.Path == null || doc.IsDirty)
-            if (!await SaveAsync(doc)) return;
+        // Run exactly what is in the editor. A file that is saved and unchanged runs in place; otherwise the
+        // text goes to a temporary copy (beside the file when possible, so relative paths keep working).
+        string scriptPath;
+        try { scriptPath = doc.Path != null && !doc.IsDirty ? doc.Path : WriteTempCopy(doc); }
+        catch (Exception ex)
+        {
+            await DialogService.ShowMessage("Could not run script", ex.Message);
+            return;
+        }
 
         var button = new ConfigButton
         {
             Text = doc.Title,
-            Script = doc.Path!,
+            Script = scriptPath,
             ScriptPathType = "absolute",
             ScriptType = doc.Language.ScriptType!
         };
         foreach (var other in _runs.Runs.Where(r => r.IsFinished)) other.IsExpanded = false;
         var args = string.IsNullOrWhiteSpace(ArgsBox.Text) ? Array.Empty<string>() : new[] { ArgsBox.Text! };
-        var run = new RunViewModel(main, _runs, button, args);
+        var run = new RunViewModel(main, _runs, button, args)
+        {
+            ScriptName = scriptPath == doc.Path ? Path.GetFileName(scriptPath) : (doc.Path != null ? Path.GetFileName(doc.Path) + " (unsaved changes)" : "unsaved")
+        };
         _runs.Runs.Insert(0, run);
         run.PropertyChanged += (_, e) => { if (e.PropertyName == nameof(RunViewModel.Status)) Dispatcher.UIThread.Post(UpdateRunButtons); };
         _ = run.StartAsync();
         UpdateRunButtons();
+    }
+
+    string WriteTempCopy(EditorDocument doc)
+    {
+        var ext = doc.Language.Extensions[0];
+        var name = $".easyjob-run-{Guid.NewGuid():N}{ext}";
+        var text = doc.Document.Text;
+        var enc = new UTF8Encoding(doc.HasBom);
+        string path;
+        try
+        {
+            if (doc.Path == null) throw new InvalidOperationException();
+            path = Path.Combine(Path.GetDirectoryName(doc.Path)!, name);
+            File.WriteAllText(path, text, enc);
+        }
+        catch
+        {
+            path = Path.Combine(Path.GetTempPath(), name);
+            File.WriteAllText(path, text, enc);
+        }
+        _tempFiles.Add(path);
+        return path;
+    }
+
+    void ShowCommandsPanel(bool show)
+    {
+        _sideOpen = show;
+        SidePanel.IsVisible = show;
+        SideSplitter.IsVisible = show;
+        if (show) Commands.EnsureLoaded();
     }
 
     void ShowOutput(bool show)
@@ -361,8 +412,7 @@ public partial class EditorWindow : Window
     void OnSaveClick(object? sender, RoutedEventArgs e) => _ = SaveAsync(_current_doc);
     void OnRunClick(object? sender, RoutedEventArgs e) => _ = RunAsync();
     void OnStopClick(object? sender, RoutedEventArgs e) { foreach (var r in _runs.Runs.Where(r => r.IsRunning)) r.Stop(); }
-    void OnCommandsClick(object? sender, RoutedEventArgs e) => OpenCommands();
-    void OpenCommands() => CommandsWindow.ShowCommands();
+    void OnCommandsToggled(object? sender, RoutedEventArgs e) => ShowCommandsPanel(CommandsToggle.IsChecked == true);
     void OnHideOutputClick(object? sender, RoutedEventArgs e) => ShowOutput(false);
     void OnClearOutputClick(object? sender, RoutedEventArgs e)
     {
