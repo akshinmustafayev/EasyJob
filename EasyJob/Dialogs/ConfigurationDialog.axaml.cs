@@ -33,6 +33,7 @@ public partial class ConfigurationDialog : Window
         ConsoleBackgroundBox.Text = config.console_background;
         ConsoleForegroundBox.Text = config.console_foreground;
         NativeColors.IsChecked = config.powershell_native_colors;
+        CheckUpdates.IsChecked = config.check_updates_on_startup;
         ClearEvents.IsChecked = config.clear_events_when_reload;
 
         // cmd.exe only exists on Windows; the POSIX shell setting only matters elsewhere.
@@ -125,6 +126,7 @@ public partial class ConfigurationDialog : Window
         _config.console_background = ConsoleBackgroundBox.Text?.Trim() ?? "";
         _config.console_foreground = ConsoleForegroundBox.Text?.Trim() ?? "";
         _config.powershell_native_colors = NativeColors.IsChecked == true;
+        _config.check_updates_on_startup = CheckUpdates.IsChecked == true;
         _config.clear_events_when_reload = ClearEvents.IsChecked == true;
         foreach (var (p, box) in _restrictions) p.SetValue(_config.restrictions, box.IsChecked == true);
         Close(true);

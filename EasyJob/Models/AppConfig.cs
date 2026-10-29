@@ -16,6 +16,8 @@ public class AppConfig
     /// <summary>"system", "light" or "dark".</summary>
     public string theme { get; set; } = "system";
     /// <summary>Script button size: auto (compact once a tab has many buttons), cards or compact.</summary>
+    /// <summary>Look for a newer EasyJob release on GitHub when the app starts.</summary>
+    public bool check_updates_on_startup { get; set; } = true;
     public string button_density { get; set; } = "auto";
     public ConfigRestrictions restrictions { get; set; } = new();
     public List<ConfigTab> tabs { get; set; } = new();

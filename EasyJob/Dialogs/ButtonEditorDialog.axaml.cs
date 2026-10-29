@@ -61,10 +61,10 @@ public partial class ButtonEditorDialog : Window
 
     void AddRow(string question, string answer)
     {
-        var box = new TextBox { Text = question, Watermark = "Question, e.g. Enter the server name" };
+        var box = new TextBox { Text = question, Watermark = "Prompt, e.g. Enter the server name" };
         var remove = new Button { Content = new Icon { Kind = "trash" }, Margin = new Avalonia.Thickness(8, 0, 0, 0) };
         remove.Classes.Add("flat");
-        ToolTip.SetTip(remove, "Remove question");
+        ToolTip.SetTip(remove, "Remove argument");
         var row = new Grid { ColumnDefinitions = new ColumnDefinitions("*,Auto") };
         row.Children.Add(box);
         Grid.SetColumn(remove, 1);

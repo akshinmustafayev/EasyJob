@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:c="using:EasyJob.Controls"
+        x:Class="EasyJob.Dialogs.UpdateDialog"
+        Title="Update EasyJob" Classes="dialog" Width="560" Height="520" CanResize="True" MinHeight="380">
+  <c:DialogShell x:Name="Shell">
+    <Grid RowDefinitions="Auto,*,Auto">
+      <TextBlock Grid.Row="0" Text="WHAT'S NEW" Classes="section" Margin="2,0,0,6"/>
+      <Border Grid.Row="1" Classes="card" Padding="2">
+        <ScrollViewer>
+          <SelectableTextBlock x:Name="Notes" TextWrapping="Wrap" Margin="12" LineHeight="19"/>
+        </ScrollViewer>
+      </Border>
+      <StackPanel Grid.Row="2" Margin="0,14,0,0" Spacing="6">
+        <ProgressBar x:Name="Progress" Minimum="0" Maximum="1" IsVisible="False"/>
+        <TextBlock x:Name="Status" TextWrapping="Wrap" Classes="muted"/>
+      </StackPanel>
+    </Grid>
+    <c:DialogShell.Footer>
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Button x:Name="PageButton" Content="Release page" Click="OnPage"/>
+        <Button x:Name="LaterButton" Content="Later" MinWidth="90" Click="OnLater"/>
+        <Button x:Name="InstallButton" Classes="primary" Content="Update and restart" MinWidth="150" IsDefault="True" Click="OnInstall"/>
+      </StackPanel>
+    </c:DialogShell.Footer>
+  </c:DialogShell>
+</Window>

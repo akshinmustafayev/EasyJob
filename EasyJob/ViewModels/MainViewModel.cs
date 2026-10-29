@@ -93,6 +93,7 @@ public partial class MainViewModel : ObservableObject
         try
         {
             LoadConfig(keepSelection: false);
+            if (Config.check_updates_on_startup) _ = CheckUpdatesQuietlyAsync();
         }
         catch (Exception ex)
         {
@@ -513,6 +514,85 @@ public partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(IsThemeLight));
         OnPropertyChanged(nameof(IsThemeDark));
         Save();
+    }
+
+    // ---------------------------------------------------------------- updates
+
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(IsUpdateAvailable), nameof(UpdateText))]
+    UpdateInfo? _update;
+
+    public bool IsUpdateAvailable => Update != null;
+    public string UpdateText => Update == null ? "" : "Update to " + Update.VersionText;
+
+    async Task CheckUpdatesQuietlyAsync()
+    {
+        try
+        {
+            if (await UpdateService.CheckAsync() is { } found)
+            {
+                Update = found;
+                Log($"EasyJob {found.VersionText} is available");
+            }
+        }
+        catch { /* offline or rate limited: stay quiet at startup */ }
+    }
+
+    [RelayCommand]
+    async Task CheckForUpdates()
+    {
+        try
+        {
+            StatusText = "Checking for updates…";
+            var found = await UpdateService.CheckAsync();
+            StatusText = "";
+            if (found == null)
+            {
+                Update = null;
+                await DialogService.ShowMessage("You are up to date", $"EasyJob {UpdateService.Format(UpdateService.CurrentVersion)} is the latest version.");
+                return;
+            }
+            Update = found;
+            await InstallUpdate();
+        }
+        catch (Exception ex)
+        {
+            StatusText = "";
+            await DialogService.ShowMessage("Could not check for updates", ex.Message);
+        }
+    }
+
+    [RelayCommand]
+    async Task InstallUpdate()
+    {
+        if (Update is not { } update) return;
+        if (EditorWindow.Current is { HasUnsaved: true })
+        {
+            await DialogService.ShowMessage("Unsaved changes", "Save or close the files in the script editor first, then update.");
+            return;
+        }
+
+        var staged = await DialogService.ShowUpdate(update);
+        if (staged == null) return;
+
+        var running = Tabs.SelectMany(t => t.Runs).Where(r => r.IsRunning).ToList();
+        if (running.Count > 0)
+        {
+            var ok = await DialogService.Confirm("Scripts are still running",
+                $"{running.Count} script(s) are still running. They are stopped when EasyJob restarts to update.", "Stop and update");
+            if (!ok) { UpdateService.Discard(staged); return; }
+            foreach (var r in running) r.Stop();
+        }
+
+        try
+        {
+            UpdateService.StartInstaller(staged);
+            App.Shutdown();
+        }
+        catch (Exception ex)
+        {
+            UpdateService.Discard(staged);
+            await DialogService.ShowMessage("Could not start the update", ex.Message);
+        }
     }
 
     // ---------------------------------------------------------------- button size

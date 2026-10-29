@@ -1,7 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:c="using:EasyJob.Controls"
         x:Class="EasyJob.Dialogs.ButtonEditorDialog"
         Classes="dialog" Width="600" Height="680" SizeToContent="Manual" CanResize="True" MinHeight="520" MinWidth="520">
-  <c:DialogShell x:Name="Shell" Subheading="A button runs one script. Add questions if it needs input each time.">
+  <c:DialogShell x:Name="Shell" Subheading="A button runs one script. Add arguments if it needs input each time.">
     <ScrollViewer>
       <StackPanel Margin="0,0,12,0">
         <StackPanel Classes="labelrow first"><TextBlock Classes="label" Text="Name"/><c:HelpButton Topic="HelpAddActionButtonText"/></StackPanel>
@@ -38,11 +38,11 @@
           </StackPanel>
         </Grid>
 
-        <StackPanel Classes="labelrow" Margin="0,22,0,5"><TextBlock Classes="label" Text="Questions"/><c:HelpButton Topic="HelpAddActionButtonArguments"/></StackPanel>
-        <TextBlock Classes="hint" Margin="0,0,0,8" Text="Each question is asked before the script runs. Answers are passed to the script as arguments, in this order."/>
+        <StackPanel Classes="labelrow" Margin="0,22,0,5"><TextBlock Classes="label" Text="Arguments"/><c:HelpButton Topic="HelpAddActionButtonArguments"/></StackPanel>
+        <TextBlock Classes="hint" Margin="0,0,0,8" Text="Each argument is asked for before the script runs, and what you type is passed to the script in this order."/>
         <StackPanel x:Name="ArgRows" Spacing="8"/>
         <Button Click="OnAddArgument" Margin="0,8,0,0" HorizontalAlignment="Left">
-          <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="plus"/><TextBlock Text="Add question"/></StackPanel>
+          <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="plus"/><TextBlock Text="Add argument"/></StackPanel>
         </Button>
       </StackPanel>
     </ScrollViewer>

@@ -33,7 +33,7 @@
 	<item>
 		<name>HelpAddActionButtonArguments</name>
 		<heading>Arguments</heading>
-		<description>Questions asked before the script runs. Your answers are passed to the script as arguments, in this order.&#10;&#10;Example: "Please specify server DNS name or IP address"</description>
+		<description>Arguments the script needs. Each one is asked for before the script runs (with the prompt text you write), and what you type is passed to the script, in this order.&#10;&#10;Example: "Please specify server DNS name or IP address"</description>
 		<used>Adding button</used>
 	</item>
 	<item>
@@ -70,6 +70,12 @@
 		<name>HelpConfigurationPowerShellNativeColors</name>
 		<heading>PowerShell's own colors</heading>
 		<description>Show the colors PowerShell itself produces: red errors, table headers, and Write-Host -ForegroundColor / -BackgroundColor. Turn it off to run scripts with plain -File and no color handling.&#10;&#10;Example: Yes</description>
+		<used>Configuration</used>
+	</item>
+	<item>
+		<name>HelpConfigurationCheckUpdates</name>
+		<heading>Check for updates</heading>
+		<description>Look for a newer EasyJob release on GitHub each time the app starts. When there is one, an Update button appears in the menu bar. You can also use Help -&gt; Check for updates at any time.&#10;&#10;Example: Yes</description>
 		<used>Configuration</used>
 	</item>
 	<item>

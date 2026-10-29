@@ -88,7 +88,7 @@ public partial class MainWindow : Window
 
     void OpenFilter()
     {
-        if (_vm.SelectedTab is { ShowFilter: true }) { FilterToggle.IsChecked = true; FilterBox.Focus(); FilterBox.SelectAll(); }
+        if (_vm.SelectedTab is { HasButtons: true }) { FilterToggle.IsChecked = true; FilterBox.Focus(); FilterBox.SelectAll(); }
     }
 
     void OnFilterMenuClick(object? sender, RoutedEventArgs e) => OpenFilter();

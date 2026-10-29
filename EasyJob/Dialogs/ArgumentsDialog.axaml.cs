@@ -5,7 +5,7 @@ using EasyJob.Models;
 
 namespace EasyJob.Dialogs;
 
-/// <summary>Asks the questions configured on a button and returns the answers in order.</summary>
+/// <summary>Asks for the arguments configured on a button and returns the values in order.</summary>
 public partial class ArgumentsDialog : Window
 {
     readonly List<TextBox> _inputs = new();

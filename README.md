@@ -76,6 +76,7 @@ Script types: `powershell` (`.ps1`), `python` (`.py`, run with `python3 -u`; set
 * Remove Add buttons from the _Settings->Workflow->Add button to current_ tab window
 * Reorder buttons from the _Settings->Workflow->Reorder buttons in current_ tab window
 * Change application settings from the _Settings->Configuration_ window
+* **Updates**: EasyJob checks the GitHub releases when it starts (switch it off in Configuration, or use Help → Check for updates). When a newer release exists an **Update to x.y.z** button appears in the menu bar; it downloads the release zip, shows the release notes, then restarts into the new version and keeps your `config.json`. Each release must carry a `.zip`; if there are several, the one whose name contains your OS (`win`, `osx`/`macos`, `linux`) and CPU (`x64`, `arm64`) is used. The app folder must be writable, and a `dotnet run` development run cannot update itself.
 * Colored console support
 * Lots of scripts? The **Add script**, **Reorder**, **Paste**, **Filter** (Ctrl/Cmd+F) and **compact view** controls live at the right end of the tab strip, so the whole panel is for buttons. Buttons fill the row width; **View → Button size** picks Comfortable cards, Compact (about twice as many on screen) or Automatic (compact once a tab has more than 12 buttons, saved as `button_density`). Drag the grip under the script area to make it taller or shorter (double-click resets it), or use the filter.
 
@@ -121,6 +122,7 @@ Here is an example:
   "console_foreground": "White",
   "powershell_native_colors": true,
   "button_density": "auto",
+  "check_updates_on_startup": true,
   "clear_events_when_reload": true,
   "restrictions": {
     "block_tabs_remove": false,

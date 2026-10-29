@@ -52,6 +52,8 @@ public static class DialogService
     public static async Task<bool> EditConfiguration(AppConfig config) =>
         await Show<bool>(new ConfigurationDialog(config));
 
+    public static Task<StagedUpdate?> ShowUpdate(UpdateInfo update) => Show<StagedUpdate>(new UpdateDialog(update));
+
     public static Task ShowAbout() => Show<bool>(new AboutDialog());
     public static Task ShowTroubleshooting(AppConfig config) => Show<bool>(new TroubleshootingDialog(config));
 }

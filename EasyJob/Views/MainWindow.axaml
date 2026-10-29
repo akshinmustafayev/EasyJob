@@ -11,7 +11,8 @@
         WindowStartupLocation="CenterScreen">
 
   <DockPanel>
-    <Menu DockPanel.Dock="Top">
+    <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto">
+    <Menu>
       <MenuItem Header="_File">
         <MenuItem x:Name="MenuNewScript" Header="New script…" Command="{Binding NewScriptCommand}"/>
         <MenuItem x:Name="MenuOpenFile" Header="Open file in editor…" Command="{Binding OpenFileInEditorCommand}"/>
@@ -70,10 +71,18 @@
       <MenuItem Header="_Help" IsVisible="{Binding ShowHelp}">
         <MenuItem Header="Troubleshooting" Command="{Binding TroubleshootingCommand}" IsVisible="{Binding ShowTroubleshooting}"/>
         <Separator/>
+        <MenuItem Header="{Binding UpdateText}" Command="{Binding InstallUpdateCommand}" IsVisible="{Binding IsUpdateAvailable}"/>
+        <MenuItem Header="Check for updates…" Command="{Binding CheckForUpdatesCommand}"/>
+        <Separator/>
         <MenuItem Header="Project on GitHub" Command="{Binding OpenGitHubCommand}"/>
         <MenuItem Header="About EasyJob" Command="{Binding AboutCommand}" IsVisible="{Binding ShowAbout}"/>
       </MenuItem>
     </Menu>
+    <Button Grid.Column="1" Classes="primary" Command="{Binding InstallUpdateCommand}" IsVisible="{Binding IsUpdateAvailable}"
+            Margin="0,3,10,3" Padding="12,3" MinHeight="26" ToolTip.Tip="A new version of EasyJob is available">
+      <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="up" Width="12" Height="12" Foreground="White"/><TextBlock Text="{Binding UpdateText}" FontSize="12.5"/></StackPanel>
+    </Button>
+    </Grid>
 
     <!-- status bar -->
     <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="0,1,0,0" Padding="8,4">
@@ -133,7 +142,7 @@
       <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,3,14,0"
                   IsVisible="{Binding HasTabs}">
         <TextBox x:Name="FilterBox" Width="200" Watermark="Filter scripts…" Text="{Binding SelectedTab.Filter}" IsVisible="False" VerticalAlignment="Center" Margin="0,0,4,0"/>
-        <ToggleButton x:Name="FilterToggle" Classes="flat" IsVisible="{Binding SelectedTab.ShowFilter}" ToolTip.Tip="Filter the scripts of this tab (Ctrl/Cmd+F)">
+        <ToggleButton x:Name="FilterToggle" Classes="flat" IsVisible="{Binding HasSelectedTab}" IsEnabled="{Binding SelectedTab.HasButtons}" ToolTip.Tip="Filter the scripts of this tab (Ctrl/Cmd+F)">
           <c:Icon Kind="search" Width="15" Height="15"/>
         </ToggleButton>
         <Button x:Name="DensityButton" Classes="flat" Command="{Binding ToggleCompactCommand}" ToolTip.Tip="Compact or comfortable script buttons (View → Button size)">
