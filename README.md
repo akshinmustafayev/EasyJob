@@ -22,6 +22,17 @@
 EasyJob - keep and execute your PowerShell, Python, shell and BAT scripts from one interface. Runs on **Windows, macOS and Linux**.
 
 
+<p align="center">
+  <img src="assets/screenshots/main-light.png" alt="EasyJob: script buttons on top, one output card per run below" width="900"/>
+</p>
+
+Every run gets its own card (status, duration, PID, its own output, Stop / Run again), so scripts running at the same time never mix. The same app also comes in a dark theme:
+
+<p align="center">
+  <img src="assets/screenshots/main-dark.png" alt="EasyJob in the dark theme" width="900"/>
+</p>
+
+
 ## :rocket: What's new in 2.0
 * Rebuilt on **.NET 10** and [Avalonia UI](https://avaloniaui.net), so the same app runs on Windows, macOS and Linux.
 * A new **run panel** replaces the old rich-text console. Every execution gets its own card with status, duration, PID, its own output, and *Stop* / *Run again* / *Copy* / *Collapse* actions. Running several scripts at once no longer mixes their output.
@@ -54,31 +65,48 @@ Script types: `powershell` (`.ps1`), `python` (`.py`, run with `python3 -u`; set
 
 
 ## :abacus: Features
-* _Remove_, _Edit_ or _Copy_ button from the GUI by right mouse click on it and then select item in the context menu. Settings are automatically will be saved to your config.json file.
 
-![image](https://raw.githubusercontent.com/akshinmustafayev/EasyJob/main/ej/feature1_1_9_0.png)
+### Buttons and tabs
+* **Add script** (Ctrl/Cmd+N), **Reorder**, **Paste** and **Filter** (Ctrl/Cmd+F) are at the right end of the tab strip. Right-click a button for _Run in tab_, _Edit in script editor_, _Open with default app_, _Show in folder_, _Edit_, _Copy_ and _Remove_; right-click a tab to rename, remove or reorder it. Everything is saved to your `config.json` as you go.
+* **Drag and drop** script buttons and tabs to reorder them.
+* **Ctrl/Cmd + click** a button to show its script in your file manager, **Shift + click** to open it in the script editor.
 
+<p align="center">
+  <img src="assets/screenshots/add-script.png" alt="Add script dialog with arguments" height="420"/>
+  <img src="assets/screenshots/arguments-prompt.png" alt="The prompt a button with arguments shows before it runs" height="200"/>
+</p>
 
-* _Remove_, _Rename_ or _Add_ tab from the GUI by right mouse click on it and then select Remove Tab in the context menu. Settings are automatically will be saved to your config.json file.
+* **Arguments**: a button can ask for input every time it runs. Each argument has a prompt; what you type is passed to the script, in order.
 
-![image](https://raw.githubusercontent.com/akshinmustafayev/EasyJob/main/ej/feature2_1_1_5.png)
+### Lots of scripts
+Buttons fill the row width. **View → Button size** switches between comfortable cards, a compact layout (about twice as many on screen) and Automatic (compact once a tab has more than 12 buttons; saved as `button_density`). Drag the grip under the script area to make it taller or shorter (double-click resets it), or use the filter.
 
+<p align="center">
+  <img src="assets/screenshots/many-scripts.png" alt="30 scripts in compact mode" width="900"/>
+</p>
 
-* _Add_ or _Paste_ button from the GUI by right mouse click on button bar.
+### Script editor
+Tools → Script editor (or Shift+click a button): tabs, syntax coloring for PowerShell, Python, shell, batch, JSON, YAML, XML and Markdown (follows the theme), find, and **Run (F5)** with live output under the editor. Run uses exactly what is in the editor, so you do not have to save first. The PowerShell command browser docks on the right (Commands button, Ctrl/Cmd+Shift+P).
 
-![image](https://raw.githubusercontent.com/akshinmustafayev/EasyJob/main/ej/feature3_1_1_9_0.PNG)
+<p align="center">
+  <img src="assets/screenshots/script-editor.png" alt="Script editor with a finished run" width="900"/>
+</p>
 
+### Menus and shortcuts
+File, Tabs, Scripts, Tools, View and Help, with the shortcut next to each item. View has the theme (system, light, dark), button size, filter, expand/collapse outputs and the event log.
 
-* Reorder Tabs from the _Settings->Workflow->Reorder_ tabs window
-* Add Tabs from the _Settings->Workflow->Add tab_ window
-* Rename Tabs from the _Settings->Workflow->Remove current tab_ window
-* Remove Tabs from the _Settings->Workflow->Rename current tab_ window
-* Remove Add buttons from the _Settings->Workflow->Add button to current_ tab window
-* Reorder buttons from the _Settings->Workflow->Reorder buttons in current_ tab window
-* Change application settings from the _Settings->Configuration_ window
-* **Updates**: EasyJob checks the GitHub releases when it starts (switch it off in Configuration, or use Help → Check for updates). When a newer release exists an **Update to x.y.z** button appears in the menu bar; it downloads the release zip, shows the release notes, then restarts into the new version and keeps your `config.json`. Each release must carry a `.zip`; if there are several, the one whose name contains your OS (`win`, `osx`/`macos`, `linux`) and CPU (`x64`, `arm64`) is used. The app folder must be writable, and a `dotnet run` development run cannot update itself.
-* Colored console support
-* Lots of scripts? The **Add script**, **Reorder**, **Paste**, **Filter** (Ctrl/Cmd+F) and **compact view** controls live at the right end of the tab strip, so the whole panel is for buttons. Buttons fill the row width; **View → Button size** picks Comfortable cards, Compact (about twice as many on screen) or Automatic (compact once a tab has more than 12 buttons, saved as `button_density`). Drag the grip under the script area to make it taller or shorter (double-click resets it), or use the filter.
+<p align="center">
+  <img src="assets/screenshots/menu-view.png" alt="The View menu" width="700"/>
+</p>
+
+### Colors
+Output colors are whatever your script or tool prints: ANSI colors (git, dotnet, npm, Python, ...) and, for PowerShell, its own colors (errors, tables, `Write-Host -ForegroundColor`). The option "Use PowerShell's own colors in output" in Tools → Configuration controls the PowerShell part.
+
+### Updates
+EasyJob checks the GitHub releases when it starts (switch it off in Configuration, or use Help → Check for updates). When a newer release exists an **Update to x.y.z** button appears in the menu bar; it downloads the release zip, shows the release notes, then restarts into the new version and keeps your `config.json`. Each release must carry a `.zip`; if there are several, the one whose name contains your OS (`win`, `osx`/`macos`, `linux`) and CPU (`x64`, `arm64`) is used. The app folder must be writable, and a `dotnet run` development run cannot update itself.
+
+### Troubleshooting
+Help → Troubleshooting lists your system, runtime, config (including script files that are missing), interpreters, environment and recent events, with a copy button for bug reports.
 
 
 ## :hammer: EasyJobPSTools
@@ -109,115 +137,43 @@ Cancelling gives an empty result (`""`, an empty array, or `$false`); add `-Thro
 
 ## :gear: Configuration
 
-Configuration could be done from config.json file located with the app executable.
+Everything is saved in `config.json` (see [Config location](#computer-requirements-and-running)); you can edit it by hand or use Tools → Configuration and the dialogs. A trimmed example:
 
-Here is an example:
-
-```
+```json
 {
-  "default_powershell_path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-  "default_cmd_path": "C:\\Windows\\System32\\cmd.exe",
+  "default_powershell_path": "",
+  "default_python_path": "",
+  "default_shell_path": "",
   "powershell_arguments": "",
-  "console_background": "Black",
-  "console_foreground": "White",
+  "console_background": "#0C0C0C",
+  "console_foreground": "#E6E6E6",
   "powershell_native_colors": true,
+  "theme": "system",
   "button_density": "auto",
   "check_updates_on_startup": true,
   "clear_events_when_reload": true,
   "restrictions": {
     "block_tabs_remove": false,
     "block_buttons_remove": false,
-    "block_tabs_add": false,
     "block_buttons_add": false,
-    "block_buttons_reorder": false,
-    "block_buttons_edit": false,
-    "block_tabs_rename": false,
-    "block_buttons_paste": false,
-    "block_buttons_copy": false,
-    "hide_menu_item_file_reload_config": false,
-    "hide_menu_item_file_open_app_folder": false,
-    "hide_menu_item_file_clear_events_list": false,
-    "hide_menu_item_settings": false,
-    "hide_menu_item_settings_workflow": false,
-    "hide_menu_item_settings_workflow_reorder_tabs": false,
-    "hide_menu_item_settings_workflow_add_tab": false,
-    "hide_menu_item_settings_workflow_remove_current_tab": false,
-    "hide_menu_item_settings_workflow_rename_current_tab": false,
-    "hide_menu_item_settings_workflow_add_button_to_current_tab": false,
-    "hide_menu_item_settings_workflow_reorder_buttons_in_current_tab": false,
-    "hide_menu_item_settings_configuration": false,
-    "hide_menu_item_help": false,
-    "hide_menu_item_help_troubleshooting": false,
-    "hide_menu_item_help_about": false
+    "hide_menu_item_settings_configuration": false
   },
   "tabs": [
     {
-      "ID": "2e5feab0-527c-451c-b83c-d838d22dacac",
-      "header": "Common actions",
-      "buttons": [
+      "ID": "10000000-0000-4000-8000-000000000001",
+      "Header": "Deploy",
+      "Buttons": [
         {
-          "Id": "01bf5871-442e-4f73-91a3-fa13855b609c",
-          "text": "test01",
-          "description": "Some test script",
-          "script": "scripts\\common\\test01.ps1",
-          "scriptpathtype": "relative",
-          "scripttype": "powershell",
-          "arguments": []
-        },
-        {
-          "Id": "9cdc38fa-fc32-4a9d-be78-cd2bfe264422",
-          "text": "Bat script",
-          "description": "Some BAT script",
-          "script": "scripts\\test02.bat",
-          "scriptpathtype": "relative",
-          "scripttype": "bat",
-          "arguments": []
-        },
-        {
-          "Id": "5ec086d9-7987-43ef-84fb-1d8481b05aea",
-          "text": "Absolute path script",
-          "description": "",
-          "script": "C:\\scripts\\absolute_script.ps1",
-          "scriptpathtype": "absolute",
-          "scripttype": "powershell",
-          "arguments": []
-        },
-        {
-          "Id": "c28abef3-494c-48f5-96d8-a5788ced1a23",
-          "text": "test04",
-          "description": "Some test 04 script with arguments",
-          "script": "scripts\\common\\test04.ps1",
-          "scriptpathtype": "relative",
-          "scripttype": "powershell",
-          "arguments": [
-            {
-              "argument_question": "What is your name?",
-              "argument_answer": ""
-            },
-            {
-              "argument_question": "What is your surname",
-              "argument_answer": ""
-            },
-            {
-              "argument_question": "No, really what is your name?",
-              "argument_answer": ""
-            }
+          "Id": "00000000-0000-4000-8000-000000000001",
+          "Text": "Deploy",
+          "Description": "Deploy a build to an environment",
+          "Script": "scripts/deploy.sh",
+          "ScriptPathType": "relative",
+          "ScriptType": "shell",
+          "Arguments": [
+            { "ArgumentQuestion": "Which environment?" },
+            { "ArgumentQuestion": "Build number" }
           ]
-        }
-      ]
-    },
-    {
-      "ID": "42f71e1a-32b9-4c16-8c7d-256cd589c52e",
-      "header": "Second Tab",
-      "buttons": [
-        {
-          "Id": "3476554c-77b1-4abd-914e-ab1db866fc5f",
-          "text": "And this is button too",
-          "description": "no description",
-          "script": "scripts\\some_button_script.ps1",
-          "scriptpathtype": "relative",
-          "scripttype": "powershell",
-          "arguments": []
         }
       ]
     }
@@ -225,20 +181,20 @@ Here is an example:
 }
 ```
 
-_Note 1: Do not specify argument_answer value, since it will be ignored when executing script_
+* Interpreter paths can be left empty; EasyJob looks for `pwsh`/`powershell`, `python3`/`python` and `/bin/sh` itself.
+* `ScriptType` is `powershell`, `python`, `shell` or `cmd`; `ScriptPathType` is `relative` (to the config folder) or `absolute`.
+* `ArgumentQuestion` is the prompt text shown for an argument. Keys written by older versions (`argument_question`, lower-case names) still load.
+* `restrictions` lock down or hide parts of the UI (useful when you hand a prepared config to a team). The full list is in `EasyJob/config.json`.
+* `ID`/`Id` can be any GUID, or left out; EasyJob generates one.
 
-_Note 2: ID my be any other random GUID number. You may not specify it, application will regenerate it after changes if it is absent._
-
-
-## :triangular_flag_on_post: Easy access
-_CTRL+Left Mouse Click_ on the button will open folder where script attached to the button is located
-
-_SHIFT+Left Mouse Click_ on the button will open the script attached to the button with your default ps1 text editor
 
 ## :electric_plug: Compilation
 
-1. Download and install Visual Studio 2022
-2. Open project in Visual Studio and build it
+1. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download).
+2. `dotnet build EasyJob.sln`, or `dotnet run --project EasyJob`.
+3. Publish a release for your platform: `dotnet publish EasyJob -c Release -r win-x64` (or `osx-arm64`, `linux-x64`, ...), then zip the output folder as the release asset.
+
+`EasyJobPSTools` is plain PowerShell and is copied next to the app by the build; its optional ModernWpf input box (`EasyJobPSTools/EasyJobPSTools.sln`, Windows, Visual Studio) is not required.
 
 ## :dart: Contributing
 

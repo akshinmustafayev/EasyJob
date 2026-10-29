@@ -84,4 +84,11 @@ public class ConfigArgument
 {
     public string ArgumentQuestion { get; set; } = "";
     public string ArgumentAnswer { get; set; } = "";
+
+    // Configs written by EasyJob 1.x use snake_case keys; read them too (they are saved back in the new form).
+    [System.Text.Json.Serialization.JsonPropertyName("argument_question"), System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? LegacyQuestion { get => null; set { if (!string.IsNullOrEmpty(value)) ArgumentQuestion = value; } }
+
+    [System.Text.Json.Serialization.JsonPropertyName("argument_answer"), System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? LegacyAnswer { get => null; set { if (!string.IsNullOrEmpty(value)) ArgumentAnswer = value; } }
 }
