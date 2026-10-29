@@ -36,6 +36,7 @@ public partial class ConfigurationDialog : Window
         NativeColors.IsChecked = config.powershell_native_colors;
         CheckUpdates.IsChecked = config.check_updates_on_startup;
         OpenCommandsPanel.IsChecked = config.editor_open_commands_panel;
+        OpenTerminal.IsChecked = config.editor_open_terminal;
         ClearEvents.IsChecked = config.clear_events_when_reload;
 
         // cmd.exe only exists on Windows; the POSIX shell setting only matters elsewhere.
@@ -263,6 +264,7 @@ public partial class ConfigurationDialog : Window
         _config.powershell_native_colors = NativeColors.IsChecked == true;
         _config.check_updates_on_startup = CheckUpdates.IsChecked == true;
         _config.editor_open_commands_panel = OpenCommandsPanel.IsChecked == true;
+        _config.editor_open_terminal = OpenTerminal.IsChecked == true;
         EasyJob.Views.EditorWindow._sideOpenLast = null; // next editor starts from the setting again
         _config.clear_events_when_reload = ClearEvents.IsChecked == true;
         _config.UserRestrictions ??= _config.restrictions;

@@ -5,15 +5,11 @@
         xmlns:views="using:EasyJob.Views"
         xmlns:svc="using:EasyJob.Services"
         xmlns:c="using:EasyJob.Controls"
+        xmlns:term="using:Iciclecreek.Terminal"
         x:Class="EasyJob.Views.EditorWindow"
         Title="Script editor" Icon="/Assets/icon.ico"
         Width="1180" Height="780" MinWidth="720" MinHeight="460"
         WindowStartupLocation="CenterScreen">
-  <Window.Styles>
-    <Style Selector="TextBox#TermInput /template/ Border#PART_BorderElement"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/></Style>
-    <Style Selector="TextBox#TermInput:focus /template/ Border#PART_BorderElement"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/></Style>
-    <Style Selector="TextBox#TermInput:pointerover /template/ Border#PART_BorderElement"><Setter Property="Background" Value="Transparent"/></Style>
-  </Window.Styles>
 
   <DockPanel>
     <!-- toolbar -->
@@ -44,8 +40,8 @@
         <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="8">
           <ComboBox x:Name="LanguageBox" Width="150" ToolTip.Tip="Language used for syntax coloring and running"/>
           <ToggleButton x:Name="WrapToggle" Content="Wrap" ToolTip.Tip="Wrap long lines" MinHeight="34" Padding="12,0" CornerRadius="8"/>
-          <ToggleButton x:Name="CommandsToggle" IsCheckedChanged="OnCommandsToggled" MinHeight="34" Padding="12,0" CornerRadius="8" ToolTip.Tip="Show or hide the PowerShell command browser (Ctrl/Cmd+Shift+P)">
-            <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="list"/><TextBlock Text="Commands"/></StackPanel>
+          <ToggleButton x:Name="CommandsToggle" IsCheckedChanged="OnCommandsToggled" MinHeight="34" Padding="12,0" CornerRadius="8" ToolTip.Tip="Show or hide the side panel (Ctrl/Cmd+Shift+P)">
+            <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="list"/><TextBlock x:Name="SideToggleText" Text="Commands"/></StackPanel>
           </ToggleButton>
           <ToggleButton x:Name="TerminalToggle" IsCheckedChanged="OnTerminalToggled" MinHeight="34" Padding="12,0" CornerRadius="8" ToolTip.Tip="Show or hide the terminal (Ctrl/Cmd+`)">
             <StackPanel Orientation="Horizontal" Spacing="7"><c:Icon Kind="terminal"/><TextBlock Text="Terminal"/></StackPanel>
@@ -64,7 +60,12 @@
       </Grid>
     </Border>
 
-    <Grid ColumnDefinitions="*,Auto,Auto">
+    <Grid x:Name="MainGrid">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" MinWidth="320"/>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="0"/>
+    </Grid.ColumnDefinitions>
     <Grid x:Name="Body" RowDefinitions="Auto,*,Auto,0">
       <!-- open documents -->
       <ListBox x:Name="DocList" Grid.Row="0" Background="Transparent" Padding="6,4,6,0"
@@ -111,20 +112,13 @@
           <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
             <ComboBox x:Name="ShellBox" Width="140" MinHeight="28" FontSize="12" IsVisible="False" SelectionChanged="OnShellChanged"/>
             <Button x:Name="TermRestartButton" Classes="flat" Click="OnTermRestartClick" IsVisible="False" ToolTip.Tip="Restart the shell"><c:Icon Kind="refresh"/></Button>
-            <Button Classes="flat" Click="OnClearOutputClick"><StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="trash"/><TextBlock Text="Clear" FontSize="12"/></StackPanel></Button>
+            <Button x:Name="ClearOutputButton" Classes="flat" Click="OnClearOutputClick"><StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="trash"/><TextBlock Text="Clear" FontSize="12"/></StackPanel></Button>
             <Button Classes="flat" Click="OnHideOutputClick" ToolTip.Tip="Hide the output panel"><c:Icon Kind="down"/></Button>
           </StackPanel>
         </Grid>
-        <Grid x:Name="TerminalView" Grid.Row="1" RowDefinitions="*,Auto" IsVisible="False" Margin="14,0,14,10">
-          <c:OutputView x:Name="TermOutput" CornerRadius="8,8,0,0"/>
-          <Border Grid.Row="1" Background="{Binding #TermOutput.Background}" CornerRadius="0,0,8,8" Padding="10,0,0,0">
-            <DockPanel>
-              <TextBlock x:Name="TermPrompt" DockPanel.Dock="Left" Text="&gt;" Foreground="#57AB5A" FontFamily="Cascadia Mono, Menlo, Consolas, DejaVu Sans Mono, monospace" VerticalAlignment="Center" Margin="0,0,6,0"/>
-              <TextBox x:Name="TermInput" BorderThickness="0" Background="Transparent"
-                       FontFamily="Cascadia Mono, Menlo, Consolas, DejaVu Sans Mono, monospace" FontSize="12.5"/>
-            </DockPanel>
-          </Border>
-        </Grid>
+        <Border x:Name="TerminalView" Grid.Row="1" IsVisible="False" Margin="14,0,14,10" CornerRadius="8" ClipToBounds="True" Padding="8,6,0,4">
+          <term:TerminalControl x:Name="Term" FontFamily="Cascadia Mono, Menlo, Consolas, DejaVu Sans Mono, monospace" FontSize="12.5" BufferSize="5000"/>
+        </Border>
         <ScrollViewer x:Name="RunsScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto">
           <ItemsControl x:Name="RunsList" Margin="14,0,14,10">
             <ItemsControl.ItemTemplate>
@@ -137,9 +131,13 @@
 
     <!-- PowerShell command browser -->
     <GridSplitter x:Name="SideSplitter" Grid.Column="1" Width="5" VerticalAlignment="Stretch" Background="Transparent" IsVisible="False" ResizeDirection="Columns"/>
-    <Border x:Name="SidePanel" Grid.Column="2" Width="380" MinWidth="260" IsVisible="False"
+    <Border x:Name="SidePanel" Grid.Column="2" IsVisible="False"
             BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="1,0,0,0">
-      <views:CommandsPanel x:Name="Commands"/>
+      <Panel>
+        <views:CommandsPanel x:Name="Commands"/>
+        <views:JsonPreviewPanel x:Name="JsonView" IsVisible="False"/>
+        <views:MarkdownPreviewPanel x:Name="MarkdownView" IsVisible="False"/>
+      </Panel>
     </Border>
     </Grid>
   </DockPanel>

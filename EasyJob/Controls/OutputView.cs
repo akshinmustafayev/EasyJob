@@ -17,8 +17,8 @@ namespace EasyJob.Controls;
 /// </summary>
 public class OutputView : Border
 {
-    public static readonly StyledProperty<IOutputSource?> RunProperty =
-        AvaloniaProperty.Register<OutputView, IOutputSource?>(nameof(Run));
+    public static readonly StyledProperty<RunViewModel?> RunProperty =
+        AvaloniaProperty.Register<OutputView, RunViewModel?>(nameof(Run));
 
     public static readonly StyledProperty<string?> ConsoleBackgroundProperty =
         AvaloniaProperty.Register<OutputView, string?>(nameof(ConsoleBackground));
@@ -33,7 +33,7 @@ public class OutputView : Border
     readonly LineColorizer _colorizer;
     readonly Dictionary<Color, IBrush> _brushes = new();
     readonly List<OutputLine> _lines = new();
-    IOutputSource? _attached;
+    RunViewModel? _attached;
     IBrush _foreground = Brushes.White;
 
     static OutputView()
@@ -69,7 +69,7 @@ public class OutputView : Border
         ApplyColors();
     }
 
-    public IOutputSource? Run { get => GetValue(RunProperty); set => SetValue(RunProperty, value); }
+    public RunViewModel? Run { get => GetValue(RunProperty); set => SetValue(RunProperty, value); }
     public string? ConsoleBackground { get => GetValue(ConsoleBackgroundProperty); set => SetValue(ConsoleBackgroundProperty, value); }
     public string? ConsoleForeground { get => GetValue(ConsoleForegroundProperty); set => SetValue(ConsoleForegroundProperty, value); }
 

@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:md="clr-namespace:Markdown.Avalonia;assembly=Markdown.Avalonia"
+             x:Class="EasyJob.Views.MarkdownPreviewPanel">
+  <Grid RowDefinitions="Auto,*">
+    <TextBlock Text="MARKDOWN (PREVIEW)" Classes="section" Margin="12,12,12,8"/>
+    <!-- The renderer's colours do not follow the dark theme, so it is always drawn as a light page. -->
+    <ThemeVariantScope Grid.Row="1" RequestedThemeVariant="Light" Margin="8,0,0,0">
+    <Border Background="#FFFFFF">
+    <md:MarkdownScrollViewer x:Name="Viewer" Margin="4,0,0,0"
+                             MarkdownStyleName="GithubLike"/>
+    </Border>
+    </ThemeVariantScope>
+  </Grid>
+</UserControl>

@@ -79,6 +79,12 @@
 		<used>Configuration</used>
 	</item>
 	<item>
+		<name>HelpConfigurationOpenTerminal</name>
+		<heading>Terminal in the script editor</heading>
+		<description>Open the terminal under the script editor automatically when the editor opens. A shell is started each time. You can still show or hide it with the Terminal button or Ctrl/Cmd+`. Nothing happens if your administrator blocks the terminal.&#10;&#10;Example: Yes</description>
+		<used>Configuration</used>
+	</item>
+	<item>
 		<name>HelpConfigurationCheckUpdates</name>
 		<heading>Check for updates</heading>
 		<description>Look for a newer EasyJob release on GitHub each time the app starts. When there is one, an Update button appears in the menu bar. You can also use Help -&gt; Check for updates at any time.&#10;&#10;Example: Yes</description>

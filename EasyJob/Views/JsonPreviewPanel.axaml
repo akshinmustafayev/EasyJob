@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ae="using:AvaloniaEdit"
+             xmlns:c="using:EasyJob.Controls"
+             x:Class="EasyJob.Views.JsonPreviewPanel">
+  <Grid RowDefinitions="Auto,Auto,*">
+    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="12,12,12,4">
+      <TextBlock Text="JSON (FORMATTED)" Classes="section" Margin="0" VerticalAlignment="Center"/>
+      <Button Grid.Column="1" Classes="flat" Click="OnCopyClick" ToolTip.Tip="Copy the formatted JSON">
+        <StackPanel Orientation="Horizontal" Spacing="6"><c:Icon Kind="copy"/><TextBlock Text="Copy" FontSize="12"/></StackPanel>
+      </Button>
+    </Grid>
+    <TextBlock x:Name="StatusText" Grid.Row="1" Margin="12,0,12,8" FontSize="12" TextWrapping="Wrap" Classes="muted"/>
+    <ae:TextEditor x:Name="View" Grid.Row="2" IsReadOnly="True" ShowLineNumbers="False" FontSize="12.5" Padding="4,6"
+                   FontFamily="Cascadia Mono, Menlo, Consolas, DejaVu Sans Mono, monospace"
+                   HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"/>
+  </Grid>
+</UserControl>

@@ -12,6 +12,8 @@ public class AppConfig
     public bool powershell_native_colors { get; set; } = true;
     /// <summary>Open the PowerShell commands panel automatically when the script editor opens.</summary>
     public bool editor_open_commands_panel { get; set; } = true;
+    /// <summary>Open the terminal under the script editor automatically when the editor opens.</summary>
+    public bool editor_open_terminal { get; set; } = true;
     public string console_background { get; set; } = "#0C0C0C";
     public string console_foreground { get; set; } = "#E6E6E6";
     public bool clear_events_when_reload { get; set; } = true;

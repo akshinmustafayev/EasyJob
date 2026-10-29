@@ -92,7 +92,7 @@ public static class ScriptCommand
 
     // Forces ANSI output (errors, Format-Table, ...) and makes Write-Host -ForegroundColor/-BackgroundColor emit ANSI,
     // because PowerShell drops host colors when its output is redirected.
-    internal const string ColorPrelude =
+    const string ColorPrelude =
         "if ($PSStyle) { $PSStyle.OutputRendering = 'Ansi' }\n" +
         "$global:LASTEXITCODE = 0\n" +
         "function global:Write-Host { param([Parameter(Position=0, ValueFromRemainingArguments)][object[]]$Object, [object]$Separator = ' ', [Nullable[ConsoleColor]]$ForegroundColor, [Nullable[ConsoleColor]]$BackgroundColor, [switch]$NoNewline)\n" +
