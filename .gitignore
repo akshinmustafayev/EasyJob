@@ -3,3 +3,5 @@ obj/
 .vs/
 *.user
 .DS_Store
+build/out/
+build/dist/

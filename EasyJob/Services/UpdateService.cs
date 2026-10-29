@@ -87,7 +87,7 @@ public static class UpdateService
             asset.Name, asset.Url, asset.Size, asset.Sha);
     }
 
-    /// <summary>One zip is used as is. Several are matched on the OS and CPU in their file name (win/osx/linux, x64/arm64).</summary>
+    /// <summary>One zip is used as is. Several are matched on the OS and CPU in their file name (win/osx/linux, x64/arm64) and on "portable" (runtime included).</summary>
     public static string? PickAsset(IReadOnlyList<string> zips)
     {
         if (zips.Count == 0) return null;
@@ -106,9 +106,13 @@ public static class UpdateService
 
         var forOs = zips.Where(z => os.Any(o => z.Contains(o, StringComparison.OrdinalIgnoreCase))).ToList();
         if (forOs.Count == 0) return null;
-        return forOs.FirstOrDefault(z => z.Contains(arch, StringComparison.OrdinalIgnoreCase))
-            ?? (arch == "arm64" ? forOs.FirstOrDefault(z => z.Contains("x64", StringComparison.OrdinalIgnoreCase)) : null)
-            ?? forOs[0];
+        var forArch = forOs.Where(z => z.Contains(arch, StringComparison.OrdinalIgnoreCase)).ToList();
+        if (forArch.Count == 0 && arch == "arm64") forArch = forOs.Where(z => z.Contains("x64", StringComparison.OrdinalIgnoreCase)).ToList();
+        if (forArch.Count == 0) forArch = forOs;
+
+        // A portable zip carries its own .NET runtime; stay on the same kind as the installed copy.
+        bool selfContained = File.Exists(Path.Combine(AppContext.BaseDirectory, "System.Private.CoreLib.dll"));
+        return forArch.FirstOrDefault(z => z.Contains("portable", StringComparison.OrdinalIgnoreCase) == selfContained) ?? forArch[0];
     }
 
     // ---------------------------------------------------------------- install

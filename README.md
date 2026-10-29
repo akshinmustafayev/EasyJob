@@ -56,6 +56,39 @@ dotnet run --project EasyJob
 dotnet publish EasyJob -c Release -r osx-arm64   # or win-x64, linux-x64, ...
 ```
 
+### Ready-to-use packages
+Release zips come in two variants for Windows, Linux and macOS (x64 and arm64):
+
+| Zip | What it is |
+| --- | --- |
+| `EasyJob-<version>-<platform>-portable.zip` | **Portable**: the .NET runtime is included, just unzip and run (about 46-48 MB) |
+| `EasyJob-<version>-<platform>.zip` | Small (about 12-16 MB), needs the [.NET 10 runtime](https://dotnet.microsoft.com/download/dotnet/10.0) installed |
+
+`<platform>` is `win-x64`, `win-arm64`, `linux-x64`, `linux-arm64`, `osx-x64` or `osx-arm64`. Windows and Linux zips unpack to an `EasyJob/` folder, macOS zips contain `EasyJob.app`.
+
+**Build them yourself** (you only need the .NET 10 SDK; any one machine builds every platform):
+
+```
+build/build.sh                                  # macOS, Linux, Git Bash, WSL
+.\build\build.ps1                               # Windows PowerShell
+build/build.sh --rids "win-x64 osx-arm64" --variants portable   # just what you need
+```
+
+The zips land in `build/dist/`. All options are in [`build/README.md`](build/README.md).
+
+### macOS notes
+* **Pick the right zip**: `osx-arm64` for Apple Silicon (M1 and newer), `osx-x64` for Intel Macs. Prefer the `-portable` zip unless you already have the .NET 10 runtime (`brew install --cask dotnet`).
+* **Unzip with Finder** (double-click) or `ditto -x -k EasyJob-*.zip .`, not the plain `unzip` command: the app's code signatures live in extended attributes that `unzip` drops.
+* **First launch**: builds you download are not notarized, so macOS may say the app is damaged or from an unidentified developer. Remove the download quarantine once, then open it normally:
+  ```
+  xattr -dr com.apple.quarantine /path/to/EasyJob.app
+  ```
+  (or right-click the app, choose Open, then Open again). Move `EasyJob.app` to `/Applications` or `~/Applications` first. Apps you build yourself on your Mac are ad-hoc signed and open without this step.
+* **Menu bar**: the menus live in the macOS menu bar at the top of the screen (EasyJob menu with About and Quit, then File, Tabs, Scripts, Tools, View, Help); shortcuts use Cmd. The script editor window has its own toolbar and shortcuts.
+* **Config**: the sample `config.json` ships inside the app (`EasyJob.app/Contents/MacOS/config.json`) and is used as is, so your changes are saved there, and updates keep it. Delete that file (or use `dotnet run`) if you prefer `config.json` in your user application-data folder.
+* **Scripts**: `.ps1` scripts need [PowerShell 7](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-macos) (`brew install --cask powershell`); Python scripts need `python3`. Shell scripts run with `/bin/sh`, and the editor's Terminal tab starts your shell (`$SHELL`) or PowerShell.
+* **Dock icon**: it is set from the app bundle; an unbundled `dotnet run` copy shows it too, after start-up.
+
 Script types: `powershell` (`.ps1`), `python` (`.py`, run with `python3 -u`; set `default_python_path` to override), `cmd` (`.bat`/`.cmd` on Windows, run with `/bin/sh` on macOS/Linux) and `shell` (`.sh`).
 
 **Config location.** If a `config.json` sits next to the executable it is used (portable mode); otherwise the app uses `config.json` in your user application-data folder (shown in the status bar). Relative script paths are resolved against the folder that contains `config.json`, and both `\` and `/` separators are accepted, so a config written on Windows works on macOS.
@@ -238,7 +271,7 @@ _What this is not:_ EasyJob runs scripts with the user's own permissions, so the
 
 1. Install the [.NET 10 SDK](https://dotnet.microsoft.com/download).
 2. `dotnet build EasyJob.sln`, or `dotnet run --project EasyJob`.
-3. Publish a release for your platform: `dotnet publish EasyJob -c Release -r win-x64` (or `osx-arm64`, `linux-x64`, ...), then zip the output folder as the release asset.
+3. Build release zips for every platform with `build/build.sh` (or `build\build.ps1` on Windows): Windows, Linux and macOS, x64 and arm64, each as a **portable** zip (runtime included) and a smaller one that needs the .NET 10 runtime. See [`build/README.md`](build/README.md). For a single platform you can also run `dotnet publish EasyJob -c Release -r win-x64` yourself.
 
 **macOS app icon.** macOS takes the Dock and Finder icon from an `.app` bundle, not from the `.ico` used on Windows. EasyJob sets its Dock icon at start-up even when run unbundled (`dotnet run`, a publish folder), and `tools/make-macos-app.sh` wraps a publish folder into a proper `EasyJob.app` (with `Info.plist` and `icon.icns`):
 
