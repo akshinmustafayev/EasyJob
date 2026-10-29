@@ -7,6 +7,11 @@
   "console_background": "#0C0C0C",
   "console_foreground": "#E6E6E6",
   "powershell_native_colors": true,
+  "editor_open_commands_panel": true,
+  "editor_open_terminal": true,
+  "theme": "system",
+  "button_density": "auto",
+  "check_updates_on_startup": true,
   "clear_events_when_reload": true,
   "restrictions": {
     "block_tabs_remove": false,
@@ -32,7 +37,24 @@
     "hide_menu_item_settings_configuration": false,
     "hide_menu_item_help": false,
     "hide_menu_item_help_troubleshooting": false,
-    "hide_menu_item_help_about": false
+    "hide_menu_item_help_about": false,
+    "config_readonly": false,
+    "script_editor_readonly": false,
+    "confirm_before_run": false,
+    "block_script_editor": false,
+    "block_script_editor_run": false,
+    "block_script_editor_open_files": false,
+    "block_powershell_commands": false,
+    "block_editor_terminal": false,
+    "block_open_script_externally": false,
+    "block_show_in_folder": false,
+    "block_updates": false,
+    "block_view_settings": false,
+    "hide_menu_item_tools": false,
+    "hide_menu_item_view_event_log": false,
+    "allowed_script_types": [],
+    "allowed_script_folders": [],
+    "max_concurrent_runs": 0
   },
   "tabs": [
     {

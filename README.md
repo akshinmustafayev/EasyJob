@@ -224,7 +224,7 @@ Everything is saved in `config.json` (see [Config location](#computer-requiremen
 * `theme` is `system`, `light` or `dark`; `button_density` is `auto` (compact once a tab has many buttons), `cards` or `compact`.
 * `powershell_native_colors` shows PowerShell's own colors in the output; `console_background` / `console_foreground` take a color name or hex value.
 * `editor_open_commands_panel` and `editor_open_terminal` (both default `true`) decide whether the script editor opens with the side panel and the terminal showing; `check_updates_on_startup` looks for a newer release when EasyJob starts.
-* `restrictions` lock down or hide parts of the UI (useful when you hand a prepared config to a team). The complete list is in [Administration](#lock-administration-restricting-what-users-can-do); `EasyJob/config.json` only lists the first ones.
+* `restrictions` lock down or hide parts of the UI (useful when you hand a prepared config to a team). The complete list, with what each one does, is in [Administration](#lock-administration-restricting-what-users-can-do); `EasyJob/config.json` has every key with its default.
 * `ID`/`Id` can be any GUID, or left out; EasyJob generates one.
 
 
